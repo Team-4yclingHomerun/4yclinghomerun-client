@@ -13,7 +13,7 @@ const useFetch = <T>(
     method: 'GET',
   },
 ) => {
-  const [data, setData] = useState<T>(<T>initialData);
+  const [data, setData] = useState(initialData);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isError, setIsError] = useState(false);
@@ -51,6 +51,8 @@ const useFetch = <T>(
     return () => {
       controller.abort();
     };
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialURL]);
 
   return { data, isLoading, isError, error };
