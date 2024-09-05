@@ -5,7 +5,7 @@ import { TEventTest } from '@/types/events';
 const EventItem = ({ items }: { items: TEventTest }) => {
   return (
     <>
-      <div className="h-[520px] hover:text-kt-red-3">
+      <div className="mt-14 h-[520px]">
         <Link to={`/events/${items.id}`}>
           <div
             style={{
