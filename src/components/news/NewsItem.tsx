@@ -2,31 +2,33 @@ import { Link } from 'react-router-dom';
 
 import { TNewsTest } from '@/types/news';
 
-const NewListItem = ({ albumId, id, title, url, thumbnailUrl }: TNewsTest) => {
+const NewsItem = ({ items }: { items: TNewsTest }) => {
   return (
     <>
-      <li className="w-[400px] list-none">
-        <Link to={`/news/${id}`}>
+      <li className="w-[400px] list-none hover:text-kt-red-3">
+        <Link to={`/news/${items.id}`}>
           <div
             style={{
-              backgroundImage: `url(${thumbnailUrl})`,
+              backgroundImage: `url(${items.thumbnailUrl})`,
               backgroundRepeat: 'no-repeat',
               backgroundPosition: 'center',
               backgroundSize: 'cover',
             }}
-            className="relative h-[520px] w-full after:invisible after:block after:h-full after:w-full after:bg-[#35393E]"
+            className="relative h-[520px] w-full"
           >
-            <div className="absolute left-2/4 top-2/4 z-10 translate-x-2/4 translate-y-2/4">
-              <span>기사보기</span>
+            <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-65 opacity-0 transition-opacity duration-300 hover:opacity-100">
+              <button className="relative z-10 rounded-full bg-kt-red-3 px-6 py-3 text-lg font-semibold text-white transition-all duration-300 hover:scale-105 hover:bg-kt-red-1 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-kt-red-3 focus:ring-offset-2">
+                기사보기
+              </button>
             </div>
           </div>
           <h4 className="mb-1 mt-2.5 truncate text-xl font-semibold">
-            {title}
+            {items.title}
           </h4>
-          <p className="text-[#717781]">2024.09.05</p>
+          <p className="text-lg text-kt-gray-2">2024.09.05</p>
         </Link>
       </li>
     </>
   );
 };
-export default NewListItem;
+export default NewsItem;

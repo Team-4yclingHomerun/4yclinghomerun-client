@@ -6,14 +6,14 @@ type FetchOptions = {
   body?: BodyInit | null;
 };
 
-export const useFetch = <T>(
+const useFetch = <T>(
   initialURL: string,
   initialData: T,
   initialOptions: FetchOptions = {
     method: 'GET',
   },
 ) => {
-  const [data, setData] = useState(initialData);
+  const [data, setData] = useState<T>(<T>initialData);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isError, setIsError] = useState(false);
@@ -55,3 +55,5 @@ export const useFetch = <T>(
 
   return { data, isLoading, isError, error };
 };
+
+export default useFetch;
