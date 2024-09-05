@@ -1,4 +1,4 @@
-import homeImage from '@/assets/home/kt.png';
+import homeImage from '@/assets/logo/logo_ktwiz_suwon2.png';
 import awayImage from '@/assets/home/lotte.png';
 
 const GameScheduleData = [

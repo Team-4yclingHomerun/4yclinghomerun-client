@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 
 import { motion, useAnimation, useInView } from 'framer-motion';
 
-import winningKt from '@/assets/images/home/winning_kt.webp';
+import winningKt from '@/assets/home/winning_kt.webp';
 
 const HeroSectionBranding = () => {
   const controls = useAnimation();
