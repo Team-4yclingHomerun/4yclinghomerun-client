@@ -3,7 +3,7 @@ import { useEffect, useLayoutEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, useAnimation, useScroll } from 'framer-motion';
 
-import logo from '@/assets/images/logo/logo_white.png';
+import logo from '@/assets/logo/logo_gray.svg';
 
 const NavigationBarLogo = () => {
   const location = useLocation();
@@ -29,7 +29,7 @@ const NavigationBarLogo = () => {
     if (location.pathname !== '/') {
       controls.set({ scale: 1, y: 0 });
     }
-     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
 
   useEffect(() => {
