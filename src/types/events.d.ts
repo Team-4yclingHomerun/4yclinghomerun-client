@@ -1,7 +1,9 @@
-export type TEventTest = {
-  albumId: number;
+export type TEvents = {
   id: number;
   title: string;
-  url: string;
-  thumbnailUrl: string;
+  date: string;
+  kategorie: 'default' | 'important' | 'event';
+  description: string;
+  bannerUrl: string;
+  linkUrl: string;
 };

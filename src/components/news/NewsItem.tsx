@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
 
-import { TNewsTest } from '@/types/news';
+import { TNews } from '@/types/news';
 
-const NewsItem = ({ items }: { items: TNewsTest }) => {
+const NewsItem = ({ items }: { items: TNews }) => {
   return (
     <>
       <li className="w-[400px] list-none hover:text-kt-red-3">
-        <Link to={`/news/${items.id}`}>
+        <Link to={items.linkUrl}>
           <div
             style={{
               backgroundImage: `url(${items.thumbnailUrl})`,
@@ -25,7 +25,7 @@ const NewsItem = ({ items }: { items: TNewsTest }) => {
           <h4 className="mb-1 mt-2.5 truncate text-xl font-semibold">
             {items.title}
           </h4>
-          <p className="text-lg text-kt-gray-2">2024.09.05</p>
+          <p className="text-lg text-kt-gray-2">{items.date}</p>
         </Link>
       </li>
     </>

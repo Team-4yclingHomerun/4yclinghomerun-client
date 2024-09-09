@@ -1,6 +1,6 @@
 import Slider, { Settings } from 'react-slick';
 
-import { NextArrow, PrevArrow } from './ArrowButton';
+import { CustomNextArrow, CustomPrevArrow } from './ArrowButton';
 
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -14,13 +14,13 @@ type TEventCarouselProps = {
 const EventCarousel = ({ children, settings = {} }: TEventCarouselProps) => {
   const defaultSettings = {
     dots: true,
-    infinite: false,
+    infinite: true,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: true,
-    nextArrow: <NextArrow />,
-    prevArrow: <PrevArrow />,
+    nextArrow: <CustomNextArrow />,
+    prevArrow: <CustomPrevArrow />,
   };
 
   const selectedSettings =

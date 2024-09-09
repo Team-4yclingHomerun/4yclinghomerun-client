@@ -1,7 +1,7 @@
-export type TNewsTest = {
-  albumId: number;
+export type TNews = {
   id: number;
   title: string;
-  url: string;
+  date: string;
   thumbnailUrl: string;
+  linkUrl: string;
 };

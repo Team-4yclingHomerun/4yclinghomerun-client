@@ -1,18 +1,20 @@
 import { Link } from 'react-router-dom';
 
-import { TEventTest } from '@/types/events';
+import { TEvents } from '@/types/events';
 
-const EventItem = ({ items }: { items: TEventTest }) => {
+const EventItem = ({ items }: { items: TEvents }) => {
+  const { bannerUrl, linkUrl } = items;
+
   return (
     <>
-      <div className="mt-14 h-[520px]">
-        <Link to={`/events/${items.id}`}>
+      <div className="mx-[100px] mt-14 h-[520px]">
+        <Link to={linkUrl}>
           <div
             style={{
-              backgroundImage: `url(${items.url})`,
+              backgroundImage: `url(${bannerUrl})`,
               backgroundRepeat: 'no-repeat',
               backgroundPosition: 'center',
-              backgroundSize: 'cover',
+              backgroundSize: 'contain',
             }}
             className="relative h-[520px] w-full"
           ></div>

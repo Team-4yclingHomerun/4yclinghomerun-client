@@ -1,27 +1,29 @@
-import { MdArrowBackIos, MdArrowForwardIos } from 'react-icons/md';
-
 import { cn } from '@/utils/cn';
 
-type TArrowProps = {
+type CustomArrowProps = {
   className?: string;
   style?: React.CSSProperties;
   onClick?: React.MouseEventHandler<HTMLDivElement>;
 };
 
-const NextArrow = ({ className, style, onClick }: TArrowProps) => {
+const CustomNextArrow = ({ className, style, onClick }: CustomArrowProps) => {
   return (
-    <div className={cn('', className)} style={style} onClick={onClick}>
-      <MdArrowForwardIos />
-    </div>
+    <div
+      className={cn('custom-arrow custom-next-arrow', className)}
+      style={style}
+      onClick={onClick}
+    />
   );
 };
 
-const PrevArrow = ({ className, style, onClick }: TArrowProps) => {
+const CustomPrevArrow = ({ className, style, onClick }: CustomArrowProps) => {
   return (
-    <div className={cn('', className)} style={style} onClick={onClick}>
-      <MdArrowBackIos />
-    </div>
+    <div
+      className={cn('custom-arrow custom-prev-arrow', className)}
+      style={style}
+      onClick={onClick}
+    />
   );
 };
 
-export { NextArrow, PrevArrow };
+export { CustomNextArrow, CustomPrevArrow };
