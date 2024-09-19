@@ -5,7 +5,7 @@ import { TPlayer } from '@/types/player';
 
 import ErrorBoundary from '@/components/error/ErrorBoundary';
 import CardArea from '@/components/player/CardArea';
-import CardItem from '@/components/player/PlayerItem';
+import PlayerCard from '@/components/player/PlayerCard';
 import HitterError from '@/components/player/hitter/HitterError';
 import HitterSkeleton from '@/components/player/hitter/HitterSkeleton';
 import SectionLayout from '@/components/player/SectionLayout';
@@ -79,7 +79,7 @@ const HitterPage = () => {
             <ErrorBoundary fallback={<HitterError />}>
               <CardArea isError={isCatcherDataError}>
                 {filteredSearch.map((item, index) => (
-                  <CardItem key={index} items={item} />
+                  <PlayerCard key={index} items={item} />
                 ))}
               </CardArea>
             </ErrorBoundary>
@@ -94,10 +94,10 @@ const HitterPage = () => {
                   <CardArea isError={isCatcherDataError}>
                     {filteredSearch.length > 0
                       ? filteredSearch.map((item, index) => (
-                          <CardItem key={index} items={item} />
+                          <PlayerCard key={index} items={item} />
                         ))
                       : catcherData.map((item, index) => (
-                          <CardItem key={index} items={item} />
+                          <PlayerCard key={index} items={item} />
                         ))}
                   </CardArea>
                 </ErrorBoundary>
@@ -111,7 +111,7 @@ const HitterPage = () => {
                 <ErrorBoundary fallback={<HitterError />}>
                   <CardArea isError={isInfielderDataError}>
                     {infielderData.map((item, index) => (
-                      <CardItem key={index} items={item} />
+                      <PlayerCard key={index} items={item} />
                     ))}
                   </CardArea>
                 </ErrorBoundary>
@@ -125,7 +125,7 @@ const HitterPage = () => {
                 <ErrorBoundary fallback={<HitterError />}>
                   <CardArea isError={isOutfielderDataError}>
                     {outfielderData.map((item, index) => (
-                      <CardItem key={index} items={item} />
+                      <PlayerCard key={index} items={item} />
                     ))}
                   </CardArea>
                 </ErrorBoundary>

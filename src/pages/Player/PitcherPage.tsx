@@ -5,7 +5,7 @@ import { TPlayer } from '@/types/player';
 
 import ErrorBoundary from '@/components/error/ErrorBoundary';
 import CardArea from '@/components/player/CardArea';
-import CardItem from '@/components/player/PlayerItem';
+import PlayerCard from '@/components/player/PlayerCard';
 import PitcherError from '@/components/player/pitcher/PitcherError';
 import PitcherSkeleton from '@/components/player/pitcher/PitcherSkeleton';
 import SectionLayout from '@/components/player/SectionLayout';
@@ -60,10 +60,10 @@ const PitcherPage = () => {
               <CardArea isError={isError}>
                 {filteredSearch.length > 0
                   ? filteredSearch.map((item, index) => (
-                      <CardItem key={index} items={item} />
+                      <PlayerCard key={index} items={item} />
                     ))
                   : pitcherData.map((item, index) => (
-                      <CardItem key={index} items={item} />
+                      <PlayerCard key={index} items={item} />
                     ))}
               </CardArea>
             </ErrorBoundary>

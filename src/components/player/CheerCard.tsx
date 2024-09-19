@@ -28,7 +28,6 @@ const CheerCard = ({ items }: CheerCardProps) => {
                 </span>
                 <span className="pl-1">{items.leaderName}</span>
               </div>
-              <span className="text-kt-red-1">No.</span>
             </div>
             <div className="h-4/5">
               <img
@@ -47,6 +46,7 @@ const CheerCard = ({ items }: CheerCardProps) => {
               <div className="relative inline-flex"></div>
             </div>
           </div>
+
           <div
             className={cn(
               'card-dynamic-size card-front-back rotate-y-180',
@@ -54,40 +54,32 @@ const CheerCard = ({ items }: CheerCardProps) => {
             )}
           >
             <div className="absolute inset-0 cursor-pointer bg-black bg-opacity-65 opacity-0 transition-opacity duration-300 hover:opacity-100"></div>
-            <div className="flex flex-col items-center">
+            <div className="flex h-full flex-col items-center justify-between">
               <h2 className="text-4xl text-kt-white">{items.leaderName}</h2>
-              <div className="relative mt-12 size-40 cursor-pointer">
-                <svg
-                  className="size-full rotate-[135deg]"
-                  viewBox="0 0 36 36"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <circle
-                    cx="18"
-                    cy="18"
-                    r="16"
-                    fill="none"
-                    className="stroke-current text-gray-200 dark:text-neutral-700"
-                    strokeWidth="1.5"
-                    strokeDasharray="75 100"
-                    strokeLinecap="round"
-                  ></circle>
-                  <circle
-                    cx="18"
-                    cy="18"
-                    r="16"
-                    fill="none"
-                    className="stroke-current text-red-600 dark:text-red-500"
-                    strokeWidth="1.5"
-                    strokeDasharray="55.5 100"
-                    strokeLinecap="round"
-                  ></circle>
-                </svg>
-                <div className="absolute start-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform text-center"></div>
+              <table className="table-auto">
+                <tbody className="font-bold">
+                  <tr>
+                    <td>별명</td>
+                    <td>{items.leaderNickName}</td>
+                  </tr>
+                  <tr>
+                    <td>생년월일</td>
+                    <td>{items.leaderBirthDay}</td>
+                  </tr>
+                  <tr>
+                    <td>키</td>
+                    <td>{items.leaderHeight}</td>
+                  </tr>
+                  <tr>
+                    <td>최애선수</td>
+                    <td>{items.leaderLikePlayer}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div className="flex items-center">
+                <button className="text-xl">자세히보기</button>
+                <FaArrowRight />
               </div>
-
-              <button className="text-xl">자세히보기</button>
-              <FaArrowRight />
             </div>
           </div>
         </div>
