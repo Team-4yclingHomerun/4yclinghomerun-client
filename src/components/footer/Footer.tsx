@@ -5,14 +5,14 @@ import { FaInstagram, FaFacebookF, FaYoutube } from 'react-icons/fa';
 import { SiNaver } from 'react-icons/si';
 
 import Dropdown from './Dropdown';
-import footerImg from '@/assets/home/footer/footer-logo.webp';
+import footerImg from '@/assets/home/footer-logo.webp';
 import {
   INSTAGRAM_URL,
   FACEBOOK_URL,
   YOUTUBE_URL,
   NAVERTV_URL,
 } from '@/constants/constant';
-import Modal from './modal/Modal';
+import Modal from '../modal/Modal';
 import { TermsOfServiceData } from '@/mocks/home/TermsOfServiceData';
 
 const Footer = () => {
@@ -32,7 +32,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-white px-4 py-10">
+    <footer className="px-4 py-10">
       <div className="mx-auto max-w-4xl">
         <div className="mb-6 flex flex-row items-start justify-between gap-10">
           <img src={footerImg} alt="kt wiz logo" className="h-12" />

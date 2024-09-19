@@ -1,15 +1,15 @@
-import item01 from '@/assets/home/shop/01.png';
-import item02 from '@/assets/home/shop/02.png';
-import item03 from '@/assets/home/shop/03.png';
-import item04 from '@/assets/home/shop/04.png';
-import item05 from '@/assets/home/shop/05.png';
-import item06 from '@/assets/home/shop/06.png';
-import item07 from '@/assets/home/shop/07.png';
-import item08 from '@/assets/home/shop/08.png';
-import item09 from '@/assets/home/shop/09.png';
-import item10 from '@/assets/home/shop/10.png';
-import item11 from '@/assets/home/shop/11.png';
-import item12 from '@/assets/home/shop/12.png';
+import item01 from '@/assets/images/shop/01.png';
+import item02 from '@/assets/images/shop/02.png';
+import item03 from '@/assets/images/shop/03.png';
+import item04 from '@/assets/images/shop/04.png';
+import item05 from '@/assets/images/shop/05.png';
+import item06 from '@/assets/images/shop/06.png';
+import item07 from '@/assets/images/shop/07.png';
+import item08 from '@/assets/images/shop/08.png';
+import item09 from '@/assets/images/shop/09.png';
+import item10 from '@/assets/images/shop/10.png';
+import item11 from '@/assets/images/shop/11.png';
+import item12 from '@/assets/images/shop/12.png';
 import { ShopItem } from '@/types/ShopItemType';
 
 const items = [

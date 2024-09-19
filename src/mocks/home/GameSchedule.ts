@@ -1,5 +1,5 @@
-import homeImage from '@/assets/home/schedule/kt.png';
-import awayImage from '@/assets/home/schedule/lotte.png';
+import homeImage from '@/assets/home/kt.png';
+import awayImage from '@/assets/home/lotte.png';
 
 const GameScheduleData = [
   {

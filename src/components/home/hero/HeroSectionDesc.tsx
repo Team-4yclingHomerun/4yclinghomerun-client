@@ -2,9 +2,8 @@ import { useRef } from 'react';
 
 import { useInView } from 'framer-motion';
 
-import magicBall from '@/assets/home/hero/magic_ball.webp';
-import magicBat from '@/assets/home/hero/magic_bat.webp';
-import '@/styles/HeroSection.css';
+import magicBall from '@/assets/images/home/magic_ball.webp';
+import magicBat from '@/assets/images/home/magic_bat.webp';
 
 const HeroSectionDesc = () => {
   const ref = useRef(null);
@@ -30,7 +29,7 @@ const HeroSectionDesc = () => {
   };
 
   return (
-    <section className="hero-desc-font relative h-screen">
+    <section className="relative h-screen">
       <img
         ref={ref}
         src={magicBall}
@@ -39,13 +38,13 @@ const HeroSectionDesc = () => {
       />
       <span
         ref={ref}
-        className="absolute right-96 top-20 z-20 text-5xl text-white"
+        className="absolute right-80 top-20 z-20 text-5xl text-white"
         style={handleStyle('right')}
       >
         WE ARE <span className="text-[#D60C0C]">GREAT</span> MAGIC
       </span>
       <span
-        className="absolute bottom-60 left-96 z-10 text-5xl text-white"
+        className="absolute bottom-60 left-44 z-10 text-5xl text-white"
         style={handleStyle('left')}
       >
         THE ONLY GOAL IS TO <span className="text-[#D60C0C]">WIN</span>

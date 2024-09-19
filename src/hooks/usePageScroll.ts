@@ -1,10 +1,15 @@
-import { TSection } from '@/types/ContentsSections';
 import { useState, useEffect, useRef, useCallback } from 'react';
 
+type Section = {
+  id: string;
+  content: React.ReactNode;
+  color: string;
+  className?: string;
+};
+
 type UsePageScrollOptions = {
-  sections: TSection[];
+  sections: Section[];
   initialSection?: number;
-  isActive: boolean;
 };
 
 interface TouchEventWithPrevY extends TouchEvent {
@@ -14,7 +19,6 @@ interface TouchEventWithPrevY extends TouchEvent {
 const usePageScroll = ({
   sections,
   initialSection = 0,
-  isActive,
 }: UsePageScrollOptions) => {
   const [currentSection, setCurrentSection] = useState(initialSection);
   const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
@@ -44,12 +48,6 @@ const usePageScroll = ({
         setCurrentSection((prev) => prev + 1);
       } else if (delta < 0 && currentSection > 0) {
         setCurrentSection((prev) => prev - 1);
-      } else if (currentSection === 0) {
-        // 첫번째 sections에서 위로 스크롤할 때
-        window.scrollTo({
-          top: window.innerHeight * 1.9, // Hero 섹션으로 이동시킴
-          behavior: 'smooth', // 부드럽게 스크롤
-        });
       }
 
       scrollTimeout.current = setTimeout(() => {
@@ -65,8 +63,6 @@ const usePageScroll = ({
   }, []);
 
   useEffect(() => {
-    if (!isActive) return; // ContentsSection이 화면에 있지 않으면 실행 안 함
-
     window.addEventListener('wheel', handleScroll, { passive: false });
     window.addEventListener('touchmove', handleScroll, { passive: false });
     window.addEventListener('touchstart', handleTouchStart);
@@ -76,10 +72,9 @@ const usePageScroll = ({
       window.removeEventListener('touchmove', handleScroll);
       window.removeEventListener('touchstart', handleTouchStart);
     };
-  }, [handleScroll, handleTouchStart, isActive]);
+  }, [handleScroll, handleTouchStart]);
 
   useEffect(() => {
-    if (!isActive) return; // ContentsSection이 화면에 있지 않으면 실행 안 함
     const handleHashChange = () => {
       const hash = window.location.hash.slice(1);
       const index = sections.findIndex((section) => section.id === hash);
@@ -92,21 +87,11 @@ const usePageScroll = ({
     handleHashChange();
 
     return () => window.removeEventListener('hashchange', handleHashChange);
-  }, [sections, isActive]);
+  }, [sections]);
 
   useEffect(() => {
-    if (isActive) {
-      window.location.hash = sections[currentSection].id;
-      // 스크롤을 맨 밑으로 내려서 Hero 섹션은 보이지 않게 함
-      window.scrollTo({
-        top: document.body.scrollHeight, // 전체 문서의 높이로 스크롤 이동
-        behavior: 'smooth', // 부드럽게 스크롤
-      });
-    } else {
-      // hero 섹션일 때는 hash를 hero로 변경
-      window.location.hash = 'hero';
-    }
-  }, [currentSection, sections, isActive]);
+    window.location.hash = sections[currentSection].id;
+  }, [currentSection, sections]);
 
   return { currentSection };
 };

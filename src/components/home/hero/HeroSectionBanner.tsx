@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { motion, useAnimation, useScroll } from 'framer-motion';
 import { SlArrowDown } from 'react-icons/sl';
 
-import heroImg from '@/assets/home/hero/hero_banner.jpg';
+import heroImg from '@/assets/images/home/hero_banner.jpg';
 
 const HeroSectionBanner = () => {
   const bannerControls = useAnimation();
@@ -33,7 +33,8 @@ const HeroSectionBanner = () => {
     };
 
     scrollYProgress.on('change', handleScroll);
-  }, [scrollYProgress, bannerControls, arrowControls]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [scrollYProgress, bannerControls]);
 
   return (
     <section className="relative h-screen">
