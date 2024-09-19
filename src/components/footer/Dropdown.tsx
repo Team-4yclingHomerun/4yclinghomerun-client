@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaChevronDown } from 'react-icons/fa';
 
 import DropdownItem from './DropdownItem';
-import { Button } from '@/ui/button/button';
+import { Button } from '@/components/common/ui/button/button';
 import { DropdownItems } from '@/mocks/home/FooterDropdownItemList';
 
 const Dropdown = () => {

@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 
 import { motion, useAnimation, useInView } from 'framer-motion';
 
-import winningKt from '@/assets/images/home/winning_kt.webp';
+import winningKt from '@/assets/home/hero/winning_kt.webp';
 
 const HeroSectionBranding = () => {
   const controls = useAnimation();
@@ -15,11 +15,10 @@ const HeroSectionBranding = () => {
     } else {
       controls.start({ opacity: 1 });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isInView]);
+  }, [isInView, controls]);
 
   return (
-    <section className="relative h-screen">
+    <section className="relative flex h-screen items-center justify-center">
       <motion.img
         ref={ref}
         src={winningKt}

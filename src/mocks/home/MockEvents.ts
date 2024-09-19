@@ -8,7 +8,7 @@ const MockEvents: TEvents[] = [
     kategorie: 'default',
     description:
       '안녕하세요, kt wiz 야구단입니다. 2024 정규리그 홈경기 운영 안내드리며, 원활한 정규시즌 경기 관람을 위해 공지 내 내용을 확인 부탁드립니다.',
-    bannerUrl: '/src/assets/images/home/Background_WinningKT.png',
+    bannerUrl: '/src/assets/home/event/Background_WinningKT.png',
     linkUrl: 'https://www.ktwiz.co.kr/media/wizpress/184875',
   },
   {
@@ -18,7 +18,7 @@ const MockEvents: TEvents[] = [
     kategorie: 'important',
     description:
       '16일(목) 정부가 발표한 방역대응 비상조치에 포함된 ‘대규모 행사, 집회의 방역수칙 강화’에 따라 오는 19일(일) 열릴 예정이었던 ‘V1 팬 페스티벌’ 행사가 취소됐습니다. 금일 예정되었던 V1 페스티벌 선착순 신청 모집도 취소될 예정입니다. 참고 부탁드립니다. 감사합니다.',
-    bannerUrl: '/src/assets/images/home/Background_WinningKT.png',
+    bannerUrl: '/src/assets/home/event/Background_WinningKT.png',
     linkUrl:
       'https://www.ktwiz.co.kr/media/wizpress/165996?search.searchWord=%EC%B7%A8%EC%86%8C&search.sort=100',
   },

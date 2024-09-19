@@ -24,5 +24,28 @@ export const KT_COMMERCE_URL = 'https://www.ktcommerce.co.kr/login.jsp';
 export const KT_DW_URL = 'https://www.ktdw.co.kr/';
 export const KT_RECRUIT_URL = 'https://recruit.kt.com/';
 export const KT_PARTNER_URL = 'https://partner.kt.com/';
+export const KT_WIZ_STORE_URL = 'https://www.ktwizstore.co.kr/';
 
 export const LOGO_URL = '/src/assets/images/logo/KTwiz_logo.svg';
+
+export const ROUTER_PATH = {
+  HOME: '/',
+  INTRODUCE: '/introduce',
+  INTRODUCE_ABOUT: '/introduce/about',
+  INTRODUCE_HISTORY: '/introduce/history',
+  WIZ_PARK: '/wiz-park',
+  DIRECTION: '/direction',
+  GAME: '/game',
+  PLAYER: '/player',
+  NEWS: '/news',
+  LOGIN: '/login',
+  SIGNUP: '/signup',
+  COACH: '/player/coach',
+  PITCHER: '/player/pitcher',
+  HITTER: '/player/hitter',
+  CHEER: '/player/cheer',
+  SCHEDULE: '/game/schedule',
+  BOXSCORE: '/game/boxscore',
+  RANKING: '/game/ranking',
+  WATCHPOINT: '/game/watchpoint',
+};

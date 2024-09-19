@@ -1,44 +1,8 @@
-/* custom arrow */
-.custom-arrow {
-  position: absolute;
-  top: 40%;
-  transform: translateY(-50%);
-  width: 30px;
-  height: 30px;
-  cursor: pointer;
-  z-index: 1;
-}
-
-.custom-arrow::before {
-  content: '';
-  width: 30px;
-  height: 30px;
-  display: block;
-  border-top: 4px solid black;
-  border-right: 4px solid black;
-}
-
-.custom-prev-arrow {
-  left: 30px;
-}
-
-.custom-next-arrow {
-  right: 30px;
-}
-
-.custom-prev-arrow::before {
-  transform: rotate(-135deg);
-}
-
-.custom-next-arrow::before {
-  transform: rotate(45deg);
-}
-
 /* custom dots */
 .custom-dots {
   display: flex !important;
   justify-content: space-between;
-  bottom: -25px;
+  bottom: -20px;
   width: 100%;
   padding: 0;
   margin: 0;
@@ -49,10 +13,6 @@
   width: 23%;
   padding: 10px;
   cursor: pointer;
-}
-
-.custom-dots img {
-  max-height: 100%;
 }
 
 .custom-dots li.slick-active .container {
