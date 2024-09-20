@@ -38,7 +38,7 @@ const CheerPage = () => {
     const sanitizedSearchTerm = searchTerm.replace(/\s+/g, '');
 
     const results = (cheerData as TCheer[]).filter((items) =>
-      items.leaderNickName.includes(sanitizedSearchTerm),
+      items.leaderName.includes(sanitizedSearchTerm),
     );
     setFilteredSearch(results);
     setSearchTerm('');

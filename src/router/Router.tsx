@@ -11,7 +11,6 @@ import NewsPage from '@/pages/news/NewsPage';
 import LoginPage from '@/pages/LoginPage';
 import SingupPage from '@/pages/SignupPage';
 import { ROUTER_PATH } from '@/constants/constant';
-import CoachPage from '@/pages/Player/CoachPage';
 import PitcherPage from '@/pages/Player/PitcherPage';
 import HitterPage from '@/pages/Player/HitterPage';
 import CheerPage from '@/pages/Player/CheerPage';
@@ -22,6 +21,8 @@ import BoxScorePage from '@/pages/Game/BoxScorePage';
 import RankingPage from '@/pages/Game/RankingPage';
 import WatchPointPage from '@/pages/Game/WatchPointPage';
 import NewsDetailPage from '@/pages/news/NewsDetailPage';
+import CoachPage from '@/pages/Player/coach/CoachPage';
+import CoachDetailPage from '@/pages/Player/coach/CoachDetailPage';
 
 const Router = () => {
   const {
@@ -58,6 +59,7 @@ const Router = () => {
           element: <PlayerPage />,
           children: [
             { path: 'coach', element: <CoachPage /> },
+            { path: 'coach/detail/:pcode', element: <CoachDetailPage /> },
             { path: 'pitcher', element: <PitcherPage /> },
             { path: 'hitter', element: <HitterPage /> },
             { path: 'cheer', element: <CheerPage /> },

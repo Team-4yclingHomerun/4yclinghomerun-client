@@ -70,3 +70,26 @@ export type TCheer = {
   webviewDetailImgPath: string; // 웹뷰 상세 이미지 경로
   webviewListImgPath: string; // 웹뷰 리스트 이미지 경로
 };
+
+export type TCoachDetail = {
+  backnum: string;
+  birth: string;
+  career: string;
+  career2: string;
+  engName: string;
+  gyear: string;
+  height: string;
+  heightWeight: string;
+  hittype: string;
+  mobilePlayerImg1: string;
+  mobilePlayerImg2: string;
+  pcode: string;
+  playerName: string;
+  playerPrvwImg: string;
+  playerPrvwImg2: string;
+  playerPrvwImg3: string;
+  position: string;
+  teamCode: string;
+  teamName: string;
+  weight: string;
+};
