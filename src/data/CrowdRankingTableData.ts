@@ -1,6 +1,6 @@
 import { createColumnHelper, ColumnDef } from '@tanstack/react-table';
 
-import { TCrowdRankingTable } from '@/types/GameCrowdRanking';
+import { TCrowdRankingTable } from '@/types/CrowdRanking';
 
 const columnHelper = createColumnHelper<TCrowdRankingTable>();
 

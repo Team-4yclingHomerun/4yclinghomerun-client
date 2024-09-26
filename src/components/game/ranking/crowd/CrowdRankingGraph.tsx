@@ -1,11 +1,11 @@
 import { ResponsiveBar } from '@nivo/bar';
 
-import { TCrowdRankingData } from '@/types/GameCrowdRanking';
+import { TCrowdRankingData } from '@/types/CrowdRanking';
 import { GraphCommonProperties } from '@/data/GraphProperties';
 import { getGraphMaxValue } from '@/utils/parseNumber';
 import GraphTooltipCrowdRank from './GraphTooltipCrowdRank';
 
-const GameCrowdRankingGraph = ({
+const CrowdRankingGraph = ({
   graphInfo,
 }: {
   graphInfo: TCrowdRankingData[];
@@ -37,4 +37,4 @@ const GameCrowdRankingGraph = ({
     />
   );
 };
-export default GameCrowdRankingGraph;
+export default CrowdRankingGraph;

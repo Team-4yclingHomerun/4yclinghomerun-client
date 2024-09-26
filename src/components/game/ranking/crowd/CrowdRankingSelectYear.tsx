@@ -3,10 +3,10 @@ import {
   MdOutlineArrowForwardIos,
 } from 'react-icons/md';
 
-import { TCrowdRankingSelectYearProps } from '@/types/GameCrowdRanking';
+import { TCrowdRankingSelectYearProps } from '@/types/CrowdRanking';
 import { cn } from '@/utils/cn';
 
-const GameCrowdRankingSelectYear = ({
+const CrowdRankingSelectYear = ({
   selectedYear,
   isOpenSelectYears,
   years,
@@ -63,4 +63,4 @@ const GameCrowdRankingSelectYear = ({
     </div>
   );
 };
-export default GameCrowdRankingSelectYear;
+export default CrowdRankingSelectYear;

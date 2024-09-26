@@ -6,9 +6,9 @@ import {
   APICrowdRankingData,
   TCrowdRankingData,
   TCrowdRankingTable,
-} from '@/types/GameCrowdRanking';
-import GameCrowdRankingGraph from '@/components/game/ranking/crowd/GameCrowdRankingGraph';
-import GameCrowdRankingSelectYear from '@/components/game/ranking/crowd/GameCrowdRankingSelectYear';
+} from '@/types/CrowdRanking';
+import CrowdRankingGraph from '@/components/game/ranking/crowd/CrowdRankingGraph';
+import CrowdRankingSelectYear from '@/components/game/ranking/crowd/CrowdRankingSelectYear';
 import GameRankingTable from '@/components/game/ranking/GameRankingTable';
 import { crowdRankingColumns } from '@/data/CrowdRankingTableData';
 
@@ -21,7 +21,7 @@ const CrowdRankingPage = () => {
   const [tableInfo, setTableInfo] = useState<TCrowdRankingTable[]>([]);
 
   const {
-    data: GameCrowdRankingTotalData,
+    data: CrowdRankingTotalData,
     delayLoading,
     isError,
     error,
@@ -34,8 +34,8 @@ const CrowdRankingPage = () => {
   });
 
   useEffect(() => {
-    if (Array.isArray(GameCrowdRankingTotalData)) {
-      const sortedList = GameCrowdRankingTotalData.sort(
+    if (Array.isArray(CrowdRankingTotalData)) {
+      const sortedList = CrowdRankingTotalData.sort(
         (a, b) => b.crowd - a.crowd,
       );
 
@@ -46,7 +46,7 @@ const CrowdRankingPage = () => {
         })),
       );
     }
-  }, [GameCrowdRankingTotalData]);
+  }, [CrowdRankingTotalData]);
 
   useEffect(() => {
     const generatedYears: number[] = [];
@@ -75,13 +75,13 @@ const CrowdRankingPage = () => {
     setIsOpenSelectYears((isOpenSelectYears) => !isOpenSelectYears);
   };
 
-  if (isError || !Array.isArray(GameCrowdRankingTotalData)) {
+  if (isError || !Array.isArray(CrowdRankingTotalData)) {
     return <p>Error: {error}</p>;
   }
 
   return (
     <div className="flex flex-col gap-10">
-      <GameCrowdRankingSelectYear
+      <CrowdRankingSelectYear
         selectedYear={selectedYear}
         isOpenSelectYears={isOpenSelectYears}
         years={years}
@@ -95,7 +95,7 @@ const CrowdRankingPage = () => {
         height="h-[50vh]"
         type="graph"
       >
-        <GameCrowdRankingGraph graphInfo={GameCrowdRankingTotalData} />
+        <CrowdRankingGraph graphInfo={CrowdRankingTotalData} />
       </GameRankingSectionFrame>
       <GameRankingTable<TCrowdRankingTable>
         title={`${selectedYear} 시즌 관중`}
