@@ -1,25 +1,22 @@
-import { useAxios } from '@/hooks/useAxios';
-import { TCoachDetail } from '@/types/player';
 import { useParams } from 'react-router-dom';
 
-interface TCoachDetailResponse {
-  data: {
-    coachsetp: TCoachDetail;
-  };
-}
+import { useAxios } from '@/hooks/useAxios';
+import { ICoachDetailReponse, TProfile } from '@/types/player';
+
+import ErrorBoundary from '@/components/error/ErrorBoundary';
+import DetailSkeleton from '@/components/player/common/DetailSkeleton';
+import ProfileError from '@/components/player/common/ProfileError';
+import Profile from '@/components/player/common/Profile';
 
 const CoachDetailPage = () => {
   const { id } = useParams();
 
-  const { data, isLoading, isError } = useAxios<
-    TCoachDetailResponse,
-    TCoachDetail
-  >({
+  const { data, isLoading, isError } = useAxios<ICoachDetailReponse>({
     method: 'GET',
-    url: `/player/coachdetail?pcode=89620`,
+    url: `/player/coachdetail?pcode=${id}`,
     initialData: {
       data: {
-        coachsetp: {
+        coachstep: {
           backnum: '',
           birth: '',
           career: '',
@@ -44,10 +41,24 @@ const CoachDetailPage = () => {
       },
     },
     shouldFetchOnMount: true,
-    processData: (data: TCoachDetailResponse) => data.data.coachsetp,
   });
 
-  console.log(data, id);
-  return <div>CoachDetailPage</div>;
+  const { coachstep } = data.data;
+
+  return (
+    <>
+      {isLoading ? (
+        <DetailSkeleton />
+      ) : (
+        <ErrorBoundary fallback={<ProfileError />}>
+          <Profile
+            items={coachstep as TProfile}
+            isError={isError}
+            type="coach"
+          />
+        </ErrorBoundary>
+      )}
+    </>
+  );
 };
 export default CoachDetailPage;

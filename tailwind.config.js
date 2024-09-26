@@ -14,6 +14,25 @@ export default {
             'background-position': 'right center',
           },
         },
+        fadein: {
+          '0%': {
+            opacity: '0',
+            transform: 'translateY(100px)',
+          },
+          '100%': {
+            opacity: '1',
+            transform: 'translateY(0)',
+          },
+        },
+        fadeout: {
+          '0%': {
+            opacity: '1',
+          },
+          '100%': {
+            opacity: '0',
+            transform: 'translateY(-20px)',
+          },
+        },
       },
       colors: {
         'kt-black-1': '#010101',
@@ -32,6 +51,8 @@ export default {
     },
     animation: {
       gradient: 'gradient 3s ease infinite',
+      fadein: 'fadein 0.5s',
+      fadeout: 'fadeout 1s',
     },
   },
   plugins: [],

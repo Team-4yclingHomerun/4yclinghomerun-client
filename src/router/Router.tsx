@@ -6,14 +6,12 @@ import IntroductionPage from '@/pages/Introduction/IntroductionPage';
 import WizParkPage from '@/pages/WizParkPage';
 import DirectionPage from '@/pages/DirectionPage';
 import GamePage from '@/pages/Game/GamePage';
-import PlayerPage from '@/pages/PlayerPage';
+import PlayerPage from '@/pages/player/PlayerPage';
 import NewsPage from '@/pages/news/NewsPage';
 import LoginPage from '@/pages/LoginPage';
 import SingupPage from '@/pages/SignupPage';
 import { ROUTER_PATH } from '@/constants/constant';
-import PitcherPage from '@/pages/Player/PitcherPage';
-import HitterPage from '@/pages/Player/HitterPage';
-import CheerPage from '@/pages/Player/CheerPage';
+
 import IntroductionClub from '@/pages/Introduction/IntroductionClub';
 import IntroductionHistory from '@/pages/Introduction/IntroductionHistory';
 import SchedulePage from '@/pages/Game/SchedulePage';
@@ -21,8 +19,14 @@ import BoxScorePage from '@/pages/Game/BoxScorePage';
 import RankingPage from '@/pages/Game/RankingPage';
 import WatchPointPage from '@/pages/Game/WatchPointPage';
 import NewsDetailPage from '@/pages/news/NewsDetailPage';
-import CoachPage from '@/pages/Player/coach/CoachPage';
-import CoachDetailPage from '@/pages/Player/coach/CoachDetailPage';
+import CoachPage from '@/pages/player/coach/CoachPage';
+import CoachDetailPage from '@/pages/player/coach/CoachDetailPage';
+import PitcherPage from '@/pages/player/pitcher/PitcherPage';
+import PitcherDetailPage from '@/pages/player/pitcher/PitcherDetailPage';
+import HitterPage from '@/pages/player/hitter/HitterPage';
+import CheerPage from '@/pages/player/cheer/CheerPage';
+import HitterDetailPage from '@/pages/player/hitter/HitterDetailPage';
+import CheerDetailPage from '@/pages/player/cheer/CheerDetailPage';
 
 const Router = () => {
   const {
@@ -59,10 +63,13 @@ const Router = () => {
           element: <PlayerPage />,
           children: [
             { path: 'coach', element: <CoachPage /> },
-            { path: 'coach/detail/:pcode', element: <CoachDetailPage /> },
+            { path: 'coach/detail/:id', element: <CoachDetailPage /> },
             { path: 'pitcher', element: <PitcherPage /> },
+            { path: 'pitcher/detail/:id', element: <PitcherDetailPage /> },
             { path: 'hitter', element: <HitterPage /> },
+            { path: 'hitter/detail/:id', element: <HitterDetailPage /> },
             { path: 'cheer', element: <CheerPage /> },
+            { path: 'cheer/detail/:id', element: <CheerDetailPage /> },
           ],
         },
         { path: NEWS, element: <NewsPage /> },
