@@ -8,4 +8,4 @@ export type DetailPageLayoutProps = {
 };
 
 export type DetailPageLayoutWithTabsProps = DetailPageLayoutProps &
-  TabNavigationProps;
+  Partial<TabNavigationProps>;

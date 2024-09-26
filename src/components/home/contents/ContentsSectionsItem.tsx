@@ -1,3 +1,5 @@
+import { forwardRef } from 'react';
+
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
@@ -11,13 +13,13 @@ type ContentsSectionItemProps = {
   currentSection: number;
 };
 
-const ContentsSectionItem = ({
-  section,
-  index,
-  currentSection,
-}: ContentsSectionItemProps) => {
+const ContentsSectionItem = forwardRef<
+  HTMLDivElement,
+  ContentsSectionItemProps
+>(({ section, index, currentSection }, ref) => {
   return (
     <motion.div
+      ref={ref}
       key={section.id}
       variants={sectionVariants}
       initial="hidden"
@@ -29,7 +31,7 @@ const ContentsSectionItem = ({
           : 'hidden'
       }
       className={`w-full bg-black text-4xl font-bold text-white ${
-        section.isFooter ? 'h-[40vh]' : 'h-screen'
+        !section.isFooter && 'h-screen'
       }`}
     >
       {!section.isFooter ? (
@@ -57,6 +59,6 @@ const ContentsSectionItem = ({
       )}
     </motion.div>
   );
-};
+});
 
 export default ContentsSectionItem;

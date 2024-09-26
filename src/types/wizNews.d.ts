@@ -19,17 +19,15 @@ export type TNaverNewsItem = {
 };
 
 export type TWizNewsDetail = {
-  article: {
-    artcContents: string;
-    artcNextSeq: number;
-    artcPrevSeq: number;
-    artcSeq: number;
-    artcTitle: string;
-    imgFilePath: string;
-    regDttm: number;
-    updDttm: number;
-    viewCnt: number;
-  };
+  artcContents: string;
+  artcNextSeq: number;
+  artcPrevSeq: number;
+  artcSeq: number;
+  artcTitle: string;
+  imgFilePath: string;
+  regDttm: number;
+  updDttm: number;
+  viewCnt: number;
 };
 
 export type TNaverNewsDetail = {
@@ -53,3 +51,13 @@ export type TNaverNewsDetail = {
     copyright: string;
   };
 };
+
+export interface APINaverNewsItemList {
+  list: TNaverNewsItem[];
+}
+
+export interface APIWizNewsItemList {
+  data: {
+    list: TWizNewsItem[];
+  };
+}

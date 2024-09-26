@@ -2,6 +2,7 @@ import { useAxios } from '@/hooks/useAxios';
 
 import {
   WatchPointGameScoreType,
+  WatchPointPlayerLineupType,
   WatchPointScheduleType,
   WatchPointTeamRankType,
   WatchPointVsRecordType,
@@ -9,6 +10,8 @@ import {
 
 interface WatchPointData {
   gameScore: WatchPointGameScoreType;
+  homeLineup: WatchPointPlayerLineupType[];
+  visitLineup: WatchPointPlayerLineupType[];
   schedule: {
     current: WatchPointScheduleType;
     next: WatchPointScheduleType;
@@ -24,99 +27,71 @@ interface GetWatchPointResponse {
   data: WatchPointData;
 }
 
-const gameScoreInitialState: WatchPointGameScoreType = {
-  bhomeName: '',
-  displayDate: '',
-  endFlag: '',
-  gameDate: 0,
-  gmKey: '',
-  gtime: '',
-  hOutcome: '',
-  home: '',
-  homeKey: '',
-  homeLogo: '',
-  hpcode: '',
-  hpitcherName: '',
-  hscore: 0,
-  stadium: '',
-  stadiumKey: '',
-  vOutcome: '',
-  visit: '',
-  visitKey: '',
-  visitLogo: '',
-  vpcode: '',
-  vpitcherName: '',
-  vscore: 0,
-};
-
-const scheduleInitialState: WatchPointScheduleType = {
-  broadcast: '',
-  cancelFlag: '',
-  crowdCn: 0,
-  endFlag: '',
-  gameDate: 0,
-  gday: 0,
-  gmkey: '',
-  gmonth: 0,
-  gtime: '',
-  gyear: '',
-  home: '',
-  homeKey: '',
-  hscore: 0,
-  stadium: '',
-  stadiumKey: '',
-  visit: '',
-  visitKey: '',
-  vscore: 0,
-};
-
-const teamRankInitialState: WatchPointTeamRankType = {
-  ab: 0,
-  bra: '',
-  continue1: '',
-  drawn: 0,
-  era: '',
-  lastrank: 0,
-  lose: 0,
-  rank: 0,
-  teamName: '',
-  teamCode: '',
-  win: 0,
-  wra: '',
-  hra: '',
-};
-
-const vsRecordInitialState: WatchPointVsRecordType = {
-  drawn: 0,
-  lose: 0,
-  win: 0,
-  teamCode: '',
-  teamName: '',
-  vsTeamCode: '',
-};
+interface ProcessedWatchPointData {
+  gameScore: WatchPointGameScoreType;
+  schedule: {
+    current: WatchPointScheduleType;
+    next: WatchPointScheduleType | null;
+    prev: WatchPointScheduleType | null;
+  };
+  homeTeam: {
+    lineup: WatchPointPlayerLineupType[];
+    rank: WatchPointTeamRankType;
+    vsRecord: WatchPointVsRecordType;
+  };
+  visitTeam: {
+    lineup: WatchPointPlayerLineupType[];
+    rank: WatchPointTeamRankType;
+    vsRecord: WatchPointVsRecordType;
+  };
+}
 
 const GetWatchPoint = (gameDate: number, gmkey: string) => {
-  const { data, isLoading, isError, error } = useAxios<GetWatchPointResponse>({
+  const processData = (
+    data: GetWatchPointResponse,
+  ): ProcessedWatchPointData => {
+    return {
+      gameScore: data.data.gameScore,
+      schedule: {
+        current: data.data.schedule.current,
+        next: data.data.schedule.next || null,
+        prev: data.data.schedule.prev || null,
+      },
+      homeTeam: {
+        lineup: data.data.homeLineup,
+        rank: data.data.homeTeamRank,
+        vsRecord: data.data.homeTeamWinLose,
+      },
+      visitTeam: {
+        lineup: data.data.visitLineup,
+        rank: data.data.visitTeamRank,
+        vsRecord: data.data.visitTeamWinLose,
+      },
+    };
+  };
+
+  return useAxios<GetWatchPointResponse, ProcessedWatchPointData>({
     method: 'GET',
     url: `/game/watchpoint?gameDate=${gameDate}&gmkey=${gmkey}`,
     initialData: {
       data: {
-        gameScore: gameScoreInitialState,
+        gameScore: {} as WatchPointGameScoreType,
+        homeLineup: [],
+        visitLineup: [],
         schedule: {
-          current: scheduleInitialState,
-          next: scheduleInitialState,
-          prev: scheduleInitialState,
+          current: {} as WatchPointScheduleType,
+          next: {} as WatchPointScheduleType,
+          prev: {} as WatchPointScheduleType,
         },
-        homeTeamRank: teamRankInitialState,
-        visitTeamRank: teamRankInitialState,
-        homeTeamWinLose: vsRecordInitialState,
-        visitTeamWinLose: vsRecordInitialState,
+        homeTeamRank: {} as WatchPointTeamRankType,
+        visitTeamRank: {} as WatchPointTeamRankType,
+        homeTeamWinLose: {} as WatchPointVsRecordType,
+        visitTeamWinLose: {} as WatchPointVsRecordType,
       },
     },
-    shouldFetchOnMount: true,
+    shouldFetchOnMount: !!gameDate || !!gmkey,
+    processData,
   });
-
-  return { data, isLoading, isError, error };
 };
 
 export { GetWatchPoint };

@@ -1,7 +1,7 @@
 import { createColumnHelper, ColumnDef } from '@tanstack/react-table';
 
 import { BoxScoreScoreBoardType } from '@/types/BoxScoreType';
-import { DataTable } from '@/ui/table/DataTable';
+import { DataTable } from '@/components/common/ui/table/DataTable';
 
 type ScoreTableProps = {
   scoreBoard: BoxScoreScoreBoardType[];

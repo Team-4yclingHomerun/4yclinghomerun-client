@@ -6,7 +6,7 @@ const Shop = () => {
   const restItems = shopItems.slice(1);
   return (
     <>
-      <div className="m-auto mt-4 max-w-[1500px]">
+      <div className="m-auto mt-6 max-w-[1500px]">
         {/* 추후 반응형 논의 - xl */}
         <ul className="flex justify-between gap-4 xl:gap-8">
           {/* 메인 아이템 */}

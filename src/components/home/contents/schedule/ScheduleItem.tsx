@@ -6,6 +6,7 @@ import HoverOverlay from '@/components/common/HoverOverlay';
 import { cn } from '@/utils/cn';
 import { KtWizMonthSchedule } from '@/types/ScheduleType';
 import { Button } from '@/components/common/ui/button/button';
+import { GAME_STATUS } from '@/constants/constant';
 
 type ScheduleItemProps = {
   game: KtWizMonthSchedule;
@@ -23,8 +24,8 @@ const ScheduleItem = ({ game, isFirstUpcoming }: ScheduleItemProps) => {
 
   const getGameStatus = () => {
     if (!game.status && isFirstUpcoming) return 'upcoming';
-    if (game.status === '2') return 'playing';
-    if (game.status === '3') return 'finished';
+    if (game.status === GAME_STATUS.PLAYING_NOW) return 'playing';
+    if (game.status === GAME_STATUS.AFTER_GAME) return 'finished';
     return 'scheduled';
   };
 

@@ -1,17 +1,21 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
+import { ROUTER_PATH } from '@/constants/constant';
 import Layout from './Layout';
 import HomePage from '@/pages/HomePage';
 import IntroductionPage from '@/pages/Introduction/IntroductionPage';
-import WizParkPage from '@/pages/WizParkPage';
+import WizParkPage from '@/pages/wiz-park/WizParkPage';
 import DirectionPage from '@/pages/DirectionPage';
 import GamePage from '@/pages/Game/GamePage';
-import PlayerPage from '@/pages/player/PlayerPage';
+import PlayerPage from '@/pages/PlayerPage';
 import NewsPage from '@/pages/news/NewsPage';
 import LoginPage from '@/pages/LoginPage';
 import SingupPage from '@/pages/SignupPage';
 import { ROUTER_PATH } from '@/constants/constant';
-
+import CoachPage from '@/pages/Player/CoachPage';
+import PitcherPage from '@/pages/Player/PitcherPage';
+import HitterPage from '@/pages/Player/HitterPage';
+import CheerPage from '@/pages/Player/CheerPage';
 import IntroductionClub from '@/pages/Introduction/IntroductionClub';
 import IntroductionHistory from '@/pages/Introduction/IntroductionHistory';
 import SchedulePage from '@/pages/Game/SchedulePage';
@@ -19,14 +23,6 @@ import BoxScorePage from '@/pages/Game/BoxScorePage';
 import RankingPage from '@/pages/Game/RankingPage';
 import WatchPointPage from '@/pages/Game/WatchPointPage';
 import NewsDetailPage from '@/pages/news/NewsDetailPage';
-import CoachPage from '@/pages/player/coach/CoachPage';
-import CoachDetailPage from '@/pages/player/coach/CoachDetailPage';
-import PitcherPage from '@/pages/player/pitcher/PitcherPage';
-import PitcherDetailPage from '@/pages/player/pitcher/PitcherDetailPage';
-import HitterPage from '@/pages/player/hitter/HitterPage';
-import CheerPage from '@/pages/player/cheer/CheerPage';
-import HitterDetailPage from '@/pages/player/hitter/HitterDetailPage';
-import CheerDetailPage from '@/pages/player/cheer/CheerDetailPage';
 
 const Router = () => {
   const {
@@ -35,8 +31,15 @@ const Router = () => {
     INTRODUCE_ABOUT,
     INTRODUCE_HISTORY,
     WIZ_PARK,
+    WIZ_PARK_INTRO,
+    WIZ_PARK_GUIDE,
     DIRECTION,
     GAME,
+    GAME_RANKING,
+    GAME_RANKING_TEAM,
+    GAME_RANKING_BATTER,
+    GAME_RANKING_PICHER,
+    GAME_RANKING_CROWND,
     PLAYER,
     NEWS,
     LOGIN,
@@ -55,9 +58,16 @@ const Router = () => {
             { path: INTRODUCE_HISTORY, element: <IntroductionHistory /> },
           ],
         },
-        { path: WIZ_PARK, element: <WizParkPage /> },
+        {
+          path: WIZ_PARK,
+          element: <WizParkPage />,
+          children: [
+            { path: WIZ_PARK_INTRO, element: <WizParkIntro /> },
+            { path: WIZ_PARK_GUIDE, element: <WizParkGuide /> },
+          ],
+        },
         { path: DIRECTION, element: <DirectionPage /> },
-        { path: GAME, element: <GamePage /> },
+        { path: PLAYER, element: <PlayerPage /> },
         {
           path: PLAYER,
           element: <PlayerPage />,
@@ -79,15 +89,26 @@ const Router = () => {
           children: [
             { path: 'schedule', element: <SchedulePage /> },
             { path: 'boxscore', element: <BoxScorePage /> },
-            { path: 'ranking', element: <RankingPage /> },
+            {
+              path: GAME_RANKING,
+              element: <RankingPage />,
+              children: [
+                { path: GAME_RANKING_TEAM, element: <TeamRankingPage /> },
+                { path: GAME_RANKING_PICHER, element: <PlayerRankingPage /> },
+                { path: GAME_RANKING_BATTER, element: <PlayerRankingPage /> },
+                { path: GAME_RANKING_CROWND, element: <CrowdRankingPage /> },
+              ],
+            },
             { path: 'watchpoint', element: <WatchPointPage /> },
           ],
         },
         { path: PLAYER, element: <PlayerPage /> },
         {
-          path: `${NEWS}/*`,
+          path: `${NEWS}/:tab`,
           element: <NewsPage />,
-          children: [{ path: 'detail/:id', element: <NewsDetailPage /> }],
+          children: [
+            { path: `${NEWS}/:tab/detail/:id`, element: <NewsDetailPage /> },
+          ],
         },
         { path: LOGIN, element: <LoginPage /> },
         { path: SIGNUP, element: <SingupPage /> },

@@ -25,6 +25,10 @@ export const KT_DW_URL = 'https://www.ktdw.co.kr/';
 export const KT_RECRUIT_URL = 'https://recruit.kt.com/';
 export const KT_PARTNER_URL = 'https://partner.kt.com/';
 export const KT_WIZ_STORE_URL = 'https://www.ktwizstore.co.kr/';
+export const GAME_STATUS = {
+  PLAYING_NOW: '2',
+  AFTER_GAME: '3',
+};
 
 export const LOGO_URL = '/src/assets/logo/KTwiz_logo.svg';
 
@@ -34,8 +38,15 @@ export const ROUTER_PATH = {
   INTRODUCE_ABOUT: '/introduce/about',
   INTRODUCE_HISTORY: '/introduce/history',
   WIZ_PARK: '/wiz-park',
+  WIZ_PARK_INTRO: '/wiz-park/intro',
+  WIZ_PARK_GUIDE: '/wiz-park/guide',
   DIRECTION: '/direction',
   GAME: '/game',
+  GAME_RANKING: '/game/ranking',
+  GAME_RANKING_TEAM: '/game/ranking/team',
+  GAME_RANKING_PICHER: '/game/ranking/pitcher',
+  GAME_RANKING_BATTER: '/game/ranking/batter',
+  GAME_RANKING_CROWND: '/game/ranking/crowd',
   PLAYER: '/player',
   NEWS: '/news',
   LOGIN: '/login',

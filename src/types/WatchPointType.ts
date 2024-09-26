@@ -94,3 +94,119 @@ export type WatchPointVsRecordType = {
   teamName: string;
   vsTeamCode: string;
 };
+
+// 네이버 선발 투수 정보를 담는 타입
+export type WatchPointPitcherStatType = {
+  bb: number; // 볼넷
+  er: number; // 자책점
+  era: string; // 평균자책점
+  gday: string;
+  hit: number; // 피안타
+  hr: number; // 피홈런
+  inn2: string; // 이닝
+  kk: number; // 탈삼진
+  l: number; // 패
+  s: number; // 세이브
+  teamName: string;
+  teamCode: string;
+  w: number; // 승
+  whip: string; // WHIP
+};
+
+// 네이버 상대 전적 정보를 담는 타입
+export type PitcherStatOnOpponentType = {
+  l: number; // 패
+  s: number; // 세이브
+  w: number; // 승
+  inn: string; // 이닝
+  kk: number; // 탈삼진
+  era: string; // 평균자책점
+  gameCount: number; // 경기수
+  er: number; // 자책점
+};
+
+// 네이버 투수 구종 담는 타입
+export type PitchKindStatType = {
+  type: string;
+  speed: number;
+  pit_rt: number;
+};
+
+// 네이버 선발 투수 정보
+export type PitchInfoType = {
+  backnum: string;
+  birth: string;
+  height: string;
+  hitType: string;
+  name: string;
+  pCode: string;
+  weight: string;
+};
+
+// 네이버 탑플레이어 정보
+export type ToplayerStatType = {
+  ab: number; // 타수
+  gameCount: number; // 경기수
+  gday: string;
+  hit: number; // 안타
+  hr: number; // 홈런
+  hra: string; // 타율
+  obp: number; // 출루율
+  rbi: number; // 타점
+};
+
+// 네이버 탑플레이어 상대 전적 정보
+export type TopPlayerStatOnOpponentType = {
+  hit: number; // 안타
+  hr: number; // 홈런
+  hra: string; // 타율
+};
+
+// 네이버 탑플레이어 선수 정보
+export type TopPlayerInfoType = {
+  backnum: string;
+  birth: string;
+  height: string;
+  hitType: string;
+  name: string;
+  pCode: string;
+  weight: string;
+};
+
+// 네이버 탑플레이어 최근 5경기 스탯
+export type TopPlayerRecentFiveGameStatType = {
+  ab: number; // 타수
+  gameCount: number;
+  hit: number; // 안타
+  hr: number; // 홈런
+  hra: string; // 타율
+  obp: number; // 출루율
+  playerCode: string;
+  playerName: string;
+  rbi: number; // 타점
+};
+
+// 네이버 탑플레이어 핫콜드존 타입
+export type TopPlayerHotColdZoneType = {
+  hra: string;
+  hraStep: string;
+  kk: number;
+  zone: number;
+};
+
+// 네이버 키플레이어 상세 데이터
+export type NaverWatchPointTopPlayerData = {
+  currentSeasonStats: ToplayerStatType;
+  currentSeasonStatsOnOpponents: TopPlayerStatOnOpponentType;
+  playerInfo: TopPlayerInfoType;
+  recentFiveGamesStats: TopPlayerRecentFiveGameStatType;
+  hotColdZone: TopPlayerHotColdZoneType[];
+};
+
+// 네이버 투수 상세 데이터
+export type NaverWatchPointPitcherData = {
+  currentPitKindStats: PitchKindStatType[];
+  currentSeasonStats: WatchPointPitcherStatType;
+  currentSeasonStatsOnOpponents: PitcherStatOnOpponentType;
+  playerInfo: PitchInfoType;
+};

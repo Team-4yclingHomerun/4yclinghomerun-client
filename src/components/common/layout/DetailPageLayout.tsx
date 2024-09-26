@@ -40,7 +40,7 @@ const DetailPageLayout = ({
           alt="topImg"
           className="h-full w-full scale-110 object-cover"
         />
-        <div className="absolute inset-0 bg-black opacity-55"></div>
+        <div className="absolute inset-0 bg-black opacity-75"></div>
       </div>
 
       <div className="relative z-10">
@@ -106,7 +106,7 @@ const DetailPageLayout = ({
             </div>
           </div>
 
-          <div className="bg-black p-4 px-40 text-white">
+          <div className="bg-black px-40 py-28 text-white">
             <div className="h-full">{children}</div>
           </div>
         </motion.div>

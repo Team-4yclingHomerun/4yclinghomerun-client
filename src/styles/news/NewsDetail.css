@@ -1,0 +1,9 @@
+.custom-html * {
+  color: inherit !important;
+  font-family: Pretendard-Regular !important;
+  font-size: 18px !important;
+}
+
+.custom-html img {
+  margin: 4px auto 0 !important;
+}
