@@ -36,14 +36,6 @@ const PlayerPage = () => {
     [navigate],
   );
 
-  if (false) {
-    return (
-      <div>
-        <Outlet />
-      </div>
-    );
-  }
-
   return (
     <>
       <DetailPageLayout
