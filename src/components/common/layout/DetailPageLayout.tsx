@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { MdArrowDownward } from 'react-icons/md';
 
 import Footer from '@/components/footer/Footer';
+import ScrollToTopButton from '../ui/button/ScrollToTopButton';
 import { TabNavigation } from '@/components/common/ui/tab/TabNavigation';
 import { DropTabNavigation } from '@/components/common/ui/tab/DropTabNavigation';
 import { DetailPageLayoutWithTabsProps } from '@/types/DetailPageLayoutType';
@@ -18,21 +19,25 @@ const DetailPageLayout = ({
   onTabChange,
 }: DetailPageLayoutWithTabsProps) => {
   const [showDropdownNav, setShowDropdownNav] = useState(false);
+  const scrollableRef = useRef<HTMLDivElement>(null);
 
   // 스크롤이 일정 위치 이상 내려가면 탭 네비게이션을 보여줌
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      const triggerPosition = window.innerHeight * 0.65;
-      setShowDropdownNav(scrollPosition > triggerPosition);
+      if (scrollableRef.current) {
+        const scrollPosition = scrollableRef.current.scrollTop;
+        const triggerPosition = window.innerHeight * 0.65;
+        setShowDropdownNav(scrollPosition > triggerPosition);
+      }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const currentRef = scrollableRef.current;
+    currentRef?.addEventListener('scroll', handleScroll);
+    return () => currentRef?.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
-    <div className="relative min-h-screen">
+    <div className="relative min-h-screen overflow-hidden">
       {/* 상단 이미지 */}
       <div className="fixed left-0 top-0 h-full w-full">
         <img
@@ -43,7 +48,10 @@ const DetailPageLayout = ({
         <div className="absolute inset-0 bg-black opacity-75"></div>
       </div>
 
-      <div className="relative z-10">
+      <div
+        className="section-scrollble relative z-10 h-screen overflow-y-auto"
+        ref={scrollableRef}
+      >
         {/* 상단 타이틀 */}
         <div className="flex h-[65vh] flex-col items-center justify-center gap-6 pt-20">
           <motion.div
@@ -110,13 +118,14 @@ const DetailPageLayout = ({
             <div className="h-full">{children}</div>
           </div>
         </motion.div>
-      </div>
-      <div className="relative h-44 w-full bg-gradient-to-b from-black via-transparent to-white"></div>
 
-      {/* Footer */}
-      <footer className="relative z-20">
-        <Footer />
-      </footer>
+        <div className="relative h-44 w-full bg-gradient-to-b from-black via-transparent to-white"></div>
+
+        {/* Footer */}
+        <footer className="relative z-20">
+          <Footer />
+        </footer>
+      </div>
 
       {/* 스크롤링 시 탭 네비게이션 */}
       <AnimatePresence>
@@ -136,7 +145,13 @@ const DetailPageLayout = ({
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* 위로 가기 버튼 */}
+      <div className="fixed bottom-10 right-20 z-50">
+        <ScrollToTopButton />
+      </div>
     </div>
   );
 };
+
 export default DetailPageLayout;
