@@ -64,7 +64,9 @@ const NewsDetailPage = () => {
           <span>최종 수정일 : {newsDetail.updDate}</span>
         </div>
         <h1 className="border-b border-kt-white p-3 text-center text-3xl">
-          <span className="max-w-screen-md inline-block">{newsDetail.title}</span>
+          <span className="inline-block max-w-screen-md">
+            {newsDetail.title}
+          </span>
         </h1>
         <p className="p-2 text-center">
           {newsDetail.viewCnt ? (
