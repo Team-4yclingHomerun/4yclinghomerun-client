@@ -1,7 +1,7 @@
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
 import { TPitcherGameRecord } from '@/types/player';
-import { DataTable } from '@/ui/table/DataTable';
+import { DataTable } from '@/components/common/ui/table/DataTable';
 
 const RecentRecordTable = ({ items }: { items: TPitcherGameRecord[] }) => {
   const columnHelper = createColumnHelper<TPitcherGameRecord>();

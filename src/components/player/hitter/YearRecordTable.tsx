@@ -1,7 +1,7 @@
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
 import { THittrtYearRecord } from '@/types/player';
-import { DataTable } from '@/ui/table/DataTable';
+import { DataTable } from '@/components/common/ui/table/DataTable';
 
 const YearRecordTable = ({ items }: { items: THittrtYearRecord[] }) => {
   const columnHelper = createColumnHelper<THittrtYearRecord>();
