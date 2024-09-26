@@ -15,6 +15,7 @@ export type TNaverNewsItem = {
   subContent: string;
   datetime: string;
   thumbnail: string;
+  thumbnail_file: string;
   totalCount: number;
 };
 

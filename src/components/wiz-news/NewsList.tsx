@@ -32,7 +32,7 @@ const NewsList = ({ newsItems, tab }: NewsListProps) => {
       content: isWiz ? stripHtmlTags(news.artcContents) : news.subContent,
       date: isWiz ? formatTimeStamp(news.updDttm) : news.datetime,
       viewCount: isWiz ? news.viewCnt : news.totalCount,
-      imageUrl: isWiz ? news.imgFilePath : news.thumbnail,
+      imageUrl: isWiz ? news.imgFilePath : news.thumbnail_file,
       officeName: isWiz ? null : news.officeName,
     };
   };
