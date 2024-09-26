@@ -189,3 +189,9 @@ export type TPlayerRankingTable =
   | TKTPitcherRankingTable
   | TTotalBatterRankingTable
   | TKTBatterRankingTable;
+
+export type TPlayerRankingColumn =
+  | ColumnDef<TTotalPitcherRankingTable>[]
+  | ColumnDef<TKTPitcherRankingTable>[]
+  | ColumnDef<TTotalBatterRankingTable>[]
+  | ColumnDef<TKTBatterRankingTable>[];

@@ -1,37 +1,31 @@
 import { DataTable } from '@/components/common/ui/table/DataTable';
 import {
-  ktPitcherColumns,
-  totalPitcherColumns,
-} from '@/data/PitcherRankingTableData';
-import {
-  ktBatterColumns,
-  totalBatterColumns,
-} from '@/data/BatterRankingTableData';
-import { TPlayerRankingTable } from '@/types/PlayerRanking';
+  TPlayerRankingColumn,
+  TPlayerRankingTable,
+} from '@/types/PlayerRanking';
 import {
   TKTBatterRankingTable,
   TKTPitcherRankingTable,
   TTotalBatterRankingTable,
   TTotalPitcherRankingTable,
 } from '@/types/PlayerRanking';
+import { ColumnDef } from '@tanstack/react-table';
 
 const PlayerRankingTable = ({
   activeTab,
   tableData,
+  tableColumns,
   isLoading,
   isError,
   error,
 }: {
   activeTab: string;
   tableData: TPlayerRankingTable[];
+  tableColumns: TPlayerRankingColumn;
   isLoading: boolean;
   isError: boolean;
   error: string | null;
 }) => {
-  const isKtHighlighted = (
-    row: TTotalPitcherRankingTable | TTotalBatterRankingTable,
-  ) => row.teamName === 'KT';
-
   if (isError || !Array.isArray(tableData)) {
     return <p>Error: {error}</p>;
   }
@@ -40,10 +34,9 @@ const PlayerRankingTable = ({
       return (
         <DataTable
           data={tableData as TTotalPitcherRankingTable[]}
-          columns={totalPitcherColumns}
+          columns={tableColumns as ColumnDef<TTotalPitcherRankingTable>[]}
           bodyCellClassName="border-b border-gray-600 text-center"
           isLoading={isLoading}
-          highlightCondition={isKtHighlighted}
           enableSorting={true}
           excludeSortingCount={3}
         />
@@ -52,7 +45,7 @@ const PlayerRankingTable = ({
       return (
         <DataTable
           data={tableData as TKTPitcherRankingTable[]}
-          columns={ktPitcherColumns}
+          columns={tableColumns as ColumnDef<TKTPitcherRankingTable>[]}
           bodyCellClassName="border-b border-gray-600 text-center"
           isLoading={isLoading}
           enableSorting={true}
@@ -63,10 +56,9 @@ const PlayerRankingTable = ({
       return (
         <DataTable
           data={tableData as TTotalBatterRankingTable[]}
-          columns={totalBatterColumns}
+          columns={tableColumns as ColumnDef<TTotalBatterRankingTable>[]}
           bodyCellClassName="border-b border-gray-600 text-center"
           isLoading={isLoading}
-          highlightCondition={isKtHighlighted}
           enableSorting={true}
           excludeSortingCount={3}
         />
@@ -75,7 +67,7 @@ const PlayerRankingTable = ({
       return (
         <DataTable
           data={tableData as TKTBatterRankingTable[]}
-          columns={ktBatterColumns}
+          columns={tableColumns as ColumnDef<TKTBatterRankingTable>[]}
           bodyCellClassName="border-b border-gray-600 text-center"
           isLoading={isLoading}
           enableSorting={true}

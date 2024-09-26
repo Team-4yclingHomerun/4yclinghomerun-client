@@ -1,11 +1,14 @@
-import { useLayoutEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 
 import PlayerRankingTabs from '@/components/game/ranking/player/PlayerRankingTabs';
 import SearchInput from '@/components/common/ui/SearchInput';
 import { useAxios } from '@/hooks/useAxios';
 import { TableData } from '@/data/PlayerRankingData';
 import PlayerRankingTable from './PlayerRankingTable';
-import { TPlayerRankingTable } from '@/types/PlayerRanking';
+import {
+  TPlayerRankingColumn,
+  TPlayerRankingTable,
+} from '@/types/PlayerRanking';
 
 const PlayerRankingTableSection = ({
   rankingType,
@@ -19,8 +22,9 @@ const PlayerRankingTableSection = ({
   ]);
   const [apiUrl, setApiUrl] = useState<string>('');
   const [tableData, setTableData] = useState<TPlayerRankingTable[]>([]);
+  const [tableColumns, setTableColumns] = useState<TPlayerRankingColumn>([]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     setActiveTab(`kt wiz ${rankingType}`);
     setTabsList([`kt wiz ${rankingType}`, `전체 ${rankingType} 순위`]);
   }, [rankingType]);
@@ -35,10 +39,10 @@ const PlayerRankingTableSection = ({
   }, [activeTab]);
 
   const {
-    data: PlayerRankingTableData,
-    delayLoading: isPlayerRankingLoaing,
-    isError: isPlayerRankingError,
-    error: PlayerRankingError,
+    data,
+    delayLoading,
+    isError: isError,
+    error,
   } = useAxios<
     { data: { list: TPlayerRankingTable[] } },
     TPlayerRankingTable[]
@@ -51,24 +55,31 @@ const PlayerRankingTableSection = ({
   });
 
   useLayoutEffect(() => {
-    if (Array.isArray(PlayerRankingTableData)) {
-      setTableData(PlayerRankingTableData as TPlayerRankingTable[]);
+    if (Array.isArray(data)) {
+      setTableData(data as TPlayerRankingTable[]);
     }
-  }, [PlayerRankingTableData]);
+    const matchingTable = TableData.find(
+      (table) => table.tableName === activeTab,
+    );
+    if (matchingTable) {
+      setTableColumns(matchingTable.tableColums);
+    }
+    console.log(tableColumns);
+  }, [data]);
 
   const handleActiveTab = (title: string) => {
     setActiveTab(title);
   };
 
-  if (isPlayerRankingError || !Array.isArray(PlayerRankingTableData)) {
-    return <p>Error: {PlayerRankingError}</p>;
+  if (isError || !Array.isArray(data)) {
+    return <p>Error: {error}</p>;
   }
 
   const handleSearch = (searchWord: string) => {
     if (searchWord.length === 0) {
-      setTableData(PlayerRankingTableData);
+      setTableData(data);
     } else {
-      const filterTable = PlayerRankingTableData.filter((item) =>
+      const filterTable = data.filter((item) =>
         item.playerName.includes(searchWord),
       );
       setTableData(filterTable);
@@ -94,9 +105,10 @@ const PlayerRankingTableSection = ({
       <PlayerRankingTable
         activeTab={activeTab}
         tableData={tableData}
-        isLoading={isPlayerRankingLoaing}
-        isError={isPlayerRankingError}
-        error={PlayerRankingError}
+        tableColumns={tableColumns}
+        isLoading={delayLoading}
+        isError={isError}
+        error={error}
       />
     </section>
   );
