@@ -21,6 +21,8 @@ import { teamRankingPitcherColumns } from '@/data/TeamRankingPitcherTableData';
 import { teamRankingYearColumns } from '@/data/TeamRankingYearTableData';
 import { teamRankingBatterColumns } from '@/data/TeamRankingBatterTableData';
 import BarGraphSkeleton from '@/components/game/ranking/BarGraphSkeleton';
+import DataTableSkeleton from '@/components/common/ui/table/DataTableSkeleton';
+import PieGraphSkeleton from '@/components/game/ranking/PieGraphSkeleton';
 
 const TeamRankingPage = () => {
   const { data: TeamRankingGraphData, delayLoading: isGraphLoading } = useAxios<
@@ -77,15 +79,6 @@ const TeamRankingPage = () => {
       data.data.list.filter((item) => item.teamCode === 'KT'),
   });
 
-  if (
-    !Array.isArray(TeamRankingGraphData) ||
-    !Array.isArray(TeamRankingPitcherTableData) ||
-    !Array.isArray(TeamRankingBatterTableData) ||
-    !Array.isArray(TeamRankingYearTableData) ||
-    !Array.isArray(TeamRankingTeamVSTableData)
-  ) {
-    return <p>Error</p>;
-  }
   return (
     <div className="flex flex-col gap-10">
       <GameRankingSectionFrame
@@ -93,36 +86,52 @@ const TeamRankingPage = () => {
         height="h-[50vh]"
         type="graph"
       >
-        {isGraphLoading ? (
+        {isGraphLoading || !Array.isArray(TeamRankingGraphData) ? (
           <BarGraphSkeleton />
         ) : (
           <TeamRankingBarGraph graphInfo={TeamRankingGraphData} />
         )}
       </GameRankingSectionFrame>
-      <GameRankingTable<TTeamRankingYearTable>
-        title="2024 시즌 팀 기록"
-        tableInfo={TeamRankingYearTableData}
-        columns={teamRankingYearColumns}
-        isLoading={isYearTableLoading}
-      />
-      <GameRankingTable<TTeamRankingPitcherTable>
-        title="2024 시즌 팀 투수 기록"
-        tableInfo={TeamRankingPitcherTableData}
-        columns={teamRankingPitcherColumns}
-        isLoading={isPitcherTableLoading}
-      />
-      <GameRankingTable<TTeamRankingBatterTable>
-        title="2024 시즌 팀 타자 기록"
-        tableInfo={TeamRankingBatterTableData}
-        columns={teamRankingBatterColumns}
-        isLoading={isBatterTableLoading}
-      />
+      {!Array.isArray(TeamRankingYearTableData) ? (
+        <DataTableSkeleton />
+      ) : (
+        <GameRankingTable<TTeamRankingYearTable>
+          title="2024 시즌 팀 기록"
+          tableInfo={TeamRankingYearTableData}
+          columns={teamRankingYearColumns}
+          isLoading={isYearTableLoading}
+        />
+      )}
+      {!Array.isArray(TeamRankingPitcherTableData) ? (
+        <DataTableSkeleton />
+      ) : (
+        <GameRankingTable<TTeamRankingPitcherTable>
+          title="2024 시즌 팀 투수 기록"
+          tableInfo={TeamRankingPitcherTableData}
+          columns={teamRankingPitcherColumns}
+          isLoading={isPitcherTableLoading}
+        />
+      )}
+      {!Array.isArray(TeamRankingBatterTableData) ? (
+        <DataTableSkeleton />
+      ) : (
+        <GameRankingTable<TTeamRankingBatterTable>
+          title="2024 시즌 팀 타자 기록"
+          tableInfo={TeamRankingBatterTableData}
+          columns={teamRankingBatterColumns}
+          isLoading={isBatterTableLoading}
+        />
+      )}
       <div>
         <SectionHeading title="2024 시즌 팀 간 승패" />
-        <TeamRankingPieGraphFrame
-          graphInfo={TeamRankingTeamVSTableData}
-          isLoading={isTeamVSTableLoading}
-        />
+        {!Array.isArray(TeamRankingTeamVSTableData) ? (
+          <PieGraphSkeleton />
+        ) : (
+          <TeamRankingPieGraphFrame
+            graphInfo={TeamRankingTeamVSTableData}
+            isLoading={isTeamVSTableLoading}
+          />
+        )}
       </div>
     </div>
   );

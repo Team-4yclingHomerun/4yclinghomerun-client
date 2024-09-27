@@ -76,7 +76,7 @@ const CrowdRankingPage = () => {
     setIsOpenSelectYears((isOpenSelectYears) => !isOpenSelectYears);
   };
 
-  if (isError || !Array.isArray(CrowdRankingTotalData)) {
+  if (isError) {
     return <p>Error: {error}</p>;
   }
 
@@ -96,7 +96,7 @@ const CrowdRankingPage = () => {
         height="h-[50vh]"
         type="graph"
       >
-        {delayLoading ? (
+        {delayLoading || !Array.isArray(CrowdRankingTotalData) ? (
           <BarGraphSkeleton />
         ) : (
           <CrowdRankingGraph graphInfo={CrowdRankingTotalData} />

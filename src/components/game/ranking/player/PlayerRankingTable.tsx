@@ -26,7 +26,7 @@ const PlayerRankingTable = ({
   isError: boolean;
   error: string | null;
 }) => {
-  if (isError || !Array.isArray(tableData)) {
+  if (isError) {
     return <p>Error: {error}</p>;
   }
   switch (activeTab) {
