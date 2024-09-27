@@ -60,7 +60,6 @@ const PlayerRankingTableSection = ({
     if (matchingTable) {
       setTableColumns(matchingTable.tableColums);
     }
-    console.log(tableColumns);
   }, [data]);
 
   const handleActiveTab = (title: string) => {
