@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 
+import { useLocation } from 'react-router-dom';
 import { motion, useAnimation, AnimatePresence } from 'framer-motion';
 import { MdOutlineVerticalAlignTop } from 'react-icons/md';
 
 const ScrollToTopButton = () => {
   const [showButton, setShowButton] = useState(false);
   const controls = useAnimation();
+  const location = useLocation();
 
   // 스크롤이 일정 위치 이상 내려가면 스크롤 버튼을 보여줌
   useEffect(() => {
@@ -45,6 +47,8 @@ const ScrollToTopButton = () => {
     const section = document.querySelector('.section-scrollble');
     section?.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  if (location.pathname === '/introduce/history') return null;
 
   return (
     <AnimatePresence>

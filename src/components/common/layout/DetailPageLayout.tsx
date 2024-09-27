@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 
+import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MdArrowDownward } from 'react-icons/md';
 
@@ -8,6 +9,7 @@ import ScrollToTopButton from '../ui/button/ScrollToTopButton';
 import { TabNavigation } from '@/components/common/ui/tab/TabNavigation';
 import { DropTabNavigation } from '@/components/common/ui/tab/DropTabNavigation';
 import { DetailPageLayoutWithTabsProps } from '@/types/DetailPageLayoutType';
+import { cn } from '@/utils/cn';
 
 const DetailPageLayout = ({
   topImg,
@@ -20,6 +22,7 @@ const DetailPageLayout = ({
 }: DetailPageLayoutWithTabsProps) => {
   const [showDropdownNav, setShowDropdownNav] = useState(false);
   const scrollableRef = useRef<HTMLDivElement>(null);
+  const location = useLocation();
 
   // 스크롤이 일정 위치 이상 내려가면 탭 네비게이션을 보여줌
   useEffect(() => {
@@ -36,8 +39,15 @@ const DetailPageLayout = ({
     return () => currentRef?.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const isHistoryPage = location.pathname === '/introduce/history';
+
   return (
-    <div className="relative min-h-screen overflow-hidden">
+    <div
+      className={cn(
+        'relative min-h-screen',
+        !isHistoryPage && 'overflow-hidden',
+      )}
+    >
       {/* 상단 이미지 */}
       <div className="fixed left-0 top-0 h-full w-full">
         <img
@@ -49,7 +59,10 @@ const DetailPageLayout = ({
       </div>
 
       <div
-        className="section-scrollble relative z-10 h-screen overflow-y-auto"
+        className={cn(
+          'relative z-10',
+          !isHistoryPage && 'section-scrollble h-screen overflow-y-auto',
+        )}
         ref={scrollableRef}
       >
         {/* 상단 타이틀 */}
