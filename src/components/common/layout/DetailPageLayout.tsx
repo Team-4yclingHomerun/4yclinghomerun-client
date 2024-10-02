@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 
 import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -24,6 +24,12 @@ const DetailPageLayout = ({
   const scrollableRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
 
+  const scrollToTop = useCallback(() => {
+    if (scrollableRef.current) {
+      scrollableRef.current.scrollTo(0, 0);
+    }
+  }, []);
+
   // 스크롤이 일정 위치 이상 내려가면 탭 네비게이션을 보여줌
   useEffect(() => {
     const handleScroll = () => {
@@ -38,6 +44,11 @@ const DetailPageLayout = ({
     currentRef?.addEventListener('scroll', handleScroll);
     return () => currentRef?.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // 라우트 변경 시 스크롤 위치 리셋
+  useEffect(() => {
+    scrollToTop();
+  }, [location.pathname, scrollToTop]);
 
   const isHistoryPage = location.pathname === '/introduce/history';
 
