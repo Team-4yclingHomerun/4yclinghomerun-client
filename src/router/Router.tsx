@@ -16,8 +16,6 @@ import IntroductionHistory from '@/pages/Introduction/IntroductionHistory';
 import TeamRankingPage from '@/pages/game/ranking/TeamRankingPage';
 import PlayerRankingPage from '@/pages/game/ranking/PlayerRankingPage';
 import CrowdRankingPage from '@/pages/game/ranking/CrowdRankingPage';
-import RankingPage from '@/pages/game/RankingPage';
-
 import SchedulePage from '@/pages/game/SchedulePage';
 import BoxScorePage from '@/pages/game/BoxScorePage';
 import WatchPointPage from '@/pages/game/WatchPointPage';
@@ -44,7 +42,6 @@ const Router = () => {
     WIZ_PARK_GUIDE,
     DIRECTION,
     GAME,
-    GAME_RANKING,
     GAME_RANKING_TEAM,
     GAME_RANKING_BATTER,
     GAME_RANKING_PICHER,
@@ -83,16 +80,10 @@ const Router = () => {
           children: [
             { path: 'schedule', element: <SchedulePage /> },
             { path: 'boxscore', element: <BoxScorePage /> },
-            {
-              path: GAME_RANKING,
-              element: <RankingPage />,
-              children: [
-                { path: GAME_RANKING_TEAM, element: <TeamRankingPage /> },
-                { path: GAME_RANKING_PICHER, element: <PlayerRankingPage /> },
-                { path: GAME_RANKING_BATTER, element: <PlayerRankingPage /> },
-                { path: GAME_RANKING_CROWND, element: <CrowdRankingPage /> },
-              ],
-            },
+            { path: GAME_RANKING_TEAM, element: <TeamRankingPage /> },
+            { path: GAME_RANKING_PICHER, element: <PlayerRankingPage /> },
+            { path: GAME_RANKING_BATTER, element: <PlayerRankingPage /> },
+            { path: GAME_RANKING_CROWND, element: <CrowdRankingPage /> },
             { path: 'watchpoint', element: <WatchPointPage /> },
           ],
         },

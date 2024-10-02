@@ -6,6 +6,8 @@ const useTabNavigation = ({
   tabs,
   activeTab,
   onTabChange,
+  activeSubTab,
+  onSubTabChange,
 }: TabNavigationProps) => {
   const [navigationStyles, setNavigationStyles] = useState({
     left: 0,
@@ -29,7 +31,14 @@ const useTabNavigation = ({
     onClick: () => onTabChange(index),
   });
 
-  return { navigationStyles, getTabProps, tabs, activeTab };
+  return {
+    navigationStyles,
+    getTabProps,
+    tabs,
+    activeTab,
+    activeSubTab,
+    onSubTabChange,
+  };
 };
 
 export { useTabNavigation };
