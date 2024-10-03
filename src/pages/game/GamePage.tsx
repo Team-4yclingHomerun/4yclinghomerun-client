@@ -47,7 +47,6 @@ const GamePage = () => {
       if (Array.isArray(gameTabs[activeTab].subTab)) {
         setActiveSubTab(subIndex);
         navigate(gameTabs[activeTab].subTab[subIndex].path); // subTab 경로로 이동
-        console.log('test');
       }
     },
     [activeTab, navigate],
