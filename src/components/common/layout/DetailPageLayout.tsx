@@ -158,6 +158,8 @@ const DetailPageLayout = ({
               tabs={tabs}
               activeTab={activeTab}
               onTabChange={onTabChange}
+              activeSubTab={activeSubTab}
+              onSubTabChange={onSubTabChange}
             />
           </motion.div>
         )}
