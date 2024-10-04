@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
 import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -9,7 +9,6 @@ import ScrollToTopButton from '../ui/button/ScrollToTopButton';
 import { TabNavigation } from '@/components/common/ui/tab/TabNavigation';
 import { DropTabNavigation } from '@/components/common/ui/tab/DropTabNavigation';
 import { DetailPageLayoutWithTabsProps } from '@/types/DetailPageLayoutType';
-import { cn } from '@/utils/cn';
 
 const DetailPageLayout = ({
   topImg,
@@ -21,44 +20,35 @@ const DetailPageLayout = ({
   onTabChange,
 }: DetailPageLayoutWithTabsProps) => {
   const [showDropdownNav, setShowDropdownNav] = useState(false);
-  const scrollableRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
 
   const scrollToTop = useCallback(() => {
-    if (scrollableRef.current) {
-      scrollableRef.current.scrollTo(0, 0);
-    }
+    window.scrollTo(0, 0);
   }, []);
 
   // 스크롤이 일정 위치 이상 내려가면 탭 네비게이션을 보여줌
-  useEffect(() => {
-    const handleScroll = () => {
-      if (scrollableRef.current) {
-        const scrollPosition = scrollableRef.current.scrollTop;
-        const triggerPosition = window.innerHeight * 0.65;
-        setShowDropdownNav(scrollPosition > triggerPosition);
-      }
-    };
-
-    const currentRef = scrollableRef.current;
-    currentRef?.addEventListener('scroll', handleScroll);
-    return () => currentRef?.removeEventListener('scroll', handleScroll);
+  const updateDropdownNavVisibility = useCallback(() => {
+    const scrollPosition = window.scrollY;
+    const triggerPosition = window.innerHeight * 0.65;
+    setShowDropdownNav(scrollPosition > triggerPosition);
   }, []);
 
-  // 라우트 변경 시 스크롤 위치 리셋
+  useEffect(() => {
+    const handleScroll = () => {
+      updateDropdownNavVisibility();
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [updateDropdownNavVisibility]);
+
   useEffect(() => {
     scrollToTop();
+    setShowDropdownNav(false);
   }, [location.pathname, scrollToTop]);
 
-  const isHistoryPage = location.pathname === '/introduce/history';
-
   return (
-    <div
-      className={cn(
-        'relative min-h-screen',
-        !isHistoryPage && 'overflow-hidden',
-      )}
-    >
+    <div className="relative min-h-screen">
       {/* 상단 이미지 */}
       <div className="fixed left-0 top-0 h-full w-full">
         <img
@@ -69,13 +59,7 @@ const DetailPageLayout = ({
         <div className="absolute inset-0 bg-black opacity-75"></div>
       </div>
 
-      <div
-        className={cn(
-          'relative z-10',
-          !isHistoryPage && 'section-scrollble h-screen overflow-y-auto',
-        )}
-        ref={scrollableRef}
-      >
+      <div className="relative z-10">
         {/* 상단 타이틀 */}
         <div className="flex h-[65vh] flex-col items-center justify-center gap-6 pt-20">
           <motion.div
@@ -164,7 +148,11 @@ const DetailPageLayout = ({
             <DropTabNavigation
               tabs={tabs}
               activeTab={activeTab}
-              onTabChange={onTabChange}
+              onTabChange={(index) => {
+                onTabChange(index);
+                scrollToTop();
+                setShowDropdownNav(false);
+              }}
             />
           </motion.div>
         )}
