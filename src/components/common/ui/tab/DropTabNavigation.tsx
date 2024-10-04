@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { motion } from 'framer-motion';
 
 import { cn } from '@/utils/cn';
@@ -15,6 +13,8 @@ const DropTabNavigation = (props: TabNavigationProps) => {
     activeTab,
     activeSubTab,
     onSubTabChange,
+    subTabWidth,
+    subTabRefs,
   } = useTabNavigation(props);
 
   const { isViewSubTab, handleTabMouseOver, handleTabMouseOut } =
@@ -27,44 +27,47 @@ const DropTabNavigation = (props: TabNavigationProps) => {
       onMouseOut={handleTabMouseOut}
     >
       {tabs.map((tab, index) => (
-        <React.Fragment key={tab.path}>
-          <button
-            {...getTabProps(index)}
-            className={cn(
-              'relative z-10 px-3 text-sm font-bold transition-colors duration-200',
-              activeTab === index
-                ? 'text-black'
-                : 'font-extrabold text-gray-400 hover:text-gray-200',
-            )}
-          >
-            {tab.name}
-          </button>
-          {activeTab === index && Array.isArray(tab.subTab) && (
-            <motion.div
-              className="absolute left-0 right-0 top-11 flex justify-evenly rounded-full bg-gray-200 py-2"
-              initial={{ opacity: 0, y: -10 }}
-              animate={{
-                opacity: isViewSubTab ? 1 : 0,
-                y: isViewSubTab ? 0 : -10,
-              }}
-              transition={{ duration: 0.3 }}
-            >
-              {tab.subTab.map((subTab, subTabIndex) => (
-                <button
-                  key={subTab.path}
-                  className={cn(
-                    'px-3 text-xs font-extrabold text-gray-400 hover:scale-105',
-                    activeSubTab === subTabIndex && 'scale-105 text-kt-red-2',
-                  )}
-                  onClick={() => onSubTabChange && onSubTabChange(subTabIndex)}
-                >
-                  {subTab.name}
-                </button>
-              ))}
-            </motion.div>
+        <button
+          key={tab.path}
+          {...getTabProps(index)}
+          className={cn(
+            'relative z-10 px-3 text-sm font-bold transition-colors duration-200',
+            activeTab === index
+              ? 'text-black'
+              : 'font-extrabold text-gray-400 hover:text-gray-200',
           )}
-        </React.Fragment>
+        >
+          {tab.name}
+        </button>
       ))}
+      {Array.isArray(tabs[activeTab].subTab) && (
+        <motion.div
+          className="absolute top-11 flex w-fit gap-4 rounded-full bg-gray-200 px-4 py-2"
+          style={{
+            left: `calc(${navigationStyles.left}px - ${subTabWidth / 4 + 16}px)`,
+          }}
+          initial={{ opacity: 0, y: -10 }}
+          animate={{
+            opacity: isViewSubTab ? 1 : 0,
+            y: isViewSubTab ? 0 : -10,
+          }}
+          transition={{ duration: 0.3 }}
+          ref={subTabRefs}
+        >
+          {tabs[activeTab].subTab.map((subTab, subTabIndex) => (
+            <button
+              key={subTab.path}
+              className={cn(
+                'text-xs font-extrabold text-gray-400 hover:scale-105',
+                activeSubTab === subTabIndex && 'scale-105 text-kt-red-2',
+              )}
+              onClick={() => onSubTabChange && onSubTabChange(subTabIndex)}
+            >
+              {subTab.name}
+            </button>
+          ))}
+        </motion.div>
+      )}
 
       <motion.div
         className="absolute bottom-2 top-2 rounded-full bg-gray-200"

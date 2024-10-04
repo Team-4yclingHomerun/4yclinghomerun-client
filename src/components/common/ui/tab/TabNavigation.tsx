@@ -12,6 +12,8 @@ const TabNavigation = (props: TabNavigationProps) => {
     activeTab,
     activeSubTab,
     onSubTabChange,
+    subTabWidth,
+    subTabRefs,
   } = useTabNavigation(props);
 
   return (
@@ -32,7 +34,13 @@ const TabNavigation = (props: TabNavigationProps) => {
             </button>
 
             {activeTab === tabIndex && Array.isArray(tab.subTab) && (
-              <div className="absolute left-16 top-12 mt-2 flex w-full justify-center space-x-4">
+              <div
+                className="absolute top-12 mt-2 flex w-fit justify-center space-x-4"
+                style={{
+                  left: `calc(${navigationStyles.left}px - ${subTabWidth / 4 + 8}px)`,
+                }}
+                ref={subTabRefs}
+              >
                 {tab.subTab.map((subTab, subTabIndex) => (
                   <button
                     key={`${tab.path}-${subTabIndex}`}
