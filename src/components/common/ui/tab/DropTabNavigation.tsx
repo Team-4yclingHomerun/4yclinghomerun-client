@@ -41,7 +41,7 @@ const DropTabNavigation = (props: TabNavigationProps) => {
           </button>
           {activeTab === index && Array.isArray(tab.subTab) && (
             <motion.div
-              className="absolute left-0 right-0 top-12 flex justify-evenly rounded-full bg-gray-200 py-2"
+              className="absolute left-0 right-0 top-11 flex justify-evenly rounded-full bg-gray-200 py-2"
               initial={{ opacity: 0, y: -10 }}
               animate={{
                 opacity: isViewSubTab ? 1 : 0,
@@ -53,7 +53,7 @@ const DropTabNavigation = (props: TabNavigationProps) => {
                 <button
                   key={subTab.path}
                   className={cn(
-                    'px-3 text-sm font-extrabold text-gray-400 hover:scale-105',
+                    'px-3 text-xs font-extrabold text-gray-400 hover:scale-105',
                     activeSubTab === subTabIndex && 'scale-105 text-kt-red-2',
                   )}
                   onClick={() => onSubTabChange && onSubTabChange(subTabIndex)}
