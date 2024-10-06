@@ -27,29 +27,27 @@ const LoginForm = () => {
   };
 
   return (
-    <main className="rounded-md bg-white p-8">
-      <Form onSubmit={onSubmit} handleSubmit={handleSubmit}>
-        <FormField
-          label="아이디"
-          name="id"
-          type="text"
-          register={register}
-          error={errors.id}
-          placeholder="아이디를 입력해주세요."
-        />
-        <FormField
-          label="비밀번호"
-          name="password"
-          type="password"
-          register={register}
-          error={errors.password}
-          placeholder="비밀번호를 입력해주세요."
-        />
-        <Button type="submit" className="w-full rounded-md">
-          로그인
-        </Button>
-      </Form>
-    </main>
+    <Form onSubmit={onSubmit} handleSubmit={handleSubmit}>
+      <FormField
+        label="아이디"
+        name="id"
+        type="text"
+        register={register}
+        error={errors.id}
+        placeholder="아이디를 입력해주세요."
+      />
+      <FormField
+        label="비밀번호"
+        name="password"
+        type="password"
+        register={register}
+        error={errors.password}
+        placeholder="비밀번호를 입력해주세요."
+      />
+      <Button type="submit" className="w-full rounded-md">
+        로그인
+      </Button>
+    </Form>
   );
 };
 
