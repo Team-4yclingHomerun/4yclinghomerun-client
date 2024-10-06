@@ -3,7 +3,6 @@ import { z } from 'zod';
 const defaultValues = {
   email: '',
   nickname: '',
-  name: '',
   id: '',
   password: '',
   passwordConfirm: '',
@@ -19,10 +18,6 @@ const SignupFormSchema = z
       .string()
       .min(3, { message: '닉네임은 3자 이상 입력해주세요.' })
       .max(10, { message: '닉네임은 10자 이하로 입력해주세요.' }),
-    name: z
-      .string()
-      .min(3, { message: '이름을 입력해주세요.' })
-      .max(10, { message: '이름은 10자 이하로 입력해주세요.' }),
     id: z
       .string()
       .min(3, { message: '아이디는 3자 이상 입력해주세요.' })
