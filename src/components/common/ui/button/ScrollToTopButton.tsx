@@ -1,19 +1,16 @@
 import { useState, useEffect } from 'react';
 
-import { useLocation } from 'react-router-dom';
 import { motion, useAnimation, AnimatePresence } from 'framer-motion';
 import { MdOutlineVerticalAlignTop } from 'react-icons/md';
 
 const ScrollToTopButton = () => {
   const [showButton, setShowButton] = useState(false);
   const controls = useAnimation();
-  const location = useLocation();
 
   // 스크롤이 일정 위치 이상 내려가면 스크롤 버튼을 보여줌
   useEffect(() => {
     const handleScroll = () => {
-      const section = document.querySelector('.section-scrollble');
-      if (section && section.scrollTop > 200) {
+      if (window.scrollY > 200) {
         setShowButton(true);
       } else {
         setShowButton(false);
@@ -21,10 +18,9 @@ const ScrollToTopButton = () => {
     };
 
     // 스크롤 이벤트 등록
-    const section = document.querySelector('.section-scrollble');
-    section?.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll);
     return () => {
-      section?.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
@@ -44,11 +40,8 @@ const ScrollToTopButton = () => {
 
   // 스크롤 버튼 클릭 시 상단으로 이동
   const scrollToTop = () => {
-    const section = document.querySelector('.section-scrollble');
-    section?.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-
-  if (location.pathname === '/introduce/history') return null;
 
   return (
     <AnimatePresence>
