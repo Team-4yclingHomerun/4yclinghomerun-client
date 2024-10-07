@@ -18,6 +18,8 @@ const DetailPageLayout = ({
   tabs,
   activeTab,
   onTabChange,
+  activeSubTab,
+  onSubTabChange,
 }: DetailPageLayoutWithTabsProps) => {
   const [showDropdownNav, setShowDropdownNav] = useState(false);
   const location = useLocation();
@@ -116,6 +118,8 @@ const DetailPageLayout = ({
                     tabs={tabs}
                     activeTab={activeTab}
                     onTabChange={onTabChange}
+                    activeSubTab={activeSubTab}
+                    onSubTabChange={onSubTabChange}
                   />
                 </motion.div>
               )}
@@ -153,6 +157,8 @@ const DetailPageLayout = ({
                 scrollToTop();
                 setShowDropdownNav(false);
               }}
+              activeSubTab={activeSubTab}
+              onSubTabChange={onSubTabChange}
             />
           </motion.div>
         )}
