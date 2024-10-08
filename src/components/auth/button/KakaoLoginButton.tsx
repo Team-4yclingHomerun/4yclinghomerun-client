@@ -4,7 +4,7 @@ import { Button } from '@/components/common/ui/button/button';
 
 const KakaoLoginButton = () => {
   const K_REST_API_KEY = import.meta.env.VITE_KAKAO_REST_API;
-  const K_REDIRECT_URI = 'http://localhost:5173/auth';
+  const K_REDIRECT_URI = import.meta.env.VITE_KAKAO_OAUTH_REDIRECT_URI;
   const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${K_REST_API_KEY}&redirect_uri=${K_REDIRECT_URI}&response_type=code`;
 
   const handleKakaoLogin = () => {

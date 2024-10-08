@@ -32,6 +32,8 @@ import CheerPage from '@/pages/player/cheer/CheerPage';
 import CheerDetailPage from '@/pages/player/cheer/CheerDetailPage';
 import CoachPage from '@/pages/player/coach/CoachPage';
 import CoachDetailPage from '@/pages/player/coach/CoachDetailPage';
+import GoogleOAuthHandler from '@/components/auth/common/GoogleAuthHandler';
+import KakaoOAuthHandler from '@/components/auth/common/KakaoAuthHandler';
 
 const Router = () => {
   const {
@@ -53,6 +55,8 @@ const Router = () => {
     NEWS,
     LOGIN,
     SIGNUP,
+    GOOGLE_OAUTH,
+    KAKAO_OAUTH,
   } = ROUTER_PATH;
   const router = createBrowserRouter([
     {
@@ -119,6 +123,8 @@ const Router = () => {
         },
         { path: LOGIN, element: <LoginPage /> },
         { path: SIGNUP, element: <SingupPage /> },
+        { path: GOOGLE_OAUTH, element: <GoogleOAuthHandler /> },
+        { path: KAKAO_OAUTH, element: <KakaoOAuthHandler /> },
       ],
     },
   ]);
