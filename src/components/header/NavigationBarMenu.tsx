@@ -1,8 +1,9 @@
-import { ROUTER_PATH } from '@/constants/constant';
 import { NavLink } from 'react-router-dom';
 
+import { ROUTER_PATH } from '@/constants/constant';
+
 const NavigationBarMenu = () => {
-  const { INTRODUCE, WIZ_PARK, DIRECTION, GAME, PLAYER, NEWS } = ROUTER_PATH;
+  const { INTRODUCE, WIZ_PARK, GAME, PLAYER, NEWS, COMMUNITY } = ROUTER_PATH;
 
   const activeStyle = 'text-rose-500 duration-200 transition-all';
 
@@ -35,21 +36,6 @@ const NavigationBarMenu = () => {
         </li>
         <li>
           <NavLink
-            to={DIRECTION}
-            className={({ isActive }) =>
-              isActive
-                ? activeStyle
-                : 'transition-all duration-200 hover:text-rose-400'
-            }
-          >
-            DIRECTION
-          </NavLink>
-        </li>
-      </ul>
-      <div className="w-60" />
-      <ul className="flex w-1/2 justify-between">
-        <li>
-          <NavLink
             to={GAME}
             className={({ isActive }) =>
               isActive
@@ -58,6 +44,21 @@ const NavigationBarMenu = () => {
             }
           >
             GAME
+          </NavLink>
+        </li>
+      </ul>
+      <div className="w-60" />
+      <ul className="flex w-1/2 justify-between">
+        <li>
+          <NavLink
+            to={COMMUNITY}
+            className={({ isActive }) =>
+              isActive
+                ? activeStyle
+                : 'transition-all duration-200 hover:text-rose-400'
+            }
+          >
+            COMMUNITY
           </NavLink>
         </li>
         <li>
