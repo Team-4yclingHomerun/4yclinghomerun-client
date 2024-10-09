@@ -59,4 +59,6 @@ export const ROUTER_PATH = {
   BOXSCORE: '/game/boxscore',
   RANKING: '/game/ranking',
   WATCHPOINT: '/game/watchpoint',
+  GOOGLE_OAUTH: '/oauth/google',
+  KAKAO_OAUTH: '/oauth/kakao',
 };
