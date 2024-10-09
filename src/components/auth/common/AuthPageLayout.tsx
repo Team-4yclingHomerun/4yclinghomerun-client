@@ -38,14 +38,13 @@ const AuthPageLayout = ({ children, to }: AuthPageLayoutProps) => {
             {isLoginPage ? '로그인' : '회원가입'}
           </h2>
           {children}
-          <Link
-            to={to}
-            className="mt-4 block text-center text-sm text-blue-500 hover:text-blue-700"
-          >
-            {isLoginPage
-              ? '아직 회원이 아니신가요? 회원가입하기'
-              : '이미 회원이신가요? 로그인하기'}
-          </Link>
+          <div className="mt-4 block text-center text-sm text-blue-500 hover:text-blue-700">
+            <Link to={to}>
+              {isLoginPage
+                ? '아직 회원이 아니신가요? 회원가입하기'
+                : '이미 회원이신가요? 로그인하기'}
+            </Link>
+          </div>
         </section>
       </main>
     </div>

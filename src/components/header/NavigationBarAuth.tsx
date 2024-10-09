@@ -1,21 +1,23 @@
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+
+import { cn } from '@/utils/cn';
 
 const NavigationBarAuth = () => {
   return (
-    <div className="flex w-40 justify-end">
-      <ul className="flex gap-4">
-        <li>
-          <Link to="/login">LOGIN</Link>
-        </li>
-        <li>
-          <Link
-            to="/signup"
-            className="rounded-md border border-white px-2 py-1 text-white transition-all duration-200 hover:bg-white hover:text-red-800"
-          >
-            JOIN US
-          </Link>
-        </li>
-      </ul>
+    <div className="absolute right-6 top-6">
+      <NavLink
+        to="/login"
+        className={({ isActive }) =>
+          cn(
+            'rounded-md border border-white px-2 py-1.5 text-lg font-extrabold transition-colors duration-300',
+            isActive
+              ? 'bg-white text-red-800 hover:border hover:border-white hover:bg-transparent hover:text-white'
+              : 'hover:border hover:border-white hover:bg-white hover:text-red-800',
+          )
+        }
+      >
+        LOGIN
+      </NavLink>
     </div>
   );
 };

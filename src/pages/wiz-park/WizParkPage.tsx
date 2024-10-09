@@ -6,7 +6,7 @@ import DetailPageLayout from '@/components/common/layout/DetailPageLayout';
 import { ROUTER_PATH } from '@/constants/constant';
 import topImg from '@/assets/game/top_img.webp';
 
-const { WIZ_PARK_INTRO, WIZ_PARK_GUIDE } = ROUTER_PATH;
+const { WIZ_PARK_INTRO, WIZ_PARK_GUIDE, WIZ_PARK_DIRECTION } = ROUTER_PATH;
 
 const tabs = [
   {
@@ -18,6 +18,11 @@ const tabs = [
     name: '구장 안내도',
     path: WIZ_PARK_GUIDE,
     subTitle: 'suwon kt wiz park를 소개합니다.',
+  },
+  {
+    name: '찾아오기',
+    path: WIZ_PARK_DIRECTION,
+    subTitle: '오시는 길을 상세하게 알려드립니다.',
   },
 ];
 
