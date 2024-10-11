@@ -40,7 +40,7 @@ export const ROUTER_PATH = {
   WIZ_PARK: '/wiz-park',
   WIZ_PARK_INTRO: '/wiz-park/intro',
   WIZ_PARK_GUIDE: '/wiz-park/guide',
-  DIRECTION: '/direction',
+  WIZ_PARK_DIRECTION: '/wiz-park/direction',
   GAME: '/game',
   GAME_RANKING: '/game/ranking',
   GAME_RANKING_TEAM: '/game/ranking/team',
@@ -49,6 +49,7 @@ export const ROUTER_PATH = {
   GAME_RANKING_CROWND: '/game/ranking/crowd',
   PLAYER: '/player',
   NEWS: '/news',
+  COMMUNITY: '/community',
   LOGIN: '/login',
   SIGNUP: '/signup',
   COACH: '/player/coach',
@@ -59,4 +60,6 @@ export const ROUTER_PATH = {
   BOXSCORE: '/game/boxscore',
   RANKING: '/game/ranking',
   WATCHPOINT: '/game/watchpoint',
+  GOOGLE_OAUTH: '/oauth/google',
+  KAKAO_OAUTH: '/oauth/kakao',
 };

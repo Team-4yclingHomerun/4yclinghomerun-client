@@ -5,7 +5,7 @@ import Layout from './Layout';
 import HomePage from '@/pages/HomePage';
 import IntroductionPage from '@/pages/Introduction/IntroductionPage';
 import WizParkPage from '@/pages/wiz-park/WizParkPage';
-import DirectionPage from '@/pages/DirectionPage';
+import WizParkDirection from '@/pages/wiz-park/WizParkDirection';
 import GamePage from '@/pages/game/GamePage';
 import PlayerPage from '@/pages/PlayerPage';
 import NewsPage from '@/pages/news/NewsPage';
@@ -30,6 +30,9 @@ import CheerPage from '@/pages/player/cheer/CheerPage';
 import CheerDetailPage from '@/pages/player/cheer/CheerDetailPage';
 import CoachPage from '@/pages/player/coach/CoachPage';
 import CoachDetailPage from '@/pages/player/coach/CoachDetailPage';
+import GoogleOAuthHandler from '@/components/auth/common/GoogleAuthHandler';
+import KakaoOAuthHandler from '@/components/auth/common/KakaoAuthHandler';
+import CommunityPage from '@/pages/community/CommunityPage';
 
 const Router = () => {
   const {
@@ -40,7 +43,7 @@ const Router = () => {
     WIZ_PARK,
     WIZ_PARK_INTRO,
     WIZ_PARK_GUIDE,
-    DIRECTION,
+    WIZ_PARK_DIRECTION,
     GAME,
     GAME_RANKING_TEAM,
     GAME_RANKING_BATTER,
@@ -50,6 +53,9 @@ const Router = () => {
     NEWS,
     LOGIN,
     SIGNUP,
+    GOOGLE_OAUTH,
+    KAKAO_OAUTH,
+    COMMUNITY,
   } = ROUTER_PATH;
   const router = createBrowserRouter([
     {
@@ -70,9 +76,10 @@ const Router = () => {
           children: [
             { path: WIZ_PARK_INTRO, element: <WizParkIntro /> },
             { path: WIZ_PARK_GUIDE, element: <WizParkGuide /> },
+            { path: WIZ_PARK_DIRECTION, element: <WizParkDirection /> },
           ],
         },
-        { path: DIRECTION, element: <DirectionPage /> },
+        { path: COMMUNITY, element: <CommunityPage /> },
         { path: NEWS, element: <NewsPage /> },
         {
           path: GAME,
@@ -110,6 +117,8 @@ const Router = () => {
         },
         { path: LOGIN, element: <LoginPage /> },
         { path: SIGNUP, element: <SingupPage /> },
+        { path: GOOGLE_OAUTH, element: <GoogleOAuthHandler /> },
+        { path: KAKAO_OAUTH, element: <KakaoOAuthHandler /> },
       ],
     },
   ]);
