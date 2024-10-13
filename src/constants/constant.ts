@@ -50,6 +50,7 @@ export const ROUTER_PATH = {
   PLAYER: '/player',
   NEWS: '/news',
   COMMUNITY: '/community',
+  CHAT: '/community/chat',
   LOGIN: '/login',
   SIGNUP: '/signup',
   COACH: '/player/coach',

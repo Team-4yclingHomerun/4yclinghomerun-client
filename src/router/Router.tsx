@@ -33,6 +33,7 @@ import CoachDetailPage from '@/pages/player/coach/CoachDetailPage';
 import GoogleOAuthHandler from '@/components/auth/common/GoogleAuthHandler';
 import KakaoOAuthHandler from '@/components/auth/common/KakaoAuthHandler';
 import CommunityPage from '@/pages/community/CommunityPage';
+import ChatPage from '@/pages/community/ChatPage';
 
 const Router = () => {
   const {
@@ -56,6 +57,7 @@ const Router = () => {
     GOOGLE_OAUTH,
     KAKAO_OAUTH,
     COMMUNITY,
+    CHAT,
   } = ROUTER_PATH;
   const router = createBrowserRouter([
     {
@@ -79,7 +81,11 @@ const Router = () => {
             { path: WIZ_PARK_DIRECTION, element: <WizParkDirection /> },
           ],
         },
-        { path: COMMUNITY, element: <CommunityPage /> },
+        {
+          path: COMMUNITY,
+          element: <CommunityPage />,
+          children: [{ path: CHAT, element: <ChatPage /> }],
+        },
         { path: NEWS, element: <NewsPage /> },
         {
           path: GAME,
