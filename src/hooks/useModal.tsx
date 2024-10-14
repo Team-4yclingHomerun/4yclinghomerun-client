@@ -1,7 +1,7 @@
 import React, { ReactNode, useRef, useState } from 'react';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import ReactDOM from 'react-dom';
+import { createPortal } from 'react-dom';
 import { IoCloseSharp } from 'react-icons/io5';
 
 import { cn } from '@/utils/cn';
@@ -29,7 +29,7 @@ const useModal = (initiallyOpen = false) => {
   }) => {
     if (!isOpen) return null;
 
-    return ReactDOM.createPortal(
+    return createPortal(
       <AnimatePresence>
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50"
