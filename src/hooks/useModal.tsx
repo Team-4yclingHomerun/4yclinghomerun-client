@@ -67,4 +67,4 @@ const useModal = (initiallyOpen = false) => {
   };
 };
 
-export default useModal;
+export { useModal };

@@ -1,7 +1,7 @@
 import { HiOutlineSpeakerphone } from 'react-icons/hi';
 
 import GuidelinesModalContent from './GuidelinesModalContent';
-import useModal from '@/hooks/useModal';
+import { useModal } from '@/hooks/useModal';
 
 const ChatHeader = () => {
   const { open, Modal } = useModal();
