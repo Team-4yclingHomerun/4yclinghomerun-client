@@ -23,7 +23,7 @@ const ChatMessageOtherUser = ({
         <div className="absolute left-0 -rotate-45 transform">
           <AiFillCaretRight color="#717781" size={15} />
         </div>
-        <p className="rou1nded-sm ml-2 w-fit max-w-[50%] bg-kt-gray-2 px-2 py-1">
+        <p className="ml-2 w-fit max-w-[50%] rounded-sm bg-kt-gray-2 px-2 py-1">
           {message.content}
         </p>
       </div>
