@@ -19,7 +19,7 @@ const ChatMessageForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="mt-3 flex gap-5">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex gap-5">
       <motion.input
         type="text"
         placeholder="메시지를 입력해주세요"
