@@ -57,7 +57,7 @@ const useModal = (initiallyOpen = false) => {
           </motion.div>
         </div>
       </AnimatePresence>,
-      document.body,
+      document.getElementById('modal-layout') as HTMLElement,
     );
   };
 
