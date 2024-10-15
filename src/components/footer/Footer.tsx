@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import { Link } from 'react-router-dom';
 import { FaInstagram, FaFacebookF, FaYoutube } from 'react-icons/fa';
 import { SiNaver } from 'react-icons/si';
@@ -12,25 +10,10 @@ import {
   YOUTUBE_URL,
   NAVERTV_URL,
 } from '@/constants/constant';
-import Modal from './modal/Modal';
 import { TermsOfServiceData } from '@/mocks/home/TermsOfServiceData';
+import FooterModal from './FooterModal';
 
 const Footer = () => {
-  const [modalState, setModalState] = useState({
-    isOpen: false,
-    title: '',
-    subTitle: '',
-    content: '',
-  });
-
-  const openModal = (title: string, subTitle: string, content: string) => {
-    setModalState({ isOpen: true, title, subTitle, content });
-  };
-
-  const closeModal = () => {
-    setModalState({ ...modalState, isOpen: false });
-  };
-
   return (
     <footer className="bg-white px-4 py-10">
       <div className="mx-auto max-w-4xl">
@@ -40,15 +23,13 @@ const Footer = () => {
           <div className="flex flex-col">
             <nav className="flex flex-wrap space-x-6 text-base">
               {TermsOfServiceData.map((data, index) => (
-                <button
+                <FooterModal
                   key={index}
-                  onClick={() =>
-                    openModal(data.title, data.subTitle, data.content)
-                  }
-                  className="text-gray-600 hover:text-gray-900"
-                >
-                  {data.text}
-                </button>
+                  title={data.title}
+                  subTitle={data.subTitle}
+                  content={data.content}
+                  buttonText={data.text}
+                />
               ))}
             </nav>
 
@@ -127,14 +108,6 @@ const Footer = () => {
           </div>
         </div>
       </div>
-
-      <Modal
-        isOpen={modalState.isOpen}
-        onClose={closeModal}
-        title={modalState.title}
-        subTitle={modalState.subTitle}
-        content={modalState.content}
-      />
     </footer>
   );
 };

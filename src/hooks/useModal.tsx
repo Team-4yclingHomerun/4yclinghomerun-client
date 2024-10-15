@@ -23,9 +23,11 @@ const useModal = (initiallyOpen = false) => {
   const Modal = ({
     children,
     buttonProps,
+    divClassname,
   }: {
     children: ReactNode;
     buttonProps?: React.ButtonHTMLAttributes<HTMLButtonElement>;
+    divClassname?: string;
   }) => {
     if (!isOpen) return null;
 
@@ -40,7 +42,10 @@ const useModal = (initiallyOpen = false) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.3 }}
-            className="relative max-h-[60vh] max-w-2xl rounded-lg bg-white"
+            className={cn(
+              'relative max-h-[60vh] max-w-2xl rounded-lg bg-white',
+              divClassname,
+            )}
           >
             <button
               {...buttonProps}
