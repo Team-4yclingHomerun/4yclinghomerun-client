@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-import axios, { AxiosError, ResponseType } from 'axios';
+import { ResponseType } from 'axios';
 
 import HttpClient from '@/api/HttpClient';
 
@@ -71,33 +71,8 @@ const useAxios = <T, R = T>({
       setIsError(false);
     } catch (error: unknown) {
       setIsError(true);
-      if (axios.isAxiosError(error)) {
-        const axiosError = error as AxiosError;
-        if (axiosError.response) {
-          switch (axiosError.response.status) {
-            case 500:
-              setError('서버에 오류가 발생했습니다');
-              break;
-            case 404:
-              setError('요청한 페이지를 찾을 수 없습니다');
-              break;
-            case 400:
-              setError('잘못된 요청입니다');
-              break;
-            case 401:
-              setError('인증에 실패했습니다');
-              break;
-            case 403:
-              setError('접근 권한이 없습니다');
-              break;
-            default:
-              setError(`오류가 발생했습니다: ${axiosError.response.status}`);
-          }
-        } else if (error.request) {
-          setError('서버로부터 응답이 없습니다');
-        } else {
-          setError(`요청 중 오류가 발생했습니다: ${error.message}`);
-        }
+      if (error instanceof Error) {
+        setError(error.message);
       }
     } finally {
       clearTimeout(timer);

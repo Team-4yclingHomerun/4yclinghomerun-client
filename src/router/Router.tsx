@@ -34,6 +34,7 @@ import GoogleOAuthHandler from '@/components/auth/common/GoogleAuthHandler';
 import KakaoOAuthHandler from '@/components/auth/common/KakaoAuthHandler';
 import CommunityPage from '@/pages/community/CommunityPage';
 import ChatPage from '@/pages/community/ChatPage';
+import NotFoundPage from './NotFoundPage';
 
 const Router = () => {
   const {
@@ -127,6 +128,7 @@ const Router = () => {
         { path: KAKAO_OAUTH, element: <KakaoOAuthHandler /> },
       ],
     },
+    { path: '*', element: <NotFoundPage /> },
   ]);
 
   return <RouterProvider router={router} />;
