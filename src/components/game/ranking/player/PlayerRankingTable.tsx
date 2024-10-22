@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 
 import { ColumnDef } from '@tanstack/react-table';
 
@@ -28,7 +28,7 @@ const PlayerRankingTable = ({
   const [excludeSortingCount, setExcludeSortingCount] = useState<number>(2);
   const [isHighlighted, setIsHighlighted] = useState<boolean>(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (activeTab.includes('전체')) {
       setExcludeSortingCount(3);
       setIsHighlighted(true);
@@ -36,7 +36,7 @@ const PlayerRankingTable = ({
       setExcludeSortingCount(2);
       setIsHighlighted(false);
     }
-  }, [activeTab, tableData]);
+  }, [tableData]);
 
   return (
     <ErrorBoundary
