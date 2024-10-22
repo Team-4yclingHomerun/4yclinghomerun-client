@@ -19,15 +19,15 @@ const GamePage = () => {
       location.pathname.startsWith(tab.path),
     );
 
-    const currentSubTab = gameTabs[currentTab].subTab?.findIndex((tab) =>
-      location.pathname.startsWith(tab.path),
-    );
-
     if (currentTab !== -1) {
       setActiveTab(currentTab);
+      setSubTitle(gameTabs[currentTab].subTitle);
+
+      const currentSubTab = gameTabs[currentTab].subTab?.findIndex((tab) =>
+        location.pathname.startsWith(tab.path),
+      );
       if (currentSubTab) {
         setActiveSubTab(currentSubTab);
-        setSubTitle(gameTabs[currentSubTab].subTitle);
       }
     } else {
       navigate('/game/schedule', { replace: true });
