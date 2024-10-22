@@ -50,14 +50,12 @@ const PlayerRankingTableSection = ({
   });
 
   useLayoutEffect(() => {
-    if (Array.isArray(data)) {
-      setTableData(data as TPlayerRankingTable[]);
-    }
     const matchingTable = TableData.find(
       (table) => table.tableName === activeTab,
     );
     if (matchingTable) {
       setTableColumns(matchingTable.tableColums);
+      setTableData(data as TPlayerRankingTable[]);
     }
   }, [data]);
 
