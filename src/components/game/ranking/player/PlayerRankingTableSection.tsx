@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import PlayerRankingTabs from '@/components/game/ranking/player/PlayerRankingTabs';
 import SearchInput from '@/components/common/ui/SearchInput';
@@ -29,7 +29,7 @@ const PlayerRankingTableSection = ({
     setTabsList([`kt wiz ${rankingType}`, `전체 ${rankingType} 순위`]);
   }, [rankingType]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const matchingTable = TableData.find(
       (table) => table.tableName === activeTab,
     );
@@ -49,15 +49,13 @@ const PlayerRankingTableSection = ({
     processData: (data) => data.data.list,
   });
 
-  useLayoutEffect(() => {
-    if (Array.isArray(data)) {
-      setTableData(data as TPlayerRankingTable[]);
-    }
+  useEffect(() => {
     const matchingTable = TableData.find(
       (table) => table.tableName === activeTab,
     );
     if (matchingTable) {
       setTableColumns(matchingTable.tableColums);
+      setTableData(data as TPlayerRankingTable[]);
     }
   }, [data]);
 

@@ -1,3 +1,5 @@
+import { useLayoutEffect, useState } from 'react';
+
 import { ColumnDef } from '@tanstack/react-table';
 
 import { DataTable } from '@/components/common/ui/table/DataTable';
@@ -6,12 +8,6 @@ import ErrorBoundary from '@/components/error/ErrorBoundary';
 import {
   TPlayerRankingColumn,
   TPlayerRankingTable,
-} from '@/types/PlayerRanking';
-import {
-  TKTBatterRankingTable,
-  TKTPitcherRankingTable,
-  TTotalBatterRankingTable,
-  TTotalPitcherRankingTable,
 } from '@/types/PlayerRanking';
 
 const PlayerRankingTable = ({
@@ -29,6 +25,19 @@ const PlayerRankingTable = ({
   isError: boolean;
   error: string | null;
 }) => {
+  const [excludeSortingCount, setExcludeSortingCount] = useState<number>(2);
+  const [isHighlighted, setIsHighlighted] = useState<boolean>(false);
+
+  useLayoutEffect(() => {
+    if (activeTab.includes('전체')) {
+      setExcludeSortingCount(3);
+      setIsHighlighted(true);
+    } else {
+      setExcludeSortingCount(2);
+      setIsHighlighted(false);
+    }
+  }, [tableData]);
+
   return (
     <ErrorBoundary
       fallback={
@@ -46,64 +55,17 @@ const PlayerRankingTable = ({
           containerClassName="w-full py-20"
         />
       ) : (
-        <>
-          {(() => {
-            switch (activeTab) {
-              case '전체 투수 순위':
-                return (
-                  <DataTable
-                    data={tableData as TTotalPitcherRankingTable[]}
-                    columns={
-                      tableColumns as ColumnDef<TTotalPitcherRankingTable>[]
-                    }
-                    bodyCellClassName="border-b border-gray-600 text-center"
-                    isLoading={isLoading}
-                    enableSorting={true}
-                    excludeSortingCount={3}
-                  />
-                );
-              case 'kt wiz 투수':
-                return (
-                  <DataTable
-                    data={tableData as TKTPitcherRankingTable[]}
-                    columns={
-                      tableColumns as ColumnDef<TKTPitcherRankingTable>[]
-                    }
-                    bodyCellClassName="border-b border-gray-600 text-center"
-                    isLoading={isLoading}
-                    enableSorting={true}
-                    excludeSortingCount={2}
-                  />
-                );
-              case '전체 타자 순위':
-                return (
-                  <DataTable
-                    data={tableData as TTotalBatterRankingTable[]}
-                    columns={
-                      tableColumns as ColumnDef<TTotalBatterRankingTable>[]
-                    }
-                    bodyCellClassName="border-b border-gray-600 text-center"
-                    isLoading={isLoading}
-                    enableSorting={true}
-                    excludeSortingCount={3}
-                  />
-                );
-              case 'kt wiz 타자':
-                return (
-                  <DataTable
-                    data={tableData as TKTBatterRankingTable[]}
-                    columns={tableColumns as ColumnDef<TKTBatterRankingTable>[]}
-                    bodyCellClassName="border-b border-gray-600 text-center"
-                    isLoading={isLoading}
-                    enableSorting={true}
-                    excludeSortingCount={2}
-                  />
-                );
-              default:
-                return <p>Error</p>;
-            }
-          })()}
-        </>
+        <DataTable
+          data={tableData as TPlayerRankingTable[]}
+          columns={tableColumns as ColumnDef<TPlayerRankingTable>[]}
+          bodyCellClassName="border-b border-gray-600 text-center"
+          isLoading={isLoading}
+          enableSorting={true}
+          excludeSortingCount={excludeSortingCount}
+          highlightCondition={
+            isHighlighted ? (row) => row.teamName === 'KT' : undefined
+          }
+        />
       )}
     </ErrorBoundary>
   );
