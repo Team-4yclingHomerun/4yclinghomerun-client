@@ -10,7 +10,7 @@ type Provider = 'google' | 'kakao';
 const useOAuthHandler = (provider: Provider) => {
   const navigate = useNavigate();
   const processedRef = useRef(false);
-  const setAccessToken = useAuthStore((state) => state.setAccessToken);
+  const { accessToken, setAccessToken, clearAccessToken } = useAuthStore();
 
   const sendAuthCodeToServer = useCallback(
     async (code: string) => {
@@ -36,19 +36,36 @@ const useOAuthHandler = (provider: Provider) => {
   );
 
   useEffect(() => {
-    if (processedRef.current) return;
+    const init = async () => {
+      if (processedRef.current) return;
 
-    const searchParams = new URLSearchParams(window.location.search);
-    const code = searchParams.get('code');
+      const searchParams = new URLSearchParams(window.location.search);
+      const code = searchParams.get('code');
 
-    if (code) {
-      sendAuthCodeToServer(code);
-    } else {
-      navigate('/', { replace: true });
-    }
+      if (code) {
+        sendAuthCodeToServer(code);
+      } else if (accessToken) {
+        // 액세스 토큰이 있지만 유효한지 검사
+        try {
+          await axios.get('/api/validate-token', {
+            headers: { Authorization: `Bearer ${accessToken}` },
+          });
+          navigate('/');
+        } catch (error) {
+          // 토큰이 유효하지 않으면 리프레시 토큰을 사용하여 토큰을 갱신
+          console.error('토큰 유효성 검사 실패:', error);
+          clearAccessToken();
+          navigate('/login', { replace: true });
+        }
+      } else {
+        navigate('/login', { replace: true });
+      }
 
-    processedRef.current = true;
-  }, [navigate, sendAuthCodeToServer]);
+      processedRef.current = true;
+    };
+
+    init();
+  }, [navigate, sendAuthCodeToServer, accessToken, clearAccessToken]);
 
   return null;
 };
