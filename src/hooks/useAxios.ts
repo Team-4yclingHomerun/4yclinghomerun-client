@@ -1,12 +1,12 @@
 /* eslint-disable */
-
 import { useEffect, useState } from 'react';
 
-import { ResponseType } from 'axios';
+import { AxiosError, AxiosInstance, ResponseType } from 'axios';
 
-import HttpClient from '@/api/HttpClient';
+import { KtHttpClient, BackendHttpClient } from '@/api/HttpClient';
 
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
+type ServerType = 'kt' | 'backend';
 
 interface RequestParams<T, R> {
   url: string;
@@ -16,7 +16,21 @@ interface RequestParams<T, R> {
   shouldFetchOnMount?: boolean;
   processData?: (data: T) => R;
   responseType?: ResponseType;
+  serverType?: ServerType;
 }
+
+interface RequestOptions {
+  body?: BodyInit | Record<string, any> | null;
+}
+
+const getHttpClient = (serverType: ServerType = 'kt'): AxiosInstance => {
+  switch (serverType) {
+    case 'backend':
+      return BackendHttpClient;
+    default:
+      return KtHttpClient;
+  }
+};
 
 const useAxios = <T, R = T>({
   url,
@@ -26,6 +40,7 @@ const useAxios = <T, R = T>({
   shouldFetchOnMount,
   processData,
   responseType,
+  serverType = 'kt',
 }: RequestParams<T, R>) => {
   const [data, setData] = useState<R | T>(initialData);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -35,24 +50,27 @@ const useAxios = <T, R = T>({
 
   const MINIMUM_LOADING_TIME = 500;
 
-  const handleRequest = async () => {
+  const handleRequest = async (options?: RequestOptions) => {
     setIsLoading(true);
     const timer = setTimeout(() => {
       setDelayLoading(true);
     }, MINIMUM_LOADING_TIME);
 
     try {
+      const HttpClient = getHttpClient(serverType);
       let response;
       const config = responseType ? { responseType } : {};
+      const requestBody = options?.body || body;
+
       switch (method) {
         case 'GET':
           response = await HttpClient.get(url, config);
           break;
         case 'POST':
-          response = await HttpClient.post(url, body, config);
+          response = await HttpClient.post(url, requestBody, config);
           break;
         case 'PUT':
-          response = await HttpClient.put(url, body, config);
+          response = await HttpClient.put(url, requestBody, config);
           break;
         case 'DELETE':
           response = await HttpClient.delete(url, config);
@@ -69,11 +87,23 @@ const useAxios = <T, R = T>({
         setData(responseData);
       }
       setIsError(false);
-    } catch (error: unknown) {
+      return responseData;
+    } catch (error) {
       setIsError(true);
-      if (error instanceof Error) {
+      if (error instanceof AxiosError) {
+        if (error.response) {
+          setError(error.response.data?.message || error.message);
+        } else if (error.request) {
+          setError('서버로부터 응답이 없습니다.');
+        } else {
+          setError(`요청 중 오류가 발생했습니다: ${error.message}`);
+        }
+      } else if (error instanceof Error) {
         setError(error.message);
+      } else {
+        setError('알 수 없는 오류가 발생했습니다.');
       }
+      throw error;
     } finally {
       clearTimeout(timer);
       setIsLoading(false);
@@ -85,7 +115,6 @@ const useAxios = <T, R = T>({
     if (method === 'GET' && shouldFetchOnMount) {
       handleRequest();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [method, url, shouldFetchOnMount]);
 
   return {
