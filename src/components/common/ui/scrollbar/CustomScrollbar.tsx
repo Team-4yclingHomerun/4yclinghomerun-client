@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useLayoutEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import { useScroll } from 'framer-motion';
 
@@ -11,7 +11,6 @@ import '@/styles/CustomScrollbar.css';
 type CustomScrollbarProps = {
   children: React.ReactNode;
   containerClassName?: string;
-  scrollbarClassName?: string;
   hideScrollbar?: boolean;
   marginTop?: number;
 };
@@ -19,7 +18,6 @@ type CustomScrollbarProps = {
 const CustomScrollbar = ({
   children,
   containerClassName = '',
-  scrollbarClassName = '',
   hideScrollbar = true,
   marginTop = 0,
 }: CustomScrollbarProps) => {
@@ -38,22 +36,34 @@ const CustomScrollbar = ({
   const { scrollYProgress } = useScroll({ container: containerRef });
 
   useEffect(() => {
-    if (containerRef.current) {
-      // 컨테이너 크기 파악
-      setContainerHeight(containerRef.current.clientHeight);
+    const containerEl = containerRef.current;
+    if (!containerEl) return;
 
-      // 컨텐츠 크기 파악
-      const contentHeightCalc = containerRef.current.children[0].clientHeight;
-      setContentHeight(contentHeightCalc);
-    }
-  }, [children]);
+    const updateHeights = () => {
+      setContainerHeight(containerEl.clientHeight);
+      setContentHeight(containerEl.scrollHeight);
+    };
+
+    const resizeObserver = new ResizeObserver(() => {
+      updateHeights();
+    });
+
+    resizeObserver.observe(containerEl);
+    resizeObserver.observe(containerEl.children[0]);
+
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+      resizeObserver.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
-    // 스크롤바 크기 조정
-    const scrollbarHeightCalc =
-      (containerHeight / contentHeight) * containerHeight;
-    setScrollbarHeight(scrollbarHeightCalc - marginTop);
-  }, [containerHeight, contentHeight]);
+    setScrollbarHeight(
+      (containerHeight / contentHeight) * containerHeight - marginTop,
+    );
+  }, [containerHeight, contentHeight, marginTop]);
 
   useEffect(() => {
     if (hideScrollbar) {
@@ -81,7 +91,7 @@ const CustomScrollbar = ({
       if (Math.abs(deltaY) > MIN_DELTA) {
         animationFrameId = requestAnimationFrame(() => {
           if (containerRef.current) {
-            const maxScrollTop = containerHeight - scrollbarHeight;
+            const maxScrollTop = containerHeight - scrollbarHeight - marginTop;
 
             const newScrollPercentage = Math.min(
               maxScrollTop,
@@ -98,7 +108,6 @@ const CustomScrollbar = ({
       }
     }
 
-    // cleanup
     return () => {
       if (animationFrameId !== undefined) {
         cancelAnimationFrame(animationFrameId);
@@ -106,22 +115,12 @@ const CustomScrollbar = ({
     };
   }, [positionY, isDragging]);
 
-  useEffect(() => {
-    return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-    };
-  }, []);
-
   const handleScrollbar = () => {
     if (containerRef.current) {
-      // 스크롤바 위치 조정
       const maxScrollTop = containerHeight - scrollbarHeight - marginTop;
       const newScrollTop =
         scrollYProgress.get() * (containerHeight - scrollbarHeight - marginTop);
 
-      // 스크롤바가 요소의 끝을 넘지 않도록 제한
       setScrollPercentage(Math.min(newScrollTop, maxScrollTop));
     }
   };
@@ -132,8 +131,8 @@ const CustomScrollbar = ({
   };
 
   const onDragStart = (event: React.MouseEvent) => {
-    event.preventDefault(); // 기본 드래그 동작 방지
-    event.stopPropagation(); // 이벤트 버블링 방지
+    event.preventDefault();
+    event.stopPropagation();
     handleMouseDown();
     setStartPositionY(positionY);
   };
@@ -150,7 +149,7 @@ const CustomScrollbar = ({
       {!(containerHeight === contentHeight) && (
         <div
           className={cn(
-            `absolute bottom-0 right-0 z-50 w-3 bg-transparent transition-opacity duration-300`,
+            `absolute bottom-0 right-0 z-30 w-3 bg-transparent transition-opacity duration-300`,
             showScrollbar ? 'opacity-100' : 'opacity-0',
             isHover || isDragging
               ? 'w-4 rounded-full bg-[rgba(255,255,255,0.1)]'
@@ -167,8 +166,7 @@ const CustomScrollbar = ({
           <div
             className={cn(
               'absolute w-full rounded-full bg-kt-gray-2',
-              scrollbarClassName,
-              isHover || isDragging ? 'opacity-100' : 'opacity-60',
+              isHover || isDragging ? 'opacity-100' : 'opacity-70',
               isDragging ? 'bg-kt-white' : 'bg-kt-gray-2',
             )}
             style={{

@@ -1,7 +1,7 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 
 import { useLocation } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll } from 'framer-motion';
 import { MdArrowDownward } from 'react-icons/md';
 
 import Footer from '@/components/footer/Footer';
@@ -9,6 +9,7 @@ import ScrollToTopButton from '../ui/button/ScrollToTopButton';
 import { TabNavigation } from '@/components/common/ui/tab/TabNavigation';
 import { DropTabNavigation } from '@/components/common/ui/tab/DropTabNavigation';
 import { DetailPageLayoutWithTabsProps } from '@/types/DetailPageLayoutType';
+import CustomScrollbar from '../ui/scrollbar/CustomScrollbar';
 
 const DetailPageLayout = ({
   topImg,
@@ -24,27 +25,31 @@ const DetailPageLayout = ({
   const [showDropdownNav, setShowDropdownNav] = useState(false);
   const location = useLocation();
 
+  const scrollContainerRef = useRef<HTMLElement | null>(null);
+  const { scrollY } = useScroll({
+    container: scrollContainerRef,
+    layoutEffect: false,
+  });
+
   const scrollToTop = useCallback(() => {
-    window.scrollTo(0, 0);
+    scrollContainerRef.current?.scrollTo(0, 0);
+  }, []);
+
+  const handleScroll = useCallback(() => {
+    const progress = scrollY.get();
+    setShowDropdownNav(progress > window.innerHeight * 0.65 ? true : false);
   }, []);
 
   // 스크롤이 일정 위치 이상 내려가면 탭 네비게이션을 보여줌
-  const updateDropdownNavVisibility = useCallback(() => {
-    const scrollPosition = window.scrollY;
-    const triggerPosition = window.innerHeight * 0.65;
-    setShowDropdownNav(scrollPosition > triggerPosition);
-  }, []);
+  useEffect(() => {
+    scrollY.on('change', handleScroll);
+  }, [scrollY]);
 
   useEffect(() => {
-    const handleScroll = () => {
-      updateDropdownNavVisibility();
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [updateDropdownNavVisibility]);
-
-  useEffect(() => {
+    const scrollContainer = document.querySelector(
+      '.scrollbar-custom',
+    ) as HTMLElement | null;
+    scrollContainerRef.current = scrollContainer;
     scrollToTop();
     setShowDropdownNav(false);
   }, [location.pathname, scrollToTop]);
@@ -60,84 +65,85 @@ const DetailPageLayout = ({
         />
         <div className="absolute inset-0 bg-black opacity-75"></div>
       </div>
+      <CustomScrollbar containerClassName="h-screen z-10" marginTop={80}>
+        <div>
+          {/* 상단 타이틀 */}
+          <div className="flex h-[65vh] flex-col items-center justify-center gap-6 pt-20">
+            <motion.div
+              initial={{ opacity: 0, y: -50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <h1 className="text-6xl font-extrabold text-white shadow-inner">
+                {title}
+              </h1>
+            </motion.div>
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4, duration: 0.6 }}
+              className="text-2xl font-extrabold text-gray-200 shadow-inner"
+            >
+              {subTitle}
+            </motion.p>
+          </div>
 
-      <div className="relative z-10">
-        {/* 상단 타이틀 */}
-        <div className="flex h-[65vh] flex-col items-center justify-center gap-6 pt-20">
+          {/* 스크롤 컨텐츠 */}
           <motion.div
-            initial={{ opacity: 0, y: -50 }}
+            className="relative"
+            initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ delay: 1, duration: 0.8 }}
           >
-            <h1 className="text-6xl font-extrabold text-white shadow-inner">
-              {title}
-            </h1>
-          </motion.div>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
-            className="text-2xl font-extrabold text-gray-200 shadow-inner"
-          >
-            {subTitle}
-          </motion.p>
-        </div>
-
-        {/* 스크롤 컨텐츠 */}
-        <motion.div
-          className="relative"
-          initial={{ opacity: 0, y: 100 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1, duration: 0.8 }}
-        >
-          <div className="relative h-64 w-full bg-gradient-to-b from-transparent via-black/60 to-black">
-            <div className="absolute inset-0 flex flex-col items-center justify-center">
-              {/* 화살표 */}
-              <motion.div
-                animate={{
-                  y: [0, -20, 0],
-                }}
-                transition={{
-                  duration: 1,
-                  repeat: Infinity,
-                  ease: 'easeInOut',
-                }}
-              >
-                <MdArrowDownward size={50} color="white" />
-              </motion.div>
-
-              {/* 탭 네비게이션 */}
-              {tabs && activeTab !== undefined && onTabChange && (
+            <div className="relative h-64 w-full bg-gradient-to-b from-transparent via-black/60 to-black">
+              <div className="absolute inset-0 flex flex-col items-center justify-center">
+                {/* 화살표 */}
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1.2, duration: 0.6 }}
-                  className="my-10"
+                  animate={{
+                    y: [0, -20, 0],
+                  }}
+                  transition={{
+                    duration: 1,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                  }}
                 >
-                  <TabNavigation
-                    tabs={tabs}
-                    activeTab={activeTab}
-                    onTabChange={onTabChange}
-                    activeSubTab={activeSubTab}
-                    onSubTabChange={onSubTabChange}
-                  />
+                  <MdArrowDownward size={50} color="white" />
                 </motion.div>
-              )}
+
+                {/* 탭 네비게이션 */}
+                {tabs && activeTab !== undefined && onTabChange && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1.2, duration: 0.6 }}
+                    className="my-10"
+                  >
+                    <TabNavigation
+                      tabs={tabs}
+                      activeTab={activeTab}
+                      onTabChange={onTabChange}
+                      activeSubTab={activeSubTab}
+                      onSubTabChange={onSubTabChange}
+                    />
+                  </motion.div>
+                )}
+              </div>
             </div>
-          </div>
 
-          <div className="bg-black px-40 py-28 text-white">
-            <div className="h-full">{children}</div>
-          </div>
-        </motion.div>
+            <div className="bg-black px-40 py-28 text-white">
+              <div className="h-full">{children}</div>
+            </div>
+          </motion.div>
 
-        <div className="relative h-44 w-full bg-gradient-to-b from-black via-transparent to-white"></div>
+          <div className="relative h-44 w-full bg-gradient-to-b from-black via-transparent to-white"></div>
 
-        {/* Footer */}
-        <footer className="relative z-20">
-          <Footer />
-        </footer>
-      </div>
+          {/* Footer */}
+          <footer className="relative z-20">
+            <Footer />
+          </footer>
+        </div>
+      </CustomScrollbar>
 
       {/* 스크롤링 시 탭 네비게이션 */}
       <AnimatePresence>
@@ -166,7 +172,7 @@ const DetailPageLayout = ({
 
       {/* 위로 가기 버튼 */}
       <div className="fixed bottom-10 right-20 z-50">
-        <ScrollToTopButton />
+        <ScrollToTopButton scrollContainerRef={scrollContainerRef} />
       </div>
     </div>
   );

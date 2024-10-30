@@ -3,25 +3,34 @@ import { useState, useEffect } from 'react';
 import { motion, useAnimation, AnimatePresence } from 'framer-motion';
 import { MdOutlineVerticalAlignTop } from 'react-icons/md';
 
-const ScrollToTopButton = () => {
+type TScrollToTopButtonProps = {
+  scrollContainerRef: React.MutableRefObject<HTMLElement | null>;
+};
+
+const ScrollToTopButton = ({ scrollContainerRef }: TScrollToTopButtonProps) => {
   const [showButton, setShowButton] = useState(false);
   const controls = useAnimation();
 
   // 스크롤이 일정 위치 이상 내려가면 스크롤 버튼을 보여줌
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 200) {
-        setShowButton(true);
-      } else {
-        setShowButton(false);
-      }
-    };
+  const handleScroll = () => {
+    const scrollContainer = scrollContainerRef.current;
+    if (scrollContainer && scrollContainer.scrollTop > 200) {
+      setShowButton(true);
+    } else {
+      setShowButton(false);
+    }
+  };
 
-    // 스크롤 이벤트 등록
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+  useEffect(() => {
+    const scrollContainer = document.querySelector(
+      '.scrollbar-custom',
+    ) as HTMLElement | null;
+    scrollContainerRef.current = scrollContainer;
+
+    if (scrollContainer) {
+      scrollContainer.addEventListener('scroll', handleScroll);
+      return () => scrollContainer.removeEventListener('scroll', handleScroll);
+    }
   }, []);
 
   // 버튼 애니메이션
@@ -40,7 +49,11 @@ const ScrollToTopButton = () => {
 
   // 스크롤 버튼 클릭 시 상단으로 이동
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const scrollContainer = document.querySelector('.scrollbar-custom');
+
+    if (scrollContainer) {
+      scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   return (
