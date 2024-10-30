@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useLayoutEffect } from 'react';
 
 import { useScroll } from 'framer-motion';
 
@@ -13,6 +13,7 @@ type CustomScrollbarProps = {
   containerClassName?: string;
   scrollbarClassName?: string;
   hideScrollbar?: boolean;
+  marginTop?: number;
 };
 
 const CustomScrollbar = ({
@@ -20,10 +21,9 @@ const CustomScrollbar = ({
   containerClassName = '',
   scrollbarClassName = '',
   hideScrollbar = true,
+  marginTop = 0,
 }: CustomScrollbarProps) => {
-  const [showScrollbar, setShowScrollbar] = useState(
-    hideScrollbar ? false : true,
-  );
+  const [showScrollbar, setShowScrollbar] = useState(!hideScrollbar);
   const { isHover, handleMouseOut, handleMouseOver } = useMouseHover();
   const { isDragging, handleMouseDown, handleMouseUp, positionY } =
     useMouseDrag();
@@ -46,13 +46,13 @@ const CustomScrollbar = ({
       const contentHeightCalc = containerRef.current.children[0].clientHeight;
       setContentHeight(contentHeightCalc);
     }
-  }, [containerRef]);
+  }, [children]);
 
   useEffect(() => {
     // 스크롤바 크기 조정
     const scrollbarHeightCalc =
       (containerHeight / contentHeight) * containerHeight;
-    setScrollbarHeight(scrollbarHeightCalc);
+    setScrollbarHeight(scrollbarHeightCalc - marginTop);
   }, [containerHeight, contentHeight]);
 
   useEffect(() => {
@@ -70,14 +70,6 @@ const CustomScrollbar = ({
       }
     }
   }, [isHover, isDragging, showScrollbar]);
-
-  useEffect(() => {
-    return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-    };
-  }, []);
 
   useEffect(() => {
     let animationFrameId: number | undefined;
@@ -114,12 +106,20 @@ const CustomScrollbar = ({
     };
   }, [positionY, isDragging]);
 
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
+
   const handleScrollbar = () => {
     if (containerRef.current) {
       // 스크롤바 위치 조정
-      const maxScrollTop = containerHeight - scrollbarHeight;
+      const maxScrollTop = containerHeight - scrollbarHeight - marginTop;
       const newScrollTop =
-        scrollYProgress.get() * (containerHeight - scrollbarHeight);
+        scrollYProgress.get() * (containerHeight - scrollbarHeight - marginTop);
 
       // 스크롤바가 요소의 끝을 넘지 않도록 제한
       setScrollPercentage(Math.min(newScrollTop, maxScrollTop));
@@ -147,32 +147,39 @@ const CustomScrollbar = ({
       >
         {children}
       </div>
-      <div
-        className={cn(
-          'absolute right-0 top-0 h-full w-3 bg-transparent transition-opacity duration-300',
-          showScrollbar ? 'opacity-100' : 'opacity-0',
-          isHover || isDragging
-            ? 'w-4 rounded-full bg-[rgba(255,255,255,0.1)]'
-            : 'bg-transparent',
-        )}
-        onMouseOver={handleMouseOver}
-        onMouseOut={handleMouseOut}
-      >
+      {!(containerHeight === contentHeight) && (
         <div
           className={cn(
-            'absolute w-full rounded-full bg-kt-gray-2',
-            scrollbarClassName,
-            isHover || isDragging ? 'opacity-100' : 'opacity-60',
-            isDragging ? 'bg-kt-white' : 'bg-kt-gray-2',
+            `absolute bottom-0 right-0 z-50 w-3 bg-transparent transition-opacity duration-300`,
+            showScrollbar ? 'opacity-100' : 'opacity-0',
+            isHover || isDragging
+              ? 'w-4 rounded-full bg-[rgba(255,255,255,0.1)]'
+              : 'bg-transparent',
           )}
           style={{
-            top: `${scrollPercentage}px`,
-            height: containerRef.current ? `${scrollbarHeight}px` : '20%',
+            height: containerRef.current
+              ? `${containerHeight - marginTop}px`
+              : '100%',
           }}
-          onMouseDownCapture={onDragStart}
-          onMouseUpCapture={handleMouseUp}
-        />
-      </div>
+          onMouseOver={handleMouseOver}
+          onMouseOut={handleMouseOut}
+        >
+          <div
+            className={cn(
+              'absolute w-full rounded-full bg-kt-gray-2',
+              scrollbarClassName,
+              isHover || isDragging ? 'opacity-100' : 'opacity-60',
+              isDragging ? 'bg-kt-white' : 'bg-kt-gray-2',
+            )}
+            style={{
+              top: `${scrollPercentage}px`,
+              height: containerRef.current ? `${scrollbarHeight}px` : '20%',
+            }}
+            onMouseDownCapture={onDragStart}
+            onMouseUpCapture={handleMouseUp}
+          />
+        </div>
+      )}
     </div>
   );
 };
