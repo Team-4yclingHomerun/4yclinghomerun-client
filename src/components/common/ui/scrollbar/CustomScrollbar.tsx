@@ -152,7 +152,7 @@ const CustomScrollbar = ({
             `absolute bottom-0 right-0 z-30 w-3 bg-transparent transition-opacity duration-300`,
             showScrollbar ? 'opacity-100' : 'opacity-0',
             isHover || isDragging
-              ? 'w-4 rounded-full bg-[rgba(255,255,255,0.1)]'
+              ? 'w-4 rounded-full bg-[rgba(255,255,255,0.2)]'
               : 'bg-transparent',
           )}
           style={{
