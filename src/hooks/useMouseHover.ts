@@ -17,4 +17,4 @@ const useMouseHover = () => {
     handleMouseOut,
   };
 };
-export default useMouseHover;
+export { useMouseHover };

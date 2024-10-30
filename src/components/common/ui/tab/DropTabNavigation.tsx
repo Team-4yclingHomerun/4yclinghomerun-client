@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { cn } from '@/utils/cn';
 import { TabNavigationProps } from '@/types/TabType';
 import { useTabNavigation } from '@/hooks/useTabNavigation';
-import useMouseHover from '@/hooks/useMouseHover';
+import { useMouseHover } from '@/hooks/useMouseHover';
 
 const DropTabNavigation = (props: TabNavigationProps) => {
   const {

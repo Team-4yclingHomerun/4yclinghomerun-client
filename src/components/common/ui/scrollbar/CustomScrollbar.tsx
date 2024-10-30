@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useScroll } from 'framer-motion';
 
 import { cn } from '@/utils/cn';
-import useMouseHover from '@/hooks/useMouseHover';
+import { useMouseHover } from '@/hooks/useMouseHover';
 import { useMouseDrag } from '@/hooks/useMouseDrag';
 
 import '@/styles/CustomScrollbar.css';
