@@ -43,6 +43,7 @@ const DetailPageLayout = ({
   // 스크롤이 일정 위치 이상 내려가면 탭 네비게이션을 보여줌
   useEffect(() => {
     scrollY.on('change', handleScroll);
+    return () => scrollY.clearListeners();
   }, [scrollY]);
 
   useEffect(() => {
