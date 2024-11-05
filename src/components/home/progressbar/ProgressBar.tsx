@@ -36,6 +36,11 @@ const ProgressBar = () => {
     return () => scrollYProgress.clearListeners();
   }, [scrollYProgress]);
 
+  const moveToSection = (section: string) => {
+    window.location.hash = section;
+    document.getElementById(section)?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <motion.div
       className="fixed left-0 top-20 z-40 flex h-full flex-col bg-kt-gray-2"
@@ -51,16 +56,25 @@ const ProgressBar = () => {
         transition: { duration: 0.3 },
       }}
     >
-      <div className="relative h-1/6">
+      <button
+        type="button"
+        className="relative h-1/6"
+        onClick={() => moveToSection('hero')}
+      >
         <motion.div
           className="h-full origin-top bg-red-800"
           style={{ scaleY: adjustedScale }}
         />
-        {isHover && <SectionIndicator title="Hero" section="hero" />}
-      </div>
+        {isHover && <SectionIndicator title="HERO" />}
+      </button>
 
       {sectionData.map((item, index) => (
-        <div className="relative h-1/6" key={item.id}>
+        <button
+          type="button"
+          className="relative h-1/6"
+          key={item.id}
+          onClick={() => moveToSection(item.id)}
+        >
           <AnimatePresence>
             {hashNumber > index && (
               <motion.div
@@ -75,10 +89,8 @@ const ProgressBar = () => {
               />
             )}
           </AnimatePresence>
-          {isHover && (
-            <SectionIndicator title={item.title!} section={item.id} />
-          )}
-        </div>
+          {isHover && <SectionIndicator title={item.title!} />}
+        </button>
       ))}
     </motion.div>
   );
