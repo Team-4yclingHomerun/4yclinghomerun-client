@@ -79,20 +79,30 @@ const usePageScroll = ({
   }, [handleScroll, handleTouchStart, isActive]);
 
   useEffect(() => {
-    if (!isActive) return; // ContentsSection이 화면에 있지 않으면 실행 안 함
     const handleHashChange = () => {
       const hash = window.location.hash.slice(1);
+
+      if (hash === 'hero' || !hash) {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth',
+        });
+        return;
+      }
       const index = sections.findIndex((section) => section.id === hash);
-      if (index !== -1) {
+      if (index >= 0) {
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: 'smooth',
+        });
         setCurrentSection(index);
       }
     };
 
     window.addEventListener('hashchange', handleHashChange);
-    handleHashChange();
 
     return () => window.removeEventListener('hashchange', handleHashChange);
-  }, [sections, isActive]);
+  }, [sections]);
 
   useEffect(() => {
     if (isActive) {
