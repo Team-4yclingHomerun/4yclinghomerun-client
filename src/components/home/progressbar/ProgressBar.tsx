@@ -38,7 +38,6 @@ const ProgressBar = () => {
 
   const moveToSection = (section: string) => {
     window.location.hash = section;
-    document.getElementById(section)?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
