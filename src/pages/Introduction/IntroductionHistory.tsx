@@ -1,5 +1,7 @@
 import { useEffect, useRef } from 'react';
 
+import { useScroll } from 'framer-motion';
+
 import { IntroductionHistoryData } from '@/mocks/introduction/MockIntroductionHistory';
 import IntroductionHistoryItem from '@/components/introduction/IntroductionHistoryItem';
 
@@ -7,14 +9,25 @@ const IntroductionHistory = () => {
   const cardFrameRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  const scrollContainerRef = useRef<HTMLElement | null>(null);
+  const { scrollY } = useScroll({
+    container: scrollContainerRef,
+    layoutEffect: false,
+  });
+
   useEffect(() => {
+    const scrollContainer = document.querySelector(
+      '.scrollbar-custom',
+    ) as HTMLElement | null;
+    scrollContainerRef.current = scrollContainer;
+
     const containerHeight = containerRef.current?.offsetHeight || 0;
-    const stickyBoxHeight = window.innerHeight;
+    const stickyBoxHeight = scrollContainerRef.current?.clientHeight ?? 0;
 
     const handleScroll = () => {
       if (!containerRef.current || !cardFrameRef.current) return;
 
-      const scrollPosition = window.scrollY;
+      const scrollPosition = scrollY.get();
       const containerTop = containerRef.current.offsetTop;
       const containerBottom = containerTop + containerHeight;
       const cardFrameWidth = (IntroductionHistoryData.length / 2) * 120;
@@ -26,8 +39,8 @@ const IntroductionHistory = () => {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    scrollY.on('change', handleScroll);
+    return () => scrollY.clearListeners();
   }, []);
 
   return (

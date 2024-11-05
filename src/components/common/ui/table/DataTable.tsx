@@ -13,6 +13,7 @@ import { TiArrowSortedDown } from 'react-icons/ti';
 
 import { cn } from '@/utils/cn';
 import DataTableSkeleton from './DataTableSkeleton';
+import CustomScrollbar from '../scrollbar/CustomScrollbar';
 
 type CellValue = string | number | boolean | null | undefined;
 
@@ -85,8 +86,17 @@ const DataTable = <T extends object>({
   return isLoading ? (
     <DataTableSkeleton rows={10} columns={columns.length} />
   ) : (
-    <div className={cn('overflow-hidden rounded-t-md', containerClassName)}>
-      <div className="max-h-[400px] overflow-x-auto">
+    <div
+      className={cn(
+        'overflow-hidden rounded-b-md rounded-t-md',
+        containerClassName,
+      )}
+    >
+      <CustomScrollbar
+        containerClassName={cn(data.length > 8 ? 'h-[400px]' : 'h-fit')}
+        hideScrollbar={false}
+        marginTop={48}
+      >
         <table className="relative min-w-full">
           <thead className="sticky top-0 z-10">
             {table.getHeaderGroups().map((headerGroup) => (
@@ -172,7 +182,7 @@ const DataTable = <T extends object>({
             )}
           </tbody>
         </table>
-      </div>
+      </CustomScrollbar>
     </div>
   );
 };
