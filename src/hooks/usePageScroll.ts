@@ -50,6 +50,7 @@ const usePageScroll = ({
           top: window.innerHeight * 1.9, // Hero 섹션으로 이동시킴
           behavior: 'smooth', // 부드럽게 스크롤
         });
+        window.location.hash = 'hero';
       }
 
       scrollTimeout.current = setTimeout(() => {
@@ -79,20 +80,30 @@ const usePageScroll = ({
   }, [handleScroll, handleTouchStart, isActive]);
 
   useEffect(() => {
-    if (!isActive) return; // ContentsSection이 화면에 있지 않으면 실행 안 함
     const handleHashChange = () => {
       const hash = window.location.hash.slice(1);
+
+      if (hash === 'hero') {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth',
+        });
+        return;
+      }
       const index = sections.findIndex((section) => section.id === hash);
-      if (index !== -1) {
+      if (index >= 0) {
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: 'smooth',
+        });
         setCurrentSection(index);
       }
     };
 
     window.addEventListener('hashchange', handleHashChange);
-    handleHashChange();
 
     return () => window.removeEventListener('hashchange', handleHashChange);
-  }, [sections, isActive]);
+  }, [sections]);
 
   useEffect(() => {
     if (isActive) {
@@ -102,9 +113,6 @@ const usePageScroll = ({
         top: document.body.scrollHeight, // 전체 문서의 높이로 스크롤 이동
         behavior: 'smooth', // 부드럽게 스크롤
       });
-    } else {
-      // hero 섹션일 때는 hash를 hero로 변경
-      window.location.hash = 'hero';
     }
   }, [currentSection, sections, isActive]);
 
