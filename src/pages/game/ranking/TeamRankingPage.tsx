@@ -42,7 +42,7 @@ const TeamRankingPage = () => {
     isError: isYearTableError,
     error: yearTableError,
   } = useAxios<APITeamRankingYearTable, TTeamRankingYearTable[]>({
-    url: '/game/teamrankbyyear',
+    url: '/game/rank/teamrankbyyear',
     method: 'GET',
     initialData: { data: { list: [] } },
     shouldFetchOnMount: true,

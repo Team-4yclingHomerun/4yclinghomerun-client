@@ -29,7 +29,7 @@ const CrowdRankingPage = () => {
     isError,
     error,
   } = useAxios<APICrowdRankingData, TCrowdRankingData[]>({
-    url: `/game/rank/crowd?gyear=${selectedYear}`,
+    url: `/game/rank/crowd/gyear-${selectedYear}`,
     method: 'GET',
     initialData: { data: { list: [] } },
     shouldFetchOnMount: true,
