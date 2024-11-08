@@ -27,12 +27,12 @@ const NewsList = ({ newsItems, tab }: NewsListProps) => {
   const modifyNewsListData = (news: TWizNewsItem | TNaverNewsItem) => {
     const isWiz = isWizNewsItem(news);
     return {
-      id: isWiz ? news.artcSeq : `oid=${news.oid}&aid=${news.aid}`,
+      id: isWiz ? news.artcSeq : `${news.oid}-${news.aid}`,
       title: isWiz ? news.artcTitle : news.title,
       content: isWiz ? stripHtmlTags(news.artcContents) : news.subContent,
       date: isWiz ? formatTimeStamp(news.updDttm) : news.datetime,
       viewCount: isWiz ? news.viewCnt : news.totalCount,
-      imageUrl: isWiz ? news.imgFilePath : news.thumbnail_file,
+      imageUrl: isWiz ? news.imgFilePath : news.thumbnail,
       officeName: isWiz ? null : news.officeName,
     };
   };
