@@ -1,71 +1,59 @@
 import { useCallback, useEffect, useRef } from 'react';
 
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
+import { useAxios } from './useAxios';
 import { useAuthStore } from '@/stores/AuthStore';
 
 type Provider = 'google' | 'kakao';
 
+interface OAuthResponse {
+  access_token: string;
+}
+
 const useOAuthHandler = (provider: Provider) => {
   const navigate = useNavigate();
   const processedRef = useRef(false);
-  const { accessToken, setAccessToken, clearAccessToken } = useAuthStore();
+  const setAccessToken = useAuthStore((state) => state.setAccessToken);
+
+  const { handleRequest: sendAuthRequest } = useAxios<OAuthResponse>({
+    url: `/login/${provider}`,
+    method: 'POST',
+    initialData: { access_token: '' },
+    serverType: 'oauth',
+  });
 
   const sendAuthCodeToServer = useCallback(
     async (code: string) => {
       try {
-        const response = await axios.post(
-          `/api/auth/${provider}`, // endpoint 미정
-          { code },
-          {
-            withCredentials: true,
-          },
-        );
+        const response = await sendAuthRequest({ body: { code } });
 
-        if (response.data.accessToken) {
-          setAccessToken(response.data.accessToken, provider);
-          navigate('/');
+        if (response.access_token) {
+          setAccessToken(response.access_token, provider);
+          // navigate('/');
         }
       } catch (error) {
-        console.error(`${provider} 로그인 실패:`, error);
         navigate('/login', { replace: true });
+        console.error(`${provider} 로그인 에러:`, error);
       }
     },
-    [navigate, provider, setAccessToken],
+    [navigate, provider, setAccessToken, sendAuthRequest],
   );
 
   useEffect(() => {
-    const init = async () => {
-      if (processedRef.current) return;
+    if (processedRef.current) return;
 
-      const searchParams = new URLSearchParams(window.location.search);
-      const code = searchParams.get('code');
+    const searchParams = new URLSearchParams(window.location.search);
+    const code = searchParams.get('code');
 
-      if (code) {
-        sendAuthCodeToServer(code);
-      } else if (accessToken) {
-        // 액세스 토큰이 있지만 유효한지 검사
-        try {
-          await axios.get('/api/validate-token', {
-            headers: { Authorization: `Bearer ${accessToken}` },
-          });
-          navigate('/');
-        } catch (error) {
-          // 토큰이 유효하지 않으면 리프레시 토큰을 사용하여 토큰을 갱신
-          console.error('토큰 유효성 검사 실패:', error);
-          clearAccessToken();
-          navigate('/login', { replace: true });
-        }
-      } else {
-        navigate('/login', { replace: true });
-      }
+    if (code) {
+      sendAuthCodeToServer(code);
+    } else {
+      navigate('/login', { replace: true });
+    }
 
-      processedRef.current = true;
-    };
-
-    init();
-  }, [navigate, sendAuthCodeToServer, accessToken, clearAccessToken]);
+    processedRef.current = true;
+  }, [navigate, sendAuthCodeToServer]);
 
   return null;
 };
