@@ -11,12 +11,13 @@ const GetWeekSchedule = () => {
   const { data, isLoading, isError, error } = useAxios<GetWeekScheduleResponse>(
     {
       method: 'GET',
-      url: '/game/weekschedule',
+      url: '/game/weekSchedule',
       initialData: {
         data: {
           list: [],
         },
       },
+      serverType: 'backend',
       shouldFetchOnMount: true,
     },
   );

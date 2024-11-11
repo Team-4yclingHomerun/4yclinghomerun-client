@@ -29,6 +29,7 @@ const GetTeamRank = () => {
         },
       },
     },
+    serverType: 'backend',
     shouldFetchOnMount: true,
   });
 
