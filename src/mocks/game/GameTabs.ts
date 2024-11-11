@@ -1,6 +1,15 @@
 import { ROUTER_PATH } from '@/constants/constant';
 
-const { SCHEDULE, BOXSCORE, RANKING, GAME_RANKING_TEAM, GAME_RANKING_BATTER, GAME_RANKING_CROWND, GAME_RANKING_PICHER, WATCHPOINT } = ROUTER_PATH;
+const {
+  SCHEDULE,
+  BOXSCORE,
+  RANKING,
+  GAME_RANKING_TEAM,
+  GAME_RANKING_BATTER,
+  GAME_RANKING_CROWND,
+  GAME_RANKING_PICHER,
+  WATCHPOINT,
+} = ROUTER_PATH;
 
 const gameTabs = [
   {
@@ -17,23 +26,24 @@ const gameTabs = [
     name: '순위 기록',
     path: RANKING,
     subTitle: 'kt wiz 정규리그 기록을 알려 드려요.',
-    subTab: [{
-      name: '팀순위',
-      path: GAME_RANKING_TEAM,
-    },
-    {
-      name: '투수순위',
-      path: GAME_RANKING_PICHER,
-    },
-    {
-      name: '타자순위',
-      path: GAME_RANKING_BATTER,
-    },
-    {
-      name: '관중현황',
-      path: GAME_RANKING_CROWND,
-    }
-  ]
+    subTab: [
+      {
+        name: '팀순위',
+        path: GAME_RANKING_TEAM,
+      },
+      {
+        name: '투수순위',
+        path: GAME_RANKING_PICHER,
+      },
+      {
+        name: '타자순위',
+        path: GAME_RANKING_BATTER,
+      },
+      {
+        name: '관중현황',
+        path: GAME_RANKING_CROWND,
+      },
+    ],
   },
   {
     name: '관전 포인트',
