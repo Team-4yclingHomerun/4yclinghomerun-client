@@ -3,10 +3,15 @@ import { useEffect, useState } from 'react';
 
 import { AxiosError, AxiosInstance, ResponseType } from 'axios';
 
-import { KtHttpClient, BackendHttpClient } from '@/api/HttpClient';
+import {
+  KtHttpClient,
+  BackendHttpClient,
+  AuthHttpClient,
+  OauthHttpClient,
+} from '@/api/HttpClient';
+import { ServerType } from '@/types/ServerType';
 
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
-type ServerType = 'kt' | 'backend';
 
 interface RequestParams<T, R> {
   url: string;
@@ -27,6 +32,10 @@ const getHttpClient = (serverType: ServerType = 'kt'): AxiosInstance => {
   switch (serverType) {
     case 'backend':
       return BackendHttpClient;
+    case 'auth':
+      return AuthHttpClient;
+    case 'oauth':
+      return OauthHttpClient;
     default:
       return KtHttpClient;
   }
