@@ -26,11 +26,11 @@ const LoginForm = () => {
   const setAccessToken = useAuthStore((state) => state.setAccessToken);
 
   const { handleRequest, isLoading } = useAxios<{ token: string }>({
-    url: '/login',
+    url: '/user/login',
     method: 'POST',
     initialData: { token: '' },
     shouldFetchOnMount: false,
-    serverType: 'backend',
+    serverType: 'auth',
   });
 
   const onSubmit = async (data: z.infer<typeof LoginFormSchema>) => {
