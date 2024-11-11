@@ -30,7 +30,7 @@ const useOAuthHandler = (provider: Provider) => {
 
         if (response.access_token) {
           setAccessToken(response.access_token, provider);
-          // navigate('/');
+          navigate('/');
         }
       } catch (error) {
         navigate('/login', { replace: true });
