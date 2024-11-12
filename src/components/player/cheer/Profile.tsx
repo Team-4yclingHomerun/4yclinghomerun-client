@@ -5,6 +5,9 @@ const Profile = ({ items, isError }: { items: TCheer; isError: boolean }) => {
     throw new Error('Error');
   }
 
+  if (!items) {
+    return <div>데이터가 없습니다.</div>;
+  }
   const filteredPictures: [string, string][] = Object.entries(items)
     .filter(([key]) => key.includes('Img'))
     .map(([key, value]) => [key, String(value)]);

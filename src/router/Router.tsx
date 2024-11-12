@@ -7,7 +7,7 @@ import IntroductionPage from '@/pages/Introduction/IntroductionPage';
 import WizParkPage from '@/pages/wiz-park/WizParkPage';
 import WizParkDirection from '@/pages/wiz-park/WizParkDirection';
 import GamePage from '@/pages/game/GamePage';
-import PlayerPage from '@/pages/PlayerPage';
+import PlayerPage from '@/pages/player/PlayerPage';
 import NewsPage from '@/pages/news/NewsPage';
 import LoginPage from '@/pages/LoginPage';
 import SingupPage from '@/pages/SignupPage';
@@ -52,6 +52,10 @@ const Router = () => {
     GAME_RANKING_PICHER,
     GAME_RANKING_CROWND,
     PLAYER,
+    PLAYER_COACH,
+    PLAYER_PITCHER,
+    PLAYER_HITTER,
+    PLAYER_CHEER,
     NEWS,
     LOGIN,
     SIGNUP,
@@ -105,14 +109,17 @@ const Router = () => {
           path: PLAYER,
           element: <PlayerPage />,
           children: [
-            { path: 'coach', element: <CoachPage /> },
-            { path: 'coach/detail/:id', element: <CoachDetailPage /> },
-            { path: 'pitcher', element: <PitcherPage /> },
-            { path: 'pitcher/detail/:id', element: <PitcherDetailPage /> },
-            { path: 'hitter', element: <HitterPage /> },
-            { path: 'hitter/detail/:id', element: <HitterDetailPage /> },
-            { path: 'cheer', element: <CheerPage /> },
-            { path: 'cheer/detail/:id', element: <CheerDetailPage /> },
+            { path: PLAYER_COACH, element: <CoachPage /> },
+            { path: `${PLAYER_COACH}/:id`, element: <CoachDetailPage /> },
+            { path: PLAYER_PITCHER, element: <PitcherPage /> },
+            { path: `${PLAYER_PITCHER}/:id`, element: <PitcherDetailPage /> },
+            { path: PLAYER_HITTER, element: <HitterPage /> },
+            {
+              path: `${PLAYER_HITTER}/:type/:id`,
+              element: <HitterDetailPage />,
+            },
+            { path: PLAYER_CHEER, element: <CheerPage /> },
+            { path: `${PLAYER_CHEER}/:id`, element: <CheerDetailPage /> },
           ],
         },
         {

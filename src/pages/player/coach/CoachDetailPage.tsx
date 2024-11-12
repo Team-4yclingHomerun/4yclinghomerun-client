@@ -13,7 +13,7 @@ const CoachDetailPage = () => {
 
   const { data, isLoading, isError } = useAxios<ICoachDetailReponse>({
     method: 'GET',
-    url: `/player/coachdetail?pcode=${id}`,
+    url: `/player/coachdetail/pcode-${id}`,
     initialData: {
       data: {
         coachstep: {

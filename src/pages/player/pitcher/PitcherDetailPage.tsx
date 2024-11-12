@@ -22,7 +22,7 @@ const PitcherDetailPage = () => {
   }: { data: IPitcherDetailReponse; isLoading: boolean; isError: boolean } =
     useAxios<IPitcherDetailReponse>({
       method: 'GET',
-      url: `/player/pitcherdetail?pcode=${id}`,
+      url: `/player/pitcherdetail/pcode-${id}`,
       initialData: {
         data: {
           gameplayer: {
