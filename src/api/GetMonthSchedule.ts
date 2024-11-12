@@ -18,7 +18,6 @@ const GetMonthSchedule = (year: number, month: number) => {
           list: [],
         },
       },
-      serverType: 'backend',
       shouldFetchOnMount: true,
     });
 

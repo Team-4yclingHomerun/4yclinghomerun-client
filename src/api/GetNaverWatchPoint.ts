@@ -74,7 +74,6 @@ const GetNaverWatchPoint = (gmkey: string) => {
         },
       },
     },
-    serverType: 'backend',
     shouldFetchOnMount: !!gmkey,
     processData,
   });

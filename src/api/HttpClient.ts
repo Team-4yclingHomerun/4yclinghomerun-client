@@ -3,7 +3,6 @@ import axios, { AxiosError, AxiosInstance, CreateAxiosDefaults } from 'axios';
 import { ServerType } from '@/types/ServerType';
 
 const API_URLS = {
-  kt: import.meta.env.VITE_API_URL,
   backend: import.meta.env.VITE_API_BACKEND_URL,
   auth: import.meta.env.VITE_API_SERVER_URL,
   oauth: import.meta.env.VITE_OAUTH_URL,
@@ -73,9 +72,8 @@ const createHttpClient = (serverType: ServerType): AxiosInstance => {
   return instance;
 };
 
-export const KtHttpClient = createHttpClient('kt');
 export const BackendHttpClient = createHttpClient('backend');
 export const AuthHttpClient = createHttpClient('auth');
 export const OauthHttpClient = createHttpClient('oauth');
 
-export default KtHttpClient;
+export default BackendHttpClient;

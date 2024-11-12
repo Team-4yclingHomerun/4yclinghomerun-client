@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { AxiosError, AxiosInstance, ResponseType } from 'axios';
 
 import {
-  KtHttpClient,
   BackendHttpClient,
   AuthHttpClient,
   OauthHttpClient,
@@ -28,16 +27,14 @@ interface RequestOptions {
   body?: BodyInit | Record<string, any> | null;
 }
 
-const getHttpClient = (serverType: ServerType = 'kt'): AxiosInstance => {
+const getHttpClient = (serverType: ServerType = 'backend'): AxiosInstance => {
   switch (serverType) {
-    case 'backend':
-      return BackendHttpClient;
     case 'auth':
       return AuthHttpClient;
     case 'oauth':
       return OauthHttpClient;
     default:
-      return KtHttpClient;
+      return BackendHttpClient;
   }
 };
 
@@ -49,7 +46,7 @@ const useAxios = <T, R = T>({
   shouldFetchOnMount,
   processData,
   responseType,
-  serverType = 'kt',
+  serverType = 'backend',
 }: RequestParams<T, R>) => {
   const [data, setData] = useState<R | T>(initialData);
   const [isLoading, setIsLoading] = useState<boolean>(false);

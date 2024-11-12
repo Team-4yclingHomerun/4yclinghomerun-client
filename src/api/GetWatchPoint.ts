@@ -90,7 +90,6 @@ const GetWatchPoint = (gameDate: number, gmkey: string) => {
       },
     },
     shouldFetchOnMount: !!gameDate || !!gmkey,
-    serverType: 'backend',
     processData,
   });
 };

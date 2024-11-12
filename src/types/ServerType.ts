@@ -1,1 +1,1 @@
-export type ServerType = 'kt' | 'backend' | 'auth' | 'oauth';
+export type ServerType = 'backend' | 'auth' | 'oauth';

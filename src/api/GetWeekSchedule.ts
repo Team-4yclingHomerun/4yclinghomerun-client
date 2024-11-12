@@ -17,7 +17,6 @@ const GetWeekSchedule = () => {
           list: [],
         },
       },
-      serverType: 'backend',
       shouldFetchOnMount: true,
     },
   );

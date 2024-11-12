@@ -68,7 +68,6 @@ const GetBoxScore = (gameDate: number, gmkey: string) => {
         scoreboard: [],
       },
     },
-    serverType: 'backend',
     shouldFetchOnMount: true,
   });
 
