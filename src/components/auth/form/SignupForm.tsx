@@ -9,31 +9,62 @@ import {
 } from '@/components/auth/schemas/SignupFormSchema';
 import { Form, FormField } from '@/components/common/ui/form/Form';
 import { Button } from '@/components/common/ui/button/button';
+import { useAxios } from '@/hooks/useAxios';
 
 const SignupForm = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm<z.infer<typeof SignupFormSchema>>({
     resolver: zodResolver(SignupFormSchema),
     defaultValues,
   });
   const navigate = useNavigate();
 
-  const onSubmit = (data: z.infer<typeof SignupFormSchema>) => {
-    console.log(data); // 추후 삭제 예정
-    navigate('/login');
+  const { handleRequest, isLoading } = useAxios<{ message: string }>({
+    url: '/signUp',
+    method: 'POST',
+    initialData: { message: '' },
+    shouldFetchOnMount: false,
+    serverType: 'backend',
+  });
+
+  const onSubmit = async (data: z.infer<typeof SignupFormSchema>) => {
+    try {
+      const result = await handleRequest({ body: data });
+      if (result) {
+        navigate('/login', {
+          state: { message: '회원가입이 완료되었습니다. 로그인해주세요.' },
+        });
+      }
+    } catch (error) {
+      if (error instanceof Error && error.message.includes('409')) {
+        setError('username', {
+          type: 'manual',
+          message: '이미 사용 중인 아이디입니다.',
+        });
+      } else {
+        setError('root', {
+          type: 'manual',
+          message:
+            error instanceof Error
+              ? error.message
+              : '알 수 없는 오류가 발생했습니다.',
+        });
+      }
+    }
   };
 
   return (
     <Form onSubmit={onSubmit} handleSubmit={handleSubmit}>
       <FormField
         label="아이디"
-        name="id"
+        name="username"
         type="text"
         register={register}
-        error={errors.id}
+        error={errors.username}
         placeholder="아이디를 입력해주세요."
       />
       <FormField
@@ -68,8 +99,11 @@ const SignupForm = () => {
         error={errors.passwordConfirm}
         placeholder="비밀번호를 다시 입력해주세요."
       />
-      <Button type="submit" className="w-full rounded-md">
-        회원가입
+      {/* {errors.root && (
+        <p className="mt-2 text-sm text-red-500">{errors.root.message}</p>
+      )} */}
+      <Button type="submit" className="w-full rounded-md" disabled={isLoading}>
+        {isLoading ? '잠시만 기다려주세요.' : '회원가입'}
       </Button>
     </Form>
   );
