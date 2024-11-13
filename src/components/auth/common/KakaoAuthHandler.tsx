@@ -12,8 +12,8 @@ const KakaoOAuthHandler = () => {
         initial={{ opacity: 0, scale: 0.5 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{
-          duration: 0.5,
-          ease: [0, 0.71, 0.2, 1.01],
+          duration: 0.1,
+          ease: 'easeInOut',
           scale: {
             type: 'spring',
             damping: 5,
@@ -28,7 +28,7 @@ const KakaoOAuthHandler = () => {
             y: [0, -10, 0],
           }}
           transition={{
-            duration: 2,
+            duration: 1,
             repeat: Infinity,
             ease: 'easeInOut',
           }}
@@ -40,7 +40,7 @@ const KakaoOAuthHandler = () => {
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
+            transition={{ delay: 0.2 }}
             className="mb-3 text-4xl font-bold text-gray-800"
           >
             카카오 계정으로 로그인 중
@@ -48,7 +48,7 @@ const KakaoOAuthHandler = () => {
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
+            transition={{ delay: 0.3 }}
             className="text-lg text-gray-700"
           >
             잠시만 기다려주세요...
