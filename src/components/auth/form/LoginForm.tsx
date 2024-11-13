@@ -30,7 +30,6 @@ const LoginForm = () => {
     method: 'POST',
     initialData: { token: '' },
     shouldFetchOnMount: false,
-    serverType: 'auth',
   });
 
   const onSubmit = async (data: z.infer<typeof LoginFormSchema>) => {

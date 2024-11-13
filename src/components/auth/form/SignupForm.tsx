@@ -28,7 +28,6 @@ const SignupForm = () => {
     method: 'POST',
     initialData: { message: '' },
     shouldFetchOnMount: false,
-    serverType: 'auth',
   });
 
   const onSubmit = async (data: z.infer<typeof SignupFormSchema>) => {

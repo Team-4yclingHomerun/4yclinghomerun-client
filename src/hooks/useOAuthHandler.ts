@@ -17,10 +17,9 @@ const useOAuthHandler = (provider: Provider) => {
   const setAccessToken = useAuthStore((state) => state.setAccessToken);
 
   const { handleRequest: sendAuthRequest } = useAxios<OAuthResponse>({
-    url: `/login/${provider}`,
+    url: `/oauth/login/${provider}`,
     method: 'POST',
     initialData: { access_token: '' },
-    serverType: 'oauth',
   });
 
   const sendAuthCodeToServer = useCallback(
