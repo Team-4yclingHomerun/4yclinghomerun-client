@@ -1,9 +1,12 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import markerIcon from '@/assets/logo/KTwiz_logo.svg';
+import DirectionMapSkeleton from './DirectionMapSkeleton';
+import { cn } from '@/utils/cn';
 
 const DirectionMap = () => {
   const mapRef = useRef<HTMLDivElement>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const lat = 37.2997553;
   const lng = 127.0096685;
   const zoom = 15;
@@ -36,6 +39,8 @@ const DirectionMap = () => {
           scaledSize: new naver.maps.Size(80, 80),
         },
       });
+
+      setIsLoading(false);
     };
 
     const script = document.createElement('script');
@@ -50,7 +55,13 @@ const DirectionMap = () => {
   }, [lat, lng, zoom, markerLat, markerLng]);
 
   return (
-    <div ref={mapRef} className="h-[70vh] w-full border-4 border-kt-red-3" />
+    <div className="relative h-[70vh] w-full border-4 border-kt-red-3">
+      {isLoading && <DirectionMapSkeleton />}
+      <div
+        ref={mapRef}
+        className={cn('h-full', isLoading ? 'opacity-0' : 'opacity-100')}
+      />
+    </div>
   );
 };
 
