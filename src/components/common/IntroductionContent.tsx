@@ -20,7 +20,10 @@ const IntroductionContent = ({
   return (
     <motion.div
       ref={ref}
-      className={cn('flex gap-20', index % 2 === 0 && 'flex-row-reverse')}
+      className={cn(
+        'flex gap-20',
+        index % 2 === 0 && 'flex-row-reverse justify-end',
+      )}
       key={data.id}
       initial={{ opacity: 0, x: -100 }}
       animate={isInView ? { opacity: 1, x: 0 } : {}}
