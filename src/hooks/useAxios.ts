@@ -1,14 +1,9 @@
 /* eslint-disable */
 import { useEffect, useState } from 'react';
 
-import { AxiosError, AxiosInstance, ResponseType } from 'axios';
+import { AxiosError, ResponseType } from 'axios';
 
-import {
-  BackendHttpClient,
-  AuthHttpClient,
-  OauthHttpClient,
-} from '@/api/HttpClient';
-import { ServerType } from '@/types/ServerType';
+import HttpClient from '@/api/HttpClient';
 
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
@@ -20,23 +15,11 @@ interface RequestParams<T, R> {
   shouldFetchOnMount?: boolean;
   processData?: (data: T) => R;
   responseType?: ResponseType;
-  serverType?: ServerType;
 }
 
 interface RequestOptions {
   body?: BodyInit | Record<string, any> | null;
 }
-
-const getHttpClient = (serverType: ServerType = 'backend'): AxiosInstance => {
-  switch (serverType) {
-    case 'auth':
-      return AuthHttpClient;
-    case 'oauth':
-      return OauthHttpClient;
-    default:
-      return BackendHttpClient;
-  }
-};
 
 const useAxios = <T, R = T>({
   url,
@@ -46,7 +29,6 @@ const useAxios = <T, R = T>({
   shouldFetchOnMount,
   processData,
   responseType,
-  serverType = 'backend',
 }: RequestParams<T, R>) => {
   const [data, setData] = useState<R | T>(initialData);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -63,7 +45,6 @@ const useAxios = <T, R = T>({
     }, MINIMUM_LOADING_TIME);
 
     try {
-      const HttpClient = getHttpClient(serverType);
       let response;
       const config = responseType ? { responseType } : {};
       const requestBody = options?.body || body;
