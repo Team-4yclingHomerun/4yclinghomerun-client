@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { RiKakaoTalkFill } from 'react-icons/ri';
 
 import { Button } from '@/components/common/ui/button/button';
@@ -7,16 +6,8 @@ const KakaoLoginButton = () => {
   const KAKAO_SERVER_REDIRECT_URI = import.meta.env
     .VITE_KAKAO_SERVER_REDIRECT_URI;
 
-  const handleKakaoLogin = async () => {
-    try {
-      const response = await axios.get('/oauth/kakao');
-
-      if (response.data) {
-        window.location.href = KAKAO_SERVER_REDIRECT_URI;
-      }
-    } catch (error) {
-      console.error('카카오 로그인 에러:', error);
-    }
+  const handleKakaoLogin = () => {
+    window.location.href = KAKAO_SERVER_REDIRECT_URI;
   };
 
   return (
