@@ -12,7 +12,7 @@ const GetMonthSchedule = (year: number, month: number) => {
   const { data, isLoading, isError, error } =
     useAxios<GetMonthScheduleResponse>({
       method: 'GET',
-      url: `/game/monthschedule?yearMonth=${yearMonth}`,
+      url: `/game/monthschedule/yearMonth-${yearMonth}`,
       initialData: {
         data: {
           list: [],

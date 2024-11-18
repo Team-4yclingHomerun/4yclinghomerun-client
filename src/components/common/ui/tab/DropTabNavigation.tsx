@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { cn } from '@/utils/cn';
 import { TabNavigationProps } from '@/types/TabType';
 import { useTabNavigation } from '@/hooks/useTabNavigation';
-import useShowOnHover from '@/hooks/useShowOnHover';
+import { useMouseHover } from '@/hooks/useMouseHover';
 
 const DropTabNavigation = (props: TabNavigationProps) => {
   const {
@@ -17,14 +17,13 @@ const DropTabNavigation = (props: TabNavigationProps) => {
     subTabRefs,
   } = useTabNavigation(props);
 
-  const { isViewSubTab, handleTabMouseOver, handleTabMouseOut } =
-    useShowOnHover();
+  const { isHover, handleMouseOver, handleMouseOut } = useMouseHover();
 
   return (
     <div
       className="relative z-10 rounded-full bg-gray-800 p-2 backdrop-blur-sm"
-      onMouseOver={handleTabMouseOver}
-      onMouseOut={handleTabMouseOut}
+      onMouseOver={handleMouseOver}
+      onMouseOut={handleMouseOut}
     >
       {tabs.map((tab, index) => (
         <button
@@ -48,8 +47,8 @@ const DropTabNavigation = (props: TabNavigationProps) => {
           }}
           initial={{ opacity: 0, y: -10 }}
           animate={{
-            opacity: isViewSubTab ? 1 : 0,
-            y: isViewSubTab ? 0 : -10,
+            opacity: isHover ? 1 : 0,
+            y: isHover ? 0 : -10,
           }}
           transition={{ duration: 0.3 }}
           ref={subTabRefs}

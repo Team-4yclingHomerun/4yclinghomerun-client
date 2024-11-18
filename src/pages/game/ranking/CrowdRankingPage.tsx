@@ -12,6 +12,8 @@ import CrowdRankingSelectYear from '@/components/game/ranking/crowd/CrowdRanking
 import GameRankingTable from '@/components/game/ranking/GameRankingTable';
 import { crowdRankingColumns } from '@/data/CrowdRankingTableData';
 import BarGraphSkeleton from '@/components/game/ranking/BarGraphSkeleton';
+import ErrorAlert from '@/components/error/ErrorAlert';
+import ErrorBoundary from '@/components/error/ErrorBoundary';
 
 const CrowdRankingPage = () => {
   const [selectedYear, setSelectedYear] = useState<number>(
@@ -27,7 +29,7 @@ const CrowdRankingPage = () => {
     isError,
     error,
   } = useAxios<APICrowdRankingData, TCrowdRankingData[]>({
-    url: `/game/rank/crowd?gyear=${selectedYear}`,
+    url: `/game/rank/crowd/gyear-${selectedYear}`,
     method: 'GET',
     initialData: { data: { list: [] } },
     shouldFetchOnMount: true,
@@ -76,39 +78,50 @@ const CrowdRankingPage = () => {
     setIsOpenSelectYears((isOpenSelectYears) => !isOpenSelectYears);
   };
 
-  if (isError) {
-    return <p>Error: {error}</p>;
+  if (isError && error) {
+    return <ErrorAlert errorMsg={error} type="page" />;
   }
 
   return (
-    <div className="flex flex-col gap-10">
-      <CrowdRankingSelectYear
-        selectedYear={selectedYear}
-        isOpenSelectYears={isOpenSelectYears}
-        years={years}
-        handleNextYear={handleNextYear}
-        handleOpenSelectYears={handleOpenSelectYear}
-        handlePreviousYear={handlePreviousYear}
-        handleYearClick={handleYearClick}
-      />
-      <GameRankingSectionFrame
-        title={`${selectedYear} 시즌 누적관중`}
-        height="h-[50vh]"
-        type="graph"
-      >
-        {delayLoading || !Array.isArray(CrowdRankingTotalData) ? (
-          <BarGraphSkeleton />
-        ) : (
-          <CrowdRankingGraph graphInfo={CrowdRankingTotalData} />
-        )}
-      </GameRankingSectionFrame>
-      <GameRankingTable<TCrowdRankingTable>
-        title={`${selectedYear} 시즌 관중`}
-        tableInfo={tableInfo}
-        columns={crowdRankingColumns}
-        isLoading={delayLoading}
-      />
-    </div>
+    <ErrorBoundary
+      fallback={
+        <ErrorAlert
+          errorMsg="페이지를 불러오는 중 오류가 발생했습니다."
+          type="page"
+        />
+      }
+    >
+      <div className="flex flex-col gap-10">
+        <CrowdRankingSelectYear
+          selectedYear={selectedYear}
+          isOpenSelectYears={isOpenSelectYears}
+          years={years}
+          handleNextYear={handleNextYear}
+          handleOpenSelectYears={handleOpenSelectYear}
+          handlePreviousYear={handlePreviousYear}
+          handleYearClick={handleYearClick}
+        />
+        <GameRankingSectionFrame
+          title={`${selectedYear} 시즌 누적관중`}
+          height="h-[50vh]"
+          type="graph"
+        >
+          {delayLoading ? (
+            <BarGraphSkeleton />
+          ) : (
+            Array.isArray(CrowdRankingTotalData) && (
+              <CrowdRankingGraph graphInfo={CrowdRankingTotalData} />
+            )
+          )}
+        </GameRankingSectionFrame>
+        <GameRankingTable<TCrowdRankingTable>
+          title={`${selectedYear} 시즌 관중`}
+          tableInfo={tableInfo}
+          columns={crowdRankingColumns}
+          isLoading={delayLoading}
+        />
+      </div>
+    </ErrorBoundary>
   );
 };
 export default CrowdRankingPage;

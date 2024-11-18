@@ -5,9 +5,9 @@ import Layout from './Layout';
 import HomePage from '@/pages/HomePage';
 import IntroductionPage from '@/pages/Introduction/IntroductionPage';
 import WizParkPage from '@/pages/wiz-park/WizParkPage';
-import DirectionPage from '@/pages/DirectionPage';
+import WizParkDirection from '@/pages/wiz-park/WizParkDirection';
 import GamePage from '@/pages/game/GamePage';
-import PlayerPage from '@/pages/PlayerPage';
+import PlayerPage from '@/pages/player/PlayerPage';
 import NewsPage from '@/pages/news/NewsPage';
 import LoginPage from '@/pages/LoginPage';
 import SingupPage from '@/pages/SignupPage';
@@ -30,6 +30,11 @@ import CheerPage from '@/pages/player/cheer/CheerPage';
 import CheerDetailPage from '@/pages/player/cheer/CheerDetailPage';
 import CoachPage from '@/pages/player/coach/CoachPage';
 import CoachDetailPage from '@/pages/player/coach/CoachDetailPage';
+import GoogleOAuthHandler from '@/components/auth/common/GoogleAuthHandler';
+import KakaoOAuthHandler from '@/components/auth/common/KakaoAuthHandler';
+import CommunityPage from '@/pages/community/CommunityPage';
+import ChatPage from '@/pages/community/ChatPage';
+import NotFoundPage from './NotFoundPage';
 
 const Router = () => {
   const {
@@ -40,18 +45,28 @@ const Router = () => {
     WIZ_PARK,
     WIZ_PARK_INTRO,
     WIZ_PARK_GUIDE,
-    DIRECTION,
+    WIZ_PARK_DIRECTION,
     GAME,
     GAME_RANKING_TEAM,
     GAME_RANKING_BATTER,
     GAME_RANKING_PICHER,
     GAME_RANKING_CROWND,
     PLAYER,
+    PLAYER_COACH,
+    PLAYER_PITCHER,
+    PLAYER_HITTER,
+    PLAYER_CHEER,
     NEWS,
     LOGIN,
     SIGNUP,
+    GOOGLE_OAUTH,
+    KAKAO_OAUTH,
+    COMMUNITY,
+    CHAT,
   } = ROUTER_PATH;
   const router = createBrowserRouter([
+    { path: GOOGLE_OAUTH, element: <GoogleOAuthHandler /> },
+    { path: KAKAO_OAUTH, element: <KakaoOAuthHandler /> },
     {
       element: <Layout />,
       children: [
@@ -70,9 +85,14 @@ const Router = () => {
           children: [
             { path: WIZ_PARK_INTRO, element: <WizParkIntro /> },
             { path: WIZ_PARK_GUIDE, element: <WizParkGuide /> },
+            { path: WIZ_PARK_DIRECTION, element: <WizParkDirection /> },
           ],
         },
-        { path: DIRECTION, element: <DirectionPage /> },
+        {
+          path: COMMUNITY,
+          element: <CommunityPage />,
+          children: [{ path: CHAT, element: <ChatPage /> }],
+        },
         { path: NEWS, element: <NewsPage /> },
         {
           path: GAME,
@@ -91,14 +111,17 @@ const Router = () => {
           path: PLAYER,
           element: <PlayerPage />,
           children: [
-            { path: 'coach', element: <CoachPage /> },
-            { path: 'coach/detail/:id', element: <CoachDetailPage /> },
-            { path: 'pitcher', element: <PitcherPage /> },
-            { path: 'pitcher/detail/:id', element: <PitcherDetailPage /> },
-            { path: 'hitter', element: <HitterPage /> },
-            { path: 'hitter/detail/:id', element: <HitterDetailPage /> },
-            { path: 'cheer', element: <CheerPage /> },
-            { path: 'cheer/detail/:id', element: <CheerDetailPage /> },
+            { path: PLAYER_COACH, element: <CoachPage /> },
+            { path: `${PLAYER_COACH}/:id`, element: <CoachDetailPage /> },
+            { path: PLAYER_PITCHER, element: <PitcherPage /> },
+            { path: `${PLAYER_PITCHER}/:id`, element: <PitcherDetailPage /> },
+            { path: PLAYER_HITTER, element: <HitterPage /> },
+            {
+              path: `${PLAYER_HITTER}/:type/:id`,
+              element: <HitterDetailPage />,
+            },
+            { path: PLAYER_CHEER, element: <CheerPage /> },
+            { path: `${PLAYER_CHEER}/:id`, element: <CheerDetailPage /> },
           ],
         },
         {
@@ -112,6 +135,7 @@ const Router = () => {
         { path: SIGNUP, element: <SingupPage /> },
       ],
     },
+    { path: '*', element: <NotFoundPage /> },
   ]);
 
   return <RouterProvider router={router} />;

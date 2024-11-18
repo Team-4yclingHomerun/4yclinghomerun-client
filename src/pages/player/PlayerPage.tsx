@@ -7,7 +7,7 @@ import { ROUTER_PATH } from '@/constants/constant';
 
 import DetailPageLayout from '@/components/common/layout/DetailPageLayout';
 
-const { COACH } = ROUTER_PATH;
+const { PLAYER_COACH } = ROUTER_PATH;
 
 const PlayerPage = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -25,7 +25,7 @@ const PlayerPage = () => {
       setActiveTab(currentTab);
       setSubTitle(playerTabs[currentTab].subTitle);
     } else {
-      navigate(COACH, { replace: true });
+      navigate(`${PLAYER_COACH}`, { replace: true });
     }
   }, [location.pathname, navigate]);
 

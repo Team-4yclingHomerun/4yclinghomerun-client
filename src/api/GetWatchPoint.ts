@@ -72,7 +72,7 @@ const GetWatchPoint = (gameDate: number, gmkey: string) => {
 
   return useAxios<GetWatchPointResponse, ProcessedWatchPointData>({
     method: 'GET',
-    url: `/game/watchpoint?gameDate=${gameDate}&gmkey=${gmkey}`,
+    url: `/game/watchpoint/gameDate-${gameDate}/gmkey-${gmkey}`,
     initialData: {
       data: {
         gameScore: {} as WatchPointGameScoreType,

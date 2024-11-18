@@ -13,7 +13,7 @@ import SeasonRecordTable from '@/components/player/hitter/SeasonRecordTable';
 import YearRecordTable from '@/components/player/hitter/YearRecordTable';
 
 const HitterDetailPage = () => {
-  const { id } = useParams();
+  const { type, id } = useParams();
 
   const {
     data,
@@ -22,7 +22,7 @@ const HitterDetailPage = () => {
   }: { data: IHitterDetailReponse; isLoading: boolean; isError: boolean } =
     useAxios<IHitterDetailReponse>({
       method: 'GET',
-      url: `/player/catcherdetail?pcode=${id}`,
+      url: `/player/${type}detail/pcode-${id}`,
       initialData: {
         data: {
           gameplayer: {

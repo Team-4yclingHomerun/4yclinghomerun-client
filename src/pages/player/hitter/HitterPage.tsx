@@ -24,6 +24,7 @@ const HitterPage = () => {
     initialData: [],
     shouldFetchOnMount: true,
   });
+
   const {
     data: infielderData,
     isLoading: isInfielderDataLoading,
@@ -34,6 +35,7 @@ const HitterPage = () => {
     initialData: [],
     shouldFetchOnMount: true,
   });
+
   const {
     data: outfielderData,
     isLoading: isOutfielderDataLoading,
@@ -57,6 +59,19 @@ const HitterPage = () => {
 
   const selectOptions = ['이름'];
 
+  const getTypeFromPosition = (position: string) => {
+    switch (position) {
+      case '포수':
+        return 'catcher';
+      case '내야수':
+        return 'infielder';
+      case '외야수':
+        return 'outfielder';
+      default:
+        return 'catcher';
+    }
+  };
+
   return (
     <>
       <div className="flex justify-end">
@@ -72,7 +87,11 @@ const HitterPage = () => {
           <ErrorBoundary fallback={<CardError />}>
             <CardArea isError={isCatcherDataError}>
               {filteredSearch.map((item, index) => (
-                <CardItem key={index} items={item} type="hitter" />
+                <CardItem
+                  key={index}
+                  items={item}
+                  type={getTypeFromPosition(item.position)}
+                />
               ))}
             </CardArea>
           </ErrorBoundary>
@@ -85,13 +104,13 @@ const HitterPage = () => {
             ) : (
               <ErrorBoundary fallback={<CardError />}>
                 <CardArea isError={isCatcherDataError}>
-                  {filteredSearch.length > 0
-                    ? filteredSearch.map((item, index) => (
-                        <CardItem key={index} items={item} type="hitter" />
-                      ))
-                    : catcherData.map((item, index) => (
-                        <CardItem key={index} items={item} type="hitter" />
-                      ))}
+                  {catcherData.map((item, index) => (
+                    <CardItem
+                      key={index}
+                      items={item}
+                      type={getTypeFromPosition(item.position)}
+                    />
+                  ))}
                 </CardArea>
               </ErrorBoundary>
             )}
@@ -104,7 +123,11 @@ const HitterPage = () => {
               <ErrorBoundary fallback={<CardError />}>
                 <CardArea isError={isInfielderDataError}>
                   {infielderData.map((item, index) => (
-                    <CardItem key={index} items={item} type="hitter" />
+                    <CardItem
+                      key={index}
+                      items={item}
+                      type={getTypeFromPosition(item.position)}
+                    />
                   ))}
                 </CardArea>
               </ErrorBoundary>
@@ -118,7 +141,11 @@ const HitterPage = () => {
               <ErrorBoundary fallback={<CardError />}>
                 <CardArea isError={isOutfielderDataError}>
                   {outfielderData.map((item, index) => (
-                    <CardItem key={index} items={item} type="hitter" />
+                    <CardItem
+                      key={index}
+                      items={item}
+                      type={getTypeFromPosition(item.position)}
+                    />
                   ))}
                 </CardArea>
               </ErrorBoundary>

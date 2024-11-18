@@ -1,21 +1,56 @@
-import { Link } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+
+import { useAuthStore } from '@/stores/AuthStore';
+import { cn } from '@/utils/cn';
 
 const NavigationBarAuth = () => {
+  const navigate = useNavigate();
+  const { accessToken, clearAccessToken } = useAuthStore();
+
+  const handleLogout = () => {
+    clearAccessToken();
+    navigate('/');
+  };
+
   return (
-    <div className="flex w-40 justify-end">
-      <ul className="flex gap-4">
-        <li>
-          <Link to="/login">LOGIN</Link>
-        </li>
-        <li>
-          <Link
-            to="/signup"
-            className="rounded-md border border-white px-2 py-1 text-white transition-all duration-200 hover:bg-white hover:text-red-800"
+    <div className="absolute right-6 top-6">
+      {accessToken ? (
+        <>
+          <NavLink
+            to="/profile"
+            className={({ isActive }) =>
+              cn(
+                'mr-2 rounded-md border border-white px-2 py-1.5 text-lg font-extrabold transition-colors duration-300',
+                isActive
+                  ? 'bg-white text-red-800 hover:border hover:border-white hover:bg-transparent hover:text-white'
+                  : 'hover:border hover:border-white hover:bg-white hover:text-red-800',
+              )
+            }
           >
-            JOIN US
-          </Link>
-        </li>
-      </ul>
+            내 정보
+          </NavLink>
+          <button
+            onClick={handleLogout}
+            className="rounded-md border border-white px-2 py-1.5 text-lg font-extrabold transition-colors duration-300 hover:border hover:border-white hover:bg-white hover:text-red-800"
+          >
+            LOGOUT
+          </button>
+        </>
+      ) : (
+        <NavLink
+          to="/login"
+          className={({ isActive }) =>
+            cn(
+              'rounded-md border border-white px-2 py-1.5 text-lg font-extrabold transition-colors duration-300',
+              isActive
+                ? 'bg-white text-red-800 hover:border hover:border-white hover:bg-transparent hover:text-white'
+                : 'hover:border hover:border-white hover:bg-white hover:text-red-800',
+            )
+          }
+        >
+          LOGIN
+        </NavLink>
+      )}
     </div>
   );
 };

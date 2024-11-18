@@ -41,7 +41,7 @@ const GetNaverWatchPoint = (gmkey: string) => {
 
   return useAxios<GetNaverWatchPointResponse, ReturnType<typeof processData>>({
     method: 'GET',
-    url: `/game/navergameinfo?gmkey=${gmkey}`,
+    url: `/game/navergameinfo/gmkey-${gmkey}`,
     initialData: {
       result: {
         previewData: {

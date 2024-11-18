@@ -22,6 +22,13 @@ const GamePage = () => {
     if (currentTab !== -1) {
       setActiveTab(currentTab);
       setSubTitle(gameTabs[currentTab].subTitle);
+
+      const currentSubTab = gameTabs[currentTab].subTab?.findIndex((tab) =>
+        location.pathname.startsWith(tab.path),
+      );
+      if (currentSubTab) {
+        setActiveSubTab(currentSubTab);
+      }
     } else {
       navigate('/game/schedule', { replace: true });
     }

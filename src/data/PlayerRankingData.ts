@@ -19,22 +19,22 @@ import {
 export const TableData: TPlayerRankigTableData[] = [
   {
     tableName: '전체 투수 순위',
-    apiUrl: '/game/rank/total/pitcher?gyear=2024&pname=&sortKey=ERA',
+    apiUrl: '/game/rank/total/pitcher',
     tableColums: totalPitcherColumns as ColumnDef<TTotalPitcherRankingTable>[],
   },
   {
     tableName: 'kt wiz 투수',
-    apiUrl: '/game/rank/kt/pitcher?gyear=2024&pname&sortKey=ERA',
+    apiUrl: '/game/rank/kt/pitcher',
     tableColums: ktPitcherColumns as ColumnDef<TKTPitcherRankingTable>[],
   },
   {
     tableName: '전체 타자 순위',
-    apiUrl: '/game/rank/total/batter?gyear=2024&pname&sortKey=HRA',
+    apiUrl: '/game/rank/total/batter',
     tableColums: totalBatterColumns as ColumnDef<TTotalBatterRankingTable>[],
   },
   {
     tableName: 'kt wiz 타자',
-    apiUrl: '/game/rank/kt/batter?gyear=2024&pname=&sortKey=HRA',
+    apiUrl: '/game/rank/kt/batter',
     tableColums: ktBatterColumns as ColumnDef<TKTBatterRankingTable>[],
   },
 ];

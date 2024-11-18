@@ -13,9 +13,9 @@ const NewsDetailPage = () => {
   const { tab, id } = useParams();
 
   const urls = {
-    wiznews: `/article/newsdetail?artcSeq=${id}`,
-    wizpress: `/article/wizpressdetail?artcSeq=${id}`,
-    navernews: `/article/navernewsdetail?${id}`,
+    wiznews: `/article/newsdetail/artcSeq-187627`,
+    wizpress: `/article/wizpressdetail/artcSeq-177032`,
+    navernews: `/article/navernewsdetail/oid/${id}`,
   };
 
   const processData = (responseData: any) => {

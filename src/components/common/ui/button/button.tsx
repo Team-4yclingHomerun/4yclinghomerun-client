@@ -20,13 +20,13 @@ const Button = ({
   className = '',
 }: ButtonProps) => {
   const baseStyles =
-    'rounded-full font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all duration-300';
+    'rounded-full font-semibold focus:outline-none focus:ring-2 focus:ring-offset-1 transition-all duration-300';
   const variantStyles = {
     primary:
-      'bg-red-500 text-white hover:bg-red-600 text-white focus:ring-red-500',
+      'bg-kt-red-2 text-white hover:bg-kt-red-2 text-white focus:ring-kt-red-2',
     secondary:
       'bg-yellow-400 text-black hover:bg-yellow-500 focus:ring-yellow-400',
-    danger: 'bg-gray-500 text-white hover:bg-gray-600 focus:ring-gray-500',
+    danger: 'bg-gray-500 text-white hover:bg-gray-600 focus:ring-gray-400',
   };
   const sizeStyles = {
     small: 'px-3 py-1 text-sm',

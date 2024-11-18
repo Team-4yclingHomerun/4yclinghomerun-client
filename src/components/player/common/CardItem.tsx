@@ -5,20 +5,29 @@ import logoImg from '@/assets/logo/KTwiz_logo.svg';
 import unknownImg from '@/assets/player/CardImage_Unknown.webp';
 import { cn } from '@/utils/cn';
 import { TCard } from '@/types/player';
+import { ROUTER_PATH } from '@/constants/constant';
 
 interface CardItemProps {
   items: TCard;
-  type: `coach` | 'pitcher' | 'hitter' | 'cheer';
+  type: `coach` | 'pitcher' | 'cheer' | 'catcher' | 'infielder' | 'outfielder';
 }
+
+const { PLAYER, PLAYER_HITTER } = ROUTER_PATH;
 
 const CardItem = ({ items, type }: CardItemProps) => {
   const navigate = useNavigate();
 
   const handleDetailClick = () => {
     if (type === 'cheer') {
-      navigate(`/player/${type}/detail/${items.regDttm}`);
+      navigate(`${PLAYER}/${type}/${items.regDttm}`);
+    } else if (
+      type === 'catcher' ||
+      type === 'infielder' ||
+      type === 'outfielder'
+    ) {
+      navigate(`${PLAYER_HITTER}/${type}/${items.pcode}`);
     } else {
-      navigate(`/player/${type}/detail/${items.pcode}`);
+      navigate(`${PLAYER}/${type}/${items.pcode}`);
     }
   };
 

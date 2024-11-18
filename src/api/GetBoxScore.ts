@@ -52,7 +52,7 @@ const scheduleInitialState: BoxScoreGameScheduleType = {
 const GetBoxScore = (gameDate: number, gmkey: string) => {
   const { data, isLoading, isError, error } = useAxios<GetBoxScoreResponse>({
     method: 'GET',
-    url: `/game/boxscore?gameDate=${gameDate}&gmkey=${gmkey}`,
+    url: `/game/boxscore/gameDate-${gameDate}/gmkey-${gmkey}`,
     initialData: {
       data: {
         etcgames: [],

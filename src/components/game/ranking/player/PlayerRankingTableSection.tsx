@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import PlayerRankingTabs from '@/components/game/ranking/player/PlayerRankingTabs';
 import SearchInput from '@/components/common/ui/SearchInput';
@@ -9,7 +9,6 @@ import {
   TPlayerRankingColumn,
   TPlayerRankingTable,
 } from '@/types/PlayerRanking';
-import DataTableSkeleton from '@/components/common/ui/table/DataTableSkeleton';
 
 const PlayerRankingTableSection = ({
   rankingType,
@@ -30,7 +29,7 @@ const PlayerRankingTableSection = ({
     setTabsList([`kt wiz ${rankingType}`, `전체 ${rankingType} 순위`]);
   }, [rankingType]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const matchingTable = TableData.find(
       (table) => table.tableName === activeTab,
     );
@@ -50,15 +49,13 @@ const PlayerRankingTableSection = ({
     processData: (data) => data.data.list,
   });
 
-  useLayoutEffect(() => {
-    if (Array.isArray(data)) {
-      setTableData(data as TPlayerRankingTable[]);
-    }
+  useEffect(() => {
     const matchingTable = TableData.find(
       (table) => table.tableName === activeTab,
     );
     if (matchingTable) {
       setTableColumns(matchingTable.tableColums);
+      setTableData(data as TPlayerRankingTable[]);
     }
   }, [data]);
 
@@ -79,10 +76,6 @@ const PlayerRankingTableSection = ({
     }
   };
 
-  if (isError) {
-    return <p>Error: {error}</p>;
-  }
-
   return (
     <section className="space-y-2">
       <div className="flex items-center justify-between">
@@ -99,9 +92,7 @@ const PlayerRankingTableSection = ({
       <p className="w-full text-end text-kt-gray-2">
         ※ 각 항목을 클릭하시면 오름차순/내림차순 정렬이 가능합니다.
       </p>
-      {!Array.isArray(data) ? (
-        <DataTableSkeleton />
-      ) : (
+      {Array.isArray(data) && (
         <PlayerRankingTable
           activeTab={activeTab}
           tableData={tableData}
