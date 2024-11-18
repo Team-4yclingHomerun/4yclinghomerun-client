@@ -26,7 +26,6 @@ const GetPostSeasonPossibility = () => {
       initialData: {
         data: [],
       },
-      serverType: 'backend',
       shouldFetchOnMount: true,
     });
 
