@@ -24,11 +24,10 @@ const SignupForm = () => {
   const navigate = useNavigate();
 
   const { handleRequest, isLoading } = useAxios<{ message: string }>({
-    url: '/signUp',
+    url: '/user/signUp',
     method: 'POST',
     initialData: { message: '' },
     shouldFetchOnMount: false,
-    serverType: 'backend',
   });
 
   const onSubmit = async (data: z.infer<typeof SignupFormSchema>) => {

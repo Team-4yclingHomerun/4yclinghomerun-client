@@ -22,10 +22,11 @@ const GetPostSeasonPossibility = () => {
   const { data, isLoading, isError, error } =
     useAxios<GetPostSeasonPossibilityResponse>({
       method: 'GET',
-      url: '/game/oddswinning',
+      url: '/game/oddsWinning',
       initialData: {
         data: [],
       },
+      serverType: 'backend',
       shouldFetchOnMount: true,
     });
 

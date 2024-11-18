@@ -1,4 +1,4 @@
-import GoogleLoginButton from '@/components/auth/button/GoogleLoginButton';
+import GoogleCustomButton from '@/components/auth/button/GoogleCustomButton';
 import KakaoLoginButton from '@/components/auth/button/KakaoLoginButton';
 import AuthPageLayout from '@/components/auth/common/AuthPageLayout';
 import LoginForm from '@/components/auth/form/LoginForm';
@@ -8,7 +8,7 @@ const LoginPage = () => {
     <AuthPageLayout to="/signup">
       <div className="mb-6 flex w-full justify-around gap-2">
         <KakaoLoginButton />
-        <GoogleLoginButton />
+        <GoogleCustomButton />
       </div>
       <div className="relative mb-6">
         <hr className="border-gray-300" />

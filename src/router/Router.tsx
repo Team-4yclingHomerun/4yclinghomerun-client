@@ -65,6 +65,8 @@ const Router = () => {
     CHAT,
   } = ROUTER_PATH;
   const router = createBrowserRouter([
+    { path: GOOGLE_OAUTH, element: <GoogleOAuthHandler /> },
+    { path: KAKAO_OAUTH, element: <KakaoOAuthHandler /> },
     {
       element: <Layout />,
       children: [
@@ -131,8 +133,6 @@ const Router = () => {
         },
         { path: LOGIN, element: <LoginPage /> },
         { path: SIGNUP, element: <SingupPage /> },
-        { path: GOOGLE_OAUTH, element: <GoogleOAuthHandler /> },
-        { path: KAKAO_OAUTH, element: <KakaoOAuthHandler /> },
       ],
     },
     { path: '*', element: <NotFoundPage /> },

@@ -1,12 +1,11 @@
 /* eslint-disable */
 import { useEffect, useState } from 'react';
 
-import { AxiosError, AxiosInstance, ResponseType } from 'axios';
+import { AxiosError, ResponseType } from 'axios';
 
-import { KtHttpClient, BackendHttpClient } from '@/api/HttpClient';
+import HttpClient from '@/api/HttpClient';
 
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
-type ServerType = 'kt' | 'backend';
 
 interface RequestParams<T, R> {
   url: string;
@@ -16,21 +15,11 @@ interface RequestParams<T, R> {
   shouldFetchOnMount?: boolean;
   processData?: (data: T) => R;
   responseType?: ResponseType;
-  serverType?: ServerType;
 }
 
 interface RequestOptions {
   body?: BodyInit | Record<string, any> | null;
 }
-
-const getHttpClient = (serverType: ServerType = 'kt'): AxiosInstance => {
-  switch (serverType) {
-    case 'backend':
-      return BackendHttpClient;
-    default:
-      return KtHttpClient;
-  }
-};
 
 const useAxios = <T, R = T>({
   url,
@@ -40,7 +29,6 @@ const useAxios = <T, R = T>({
   shouldFetchOnMount,
   processData,
   responseType,
-  serverType = 'kt',
 }: RequestParams<T, R>) => {
   const [data, setData] = useState<R | T>(initialData);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -57,7 +45,6 @@ const useAxios = <T, R = T>({
     }, MINIMUM_LOADING_TIME);
 
     try {
-      const HttpClient = getHttpClient(serverType);
       let response;
       const config = responseType ? { responseType } : {};
       const requestBody = options?.body || body;
