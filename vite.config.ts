@@ -6,7 +6,6 @@ import { resolve } from 'path';
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
 
-  const url = env.VITE_API_SERVER_URL;
   const backendUrl = env.VITE_API_BACKEND_URL;
 
   return {
@@ -16,11 +15,6 @@ export default defineConfig(({ mode }) => {
     plugins: [react(), tsconfigPaths()],
     server: {
       proxy: {
-        '/yclinghomerun': {
-          target: url,
-          changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/yclinghomerun/, ''),
-        },
         '/api': {
           target: backendUrl,
           changeOrigin: true,
